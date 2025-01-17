@@ -67,16 +67,34 @@ website:
               href: src/qse/01_installation.qmd
             - text: Scanning
               href: src/qse/02_scanning.qmd
-
-
-        - section: Implementation Methodology
+        - section: Guardium Insights
           contents:
-          - text: Step One
-            href: src/implementation_methodology/stepone-imp.qmd
-          - text: Step Two
-            href: src/implementation_methodology/steptwo-imp.qmd
-          - text: Step Three
-            href: src/implementation_methodology/stepthree-imp.qmd
+            - section: EC2
+              contents:
+                - text: Prerequisites
+                  href: src/guardium_insights/ec2/01-prereqs.qmd
+                - text: Preparation
+                  href: src/guardium_insights/ec2/02-preparation.qmd
+#                - text: UPI Installation
+#                  href: src/guardium_insights/ec2/03-upi_install.qmd
+            - section: EKS
+              contents:
+                - text: Prerequisites
+                  href: src/guardium_insights/eks/01_pre-reqs.qmd
+                - text: EKS Cluster Build
+                  href: src/guardium_insights/eks/02_cluster-build.qmd
+            - text: Guardium Insights Installation
+              href: src/guardium_insights/03_gi-install.qmd
+            - text: Optional Services
+              href: src/guardium_insights/04_optional_services.qmd
+#        - section: Implementation Methodology
+#          contents:
+#          - text: Step One
+#            href: src/implementation_methodology/stepone-imp.qmd
+#          - text: Step Two
+#            href: src/implementation_methodology/steptwo-imp.qmd
+#          - text: Step Three
+#            href: src/implementation_methodology/stepthree-imp.qmd
         - text: Key Takeaways
           href: src/key-takeaway.qmd
 

@@ -1,6 +1,7 @@
 /.quarto/
 /_site
 /docs/*
+.DS_Store
 
 !docs/docsfile
 _quarto_internal_scss_error.scss

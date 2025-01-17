@@ -23,8 +23,8 @@ export CP_REPO_USER="cp"
 export CP_REPO_PASS=<Your Password / Entitlement Key to cp.icr.io>
 export NAMESPACE="openshift-marketplace"
 export CLUSTERNAME="<your-cluster-name>"
-export CASE_NAME=ibm-guardium-insights
-export CASE_VERSION=2.5.0
+export CASE_NAME=ibm-guardium-data-security-center
+export CASE_VERSION=2.6.0
 export LOCAL_CASE_DIR=$HOME/.ibm-pak/data/cases/$CASE_NAME/$CASE_VERSION
 export GI_INVENTORY_SETUP=install
 export IBMPAK_LAUNCH_SKIP_PREREQ_CHECK=true
@@ -38,7 +38,7 @@ oc ibm-pak get $CASE_NAME \
 --skip-verify
 ```
 
-This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-insights/2.5.0`
+This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-data-security-center/2.6.0`
 
 ## Install the GI Operator
 
@@ -182,7 +182,7 @@ cloud-native-postgresql                       cloud-native-postgresql          c
 ibm-common-service-operator                   ibm-common-service-operator      opencloud-operators                      v4.6
 ibm-db2uoperator-catalog-subscription         db2u-operator                    ibm-db2uoperator-catalog                 v110509.0
 ibm-events-operator                           ibm-events-operator              opencloud-operators                      v3
-ibm-guardium-insights-operator-subscription   ibm-guardium-insights-operator   ibm-guardium-insights-operator-catalog   v3.4
+ibm-guardium-insights-operator-subscription   ibm-guardium-insights-operator   ibm-guardium-insights-operator-catalog   v3.6
 ibm-idp-config-ui-operator                    ibm-commonui-operator-app        opencloud-operators                      v4.4
 ibm-im-operator                               ibm-iam-operator                 opencloud-operators                      v4.5
 ibm-platformui-operator                       ibm-zen-operator                 opencloud-operators                      v4.4
@@ -256,115 +256,21 @@ Also we will be setting the RWO storage classes to use the gp3 block storage cla
 
 This will install an instance with the sizing set to `values-small`
 
-`gi-custom-eks.yaml`
+`gdsc-custom-eks.yaml`
 
 ```bash
 cat <<EOF > gi-custom-eks.yaml
 apiVersion: gi.ds.isc.ibm.com/v1
-kind: GuardiumInsights
+kind: GuardiumDataSecurityCenter
 metadata:
   name: ${CLUSTERNAME}
   namespace: ${NAMESPACE}
 spec:
-  dependency-security:
-    networkPolicy:
-      egresses:
-        enabled: false
-        egress-required-allow:
-          egress:
-            - ports:
-                - protocol: UDP
-                  port: 443
-                - protocol: TCP
-                  port: 443
-                - protocol: UDP
-                  port: 53
-                - protocol: TCP
-                  port: 53
-  version: 3.5.0
+  version: 3.6.0
   license:
     accept: true
-    licenseType: "L-YRPR-ZV3BA6"
-  dependency-postgres:
-    podContainerSecurityContextParams:
-      fsGroup: 0
-      runAsUser: 1000
-      runAsNonRoot: true
-  dependency-kafka:
-   podContainerSecurityContextParams:
-      fsGroup: 0
-      runAsUser: 1000
-      runAsNonRoot: true
-  dependency-redis:
-   podContainerSecurityContextParams:
-      fsGroup: 0
-      runAsUser: 1000
-      runAsNonRoot: true
-  guardium-agent-cert-generator:
-   podContainerSecurityContextParams:
-     fsGroup: 0
-     runAsUser: 1000
-  mini-snif:
-    podContainerSecurityContextParams:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      privileged: false
-      readOnlyRootFilesystem: false
-      runAsNonRoot: false
-    replicaCount: 1
-  dependency-db2:
-    db2instance:
-      nodes: 1
-      storage:
-          - name: meta
-            spec:
-              accessModes:
-              - ReadWriteMany
-              resources:
-                requests:
-                  storage: 100Gi
-              storageClassName: efs-sc
-            type: create
-          - name: data
-            spec:
-              accessModes:
-              - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 100Gi
-              storageClassName: ebs-gp3-sc
-            type: template
-          - name: backup
-            spec:
-              accessModes:
-              - ReadWriteMany
-              resources:
-                requests:
-                  storage: 100Gi
-              storageClassName: efs-sc
-            type: create
-          - name: tempts
-            spec:
-              accessModes:
-              - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 100Gi
-              storageClassName: ebs-gp3-sc
-            type: template  
-          - name: archivelogs
-            spec:
-              accessModes:
-              - ReadWriteMany
-              resources:
-                requests:
-                  storage: 200Gi
-              storageClassName: efs-sc
-            type: create       
-
-  guardiumInsightsGlobal:
+    licenseType: "L-QABB-9QRLFB"
+  guardiumGlobal:
     deploymentOptions:
       prometheusType: disabled
     fsGroupGid: 0
@@ -375,9 +281,9 @@ spec:
       name: backup-pvc-support
     image:
       insightsPullSecret: ibm-entitlement-key
-      repository: cp.icr.io/cp/ibm-guardium-insights
+      repository: cp.icr.io/cp/ibm-guardium-data-security-center
     size: values-small
-    insights:
+    instance:
       ingress:
         hostName: guardium.${HOSTNAME}
         domainName: ${HOSTNAME}
@@ -389,16 +295,130 @@ spec:
     deploySettings:
       nonOCP: true
       ensureDb2InstallPlacement: true
-  ssh-service:
-    serviceAnnotations:
-      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+  capabilities:
+  - name: quantum-safe
+    enabled: true
+    configurations: {}
+  - name: platform
+    enabled: true
+    configurations:
+      ssh-service:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+      dependency-security:
+        networkPolicy:
+          egresses:
+            enabled: false
+            egress-required-allow:
+              egress:
+                - ports:
+                    - protocol: UDP
+                      port: 443
+                    - protocol: TCP
+                      port: 443
+                    - protocol: UDP
+                      port: 53
+                    - protocol: TCP
+                      port: 53
+                    - port: 5353
+                      protocol: UDP
+                    - port: 5353
+                      protocol: TCP
+      dependency-postgres:
+        podContainerSecurityContextParams:
+          fsGroup: 0
+          runAsUser: 1000
+          runAsNonRoot: true
+      dependency-kafka:
+        kafka:
+            storage:
+              type: persistent-claim
+              size: 250Gi
+              class: gp2
+        zookeeper:
+            storage:
+              type: persistent-claim
+              size: 20Gi
+              class: gp2
+        podContainerSecurityContextParams:
+            fsGroup: 0
+            runAsUser: 1000
+            runAsNonRoot: true
+      dependency-redis:
+        podContainerSecurityContextParams:
+            fsGroup: 0
+            runAsUser: 1000
+            runAsNonRoot: true
+      guardium-agent-cert-generator:
+        podContainerSecurityContextParams:
+          fsGroup: 0
+          runAsUser: 1000
+      mini-snif:
+        podContainerSecurityContextParams:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        replicaCount: 1
+      dependency-db2:
+        db2instance:
+          nodes: 2
+          storage:
+              - name: meta
+                spec:
+                  accessModes:
+                  - ReadWriteMany
+                  resources:
+                    requests:
+                      storage: 1000Gi
+                  storageClassName: efs-sc
+                type: create
+              - name: data
+                spec:
+                  accessModes:
+                  - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 100Gi
+                  storageClassName: gp2
+                type: template
+              - name: backup
+                spec:
+                  accessModes:
+                  - ReadWriteMany
+                  resources:
+                    requests:
+                      storage: 2000Gi
+                  storageClassName: efs-sc
+                type: create
+              - name: tempts
+                spec:
+                  accessModes:
+                  - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 1000Gi
+                  storageClassName: gp2
+                type: template
+              - name: archivelogs
+                spec:
+                  accessModes:
+                  - ReadWriteMany
+                  resources:
+                    requests:
+                      storage: 500Gi
+                  storageClassName: efs-sc
+                type: create
 EOF
 ```
 
 Apply the above CR 
 
 ```tsx
-kubectl apply -f gi-custom-eks.yaml
+kubectl apply -f gdsc-custom-eks.yaml
 ```
 
 The deployment may take a little while.
@@ -408,14 +428,14 @@ The deployment may take a little while.
 Check to make sure the Guardium Insights custom resource (CR) has been completely reconciled.
 
 ```tsx 
-kubectl get gi
+kubectl get gdsc
 ```
 
 Output should look like this:
 
 ```tsx {2}
 NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
-gi-eks   Ready   True     Complete   Completed Reconciliation   3.5.0             3.5.0
+gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
 Check that the tenant has been created
@@ -428,7 +448,7 @@ Output should look like this:
 
 ```tsx {2}
 NAME                           TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
-gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.5.0             3.5.0
+gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
 Verify all ingress paths have been created
@@ -480,7 +500,7 @@ Output should look like this:
 
 ```tsx
 NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
-gi-eks   Ready   True     Complete   Completed Reconciliation   3.5.0             3.5.0
+gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
 ```tsx

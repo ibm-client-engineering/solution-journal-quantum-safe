@@ -417,6 +417,32 @@ you can skip this section as it's meant for development environments.
 
 Deploy OPA Gatekeeper using prebuilt docker images
 
+:::note
+By default, the violations audit runs every 60 seconds and will report a maximum of 20 audits in the constraint yaml.
+If you want to increase the number of violations shown on the constraint yaml to 500 (not recommended to increase further),
+update the gatekeeper.yaml below before applying and add the following argument to the audit deployment.
+
+```yaml {17}
+  template:
+    metadata:
+      labels:
+        control-plane: audit-controller
+        gatekeeper.sh/operation: audit
+        gatekeeper.sh/system: "yes"
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --operation=audit
+        - --operation=status
+        - --operation=mutation-status
+        - --logtostderr
+        - --disable-opa-builtin={http.send}
+        - --disable-cert-rotation
+        - --constraint-violations-limit=500
+```
+:::
+
 ```tsx
 kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.17/deploy/gatekeeper.yaml
 ```
@@ -617,6 +643,13 @@ Near the end of the yaml output, you will see violations listed.
     name: gatekeeper-audit-c794d5f69-s2nmd
     namespace: gatekeeper-system
     version: v1
+```
+
+If you want a CSV of all of the violations (up to the constraints violation limit set at install),
+run the following command. Note that the header will be repeated.
+
+```
+kubectl get constraints -o json | yq -o=json eval '.items[].status.violations' | jq -r '(.[0] | keys_unsorted) as $keys | $keys, map([.[ $keys[] ]])[] | @csv' > violations.csv 2>/dev/null
 ```
 
 ## Configure OPA Mutations

@@ -23,9 +23,9 @@ This also assumes you will be creating the cluster in the us-east region. This c
 
 Run the `eksctl` command below to create your first cluster and perform the following:
 
--   Create a 4-node Kubernetes cluster named `gi-east` with node type as `m6i.4xlarge` and region as `us-east-1`.
+-   Create a 5-node Kubernetes cluster named `gi-east` with node type as `m6i.4xlarge` and region as `us-east-1`.
 -   Control plane is managed by AWS EKS, so sizing for control plane nodes doesn't apply.
--   Define a minimum of one node (`--nodes-min 4`) and a maximum of three-node (`--nodes-max 6`) for this node group managed by EKS.
+-   Define a minimum of one node (`--nodes-min 5`) and a maximum of three-node (`--nodes-max 6`) for this node group managed by EKS.
 -   Create a node group with the name `guardium-workers` and select a machine type for the `guardium-workers` node group.
 
 :::caution[Multiple AZ support]
@@ -58,8 +58,8 @@ eksctl create cluster \
 --nodegroup-name guardium-workers \
 --node-type m6i.4xlarge \
 --with-oidc \
---nodes 4 \
---nodes-min 4 \
+--nodes 5 \
+--nodes-min 5 \
 --nodes-max 6 \
 --node-zones ${region}a \
 --tags "Product=Guardium" \
@@ -1026,7 +1026,7 @@ If you followed the directions [here](../01_pre-reqs/#downloading-the-case-file)
 
 Change to the following directory
 ```tsx
-cd ibm-guardium-insights/inventory/install/files/support/eks
+cd ibm-guardium-data-security-center/inventory/install/files/support/eks
 ```
 
 Create the namespace and then run the installation script
@@ -1087,11 +1087,10 @@ apps.gi.guardium-insights.com
 
 For type, select `Private hosted zone`
 
-![image](https://media.github.ibm.com/user/207188/files/764833c5-2f7e-4f0c-8415-aed7390c465e)
-
 For the VPCs to associate with the hosted zone, select the proper region, then select the VPC that was created for your cluster.
 
-![image](https://media.github.ibm.com/user/207188/files/27cbf581-9648-449d-952d-9eea350785ee)
+![843816c6-ced2-4b4c-a554-89903338a4b1](https://github.com/user-attachments/assets/676c77ba-abb0-43e5-9313-d1efaed23dcb)
+
 
 Then click `Create Hosted zone` button to create the hosted zone.
 
@@ -1115,40 +1114,28 @@ Back on the hosted zone details page, click the `Create record` button.
 We want to create a `CNAME` record that routes `*.apps.gi.guardium-insights.com` to
 the external cluster IP address captured above.
 
-![image](https://media.github.ibm.com/user/207188/files/ac259a65-0383-4ce7-994b-03c38465814d)
+![image](https://private-user-images.githubusercontent.com/137658020/396157933-da3edef3-9a47-47fd-bb9c-c386406ec48c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzQzNzg0MTksIm5iZiI6MTczNDM3ODExOSwicGF0aCI6Ii8xMzc2NTgwMjAvMzk2MTU3OTMzLWRhM2VkZWYzLTlhNDctNDdmZC1iYjljLWMzODY0MDZlYzQ4Yy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjE2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIxNlQxOTQxNTlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mMTc3ZjhjNGNhZWU0Y2MwZmRhZDRhMDhhMTQzYzJmMzJlNDVhMTRhYjI3YTU1NTA2ZTk5YzliODZhYzI0ZGIwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.M1n79fF4eXHtd6j05ZGneCYN1SQkUJS-WS8TiDY61Us)
 
 Click `Create Records`.
 
 ## Install Foundational Services
 
 :::note[Entitlement]
-As noted [here](../guardium_insights/01_pre-reqs/) make sure you have retrieved your entitlement key and applied it to the namespace
+As noted [here](../guardium_insights/01_pre-reqs/) make sure you have retrieved your entitlement key for the next step
+:::
 
 Export your entitlement key as an env var
 
-```tsx
+```
 export IBMKEY="<entitlement key>"
 ```
 
-Set the entitlement key
-
-```tsx
-kubectl create secret docker-registry ibm-entitlement-key \
-    --docker-username=cp \
-    --docker-password=${IBMKEY} \
-    --docker-server=cp.icr.io \
-    --namespace=${NAMESPACE}
-```
-
-:::
-
-
 Change to the following directory
 ```tsx
-cd ibm-guardium-insights/inventory/install/files/support/eks
+cd ibm-guardium-data-security-center/inventory/install/files/support/eks
 ```
 
-As of this writing, we are using Guardium Insights v3.5.0 which uses bundle version 2.5.0. 
+As of this writing, we are using Guardium Data Security center v3.6.0 which uses bundle version 2.6.0. 
 
 Export the following vars
 
@@ -1161,8 +1148,8 @@ export IBMPAK_LAUNCH_SKIP_PREREQ_CHECK=true
 export CP_REPO_USER="cp"
 export CP_REPO_PASS=${IBMKEY}
 export NAMESPACE="openshift-marketplace"
-export CASE_NAME=ibm-guardium-insights
-export CASE_VERSION=2.5.0
+export CASE_NAME=ibm-guardium-data-security-center
+export CASE_VERSION=2.6.0
 export LOCAL_CASE_DIR=$HOME/.ibm-pak/data/cases/$CASE_NAME/$CASE_VERSION
 ```
 
@@ -1174,7 +1161,7 @@ oc ibm-pak get $CASE_NAME \
 --skip-verify
 ```
 
-This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-insights/2.5.0`
+This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-data-security-center/2.6.0`
 
 {/*We're going to use the loadbalancer name for this as we aren't using any DNS (hope it works)*/}
 
@@ -1502,13 +1489,13 @@ kubectl get csv | grep ibm
 
 Output should look like this:
 
-```tsx
-ibm-cert-manager-operator.v4.2.9              IBM Cert Manager                       4.2.9                                        Succeeded
-ibm-common-service-operator.v4.6.5            IBM Cloud Pak foundational services    4.6.5                                        Succeeded
-ibm-commonui-operator.v4.4.4                  Ibm Common UI                          4.4.4                                        Succeeded
-ibm-events-operator.v5.0.1                    IBM Events Operator                    5.0.1                                        Succeeded
-ibm-iam-operator.v4.5.4                       IBM IM Operator                        4.5.4                                        Succeeded
-ibm-zen-operator.v5.1.7                       IBM Zen Service                        5.1.7                                        Succeeded
+```
+ibm-cert-manager-operator.v4.2.11             IBM Cert Manager                       4.2.11                                          Succeeded
+ibm-common-service-operator.v4.6.6            IBM Cloud Pak foundational services    4.6.6                                           Succeeded
+ibm-commonui-operator.v4.4.5                  Ibm Common UI                          4.4.5                                           Succeeded
+ibm-events-operator.v5.0.1                    IBM Events Operator                    5.0.1                                           Succeeded
+ibm-iam-operator.v4.5.5                       IBM IM Operator                        4.5.5                                           Succeeded
+ibm-zen-operator.v5.1.8                       IBM Zen Service                        5.1.8                                           Succeeded
 ```
 
 ### Verify that the operand requests have completed and installed
@@ -1537,7 +1524,7 @@ kubectl patch commonservices common-service --type merge -p '{"spec":{"license":
 
 ```tsx
 export CS_NAMESPACE=openshift-marketplace
-cp -R ibm-guardium-insights/inventory/ibmCommonServiceOperatorSetup/files/cp3-networkpolicy/ingress ibm-guardium-insights/inventory/install/files/support/eks/
+cp -R ibm-guardium-data-security-center/inventory/ibmCommonServiceOperatorSetup/files/cp3-networkpolicy/ingress ibm-guardium-data-security-center/inventory/install/files/support/eks/
 ./install_networkpolicy.sh -n $CS_NAMESPACE
 ```
 */}
