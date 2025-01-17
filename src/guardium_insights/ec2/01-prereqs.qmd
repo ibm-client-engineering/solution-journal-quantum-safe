@@ -1,9 +1,7 @@
 ---
 title: Prerequisites
 description: Running Guardium Insights with QSPM on EC2
-sidebar:
-  label: Prerequisites
-  order: 1
+format: html
 ---
 Installing OpenShift and Cloud Pak for Data requires specific access, resources and considerations on AWS. In this documentation, we are assuming a CloudFormation install on user-provisioned infrastructure.
 

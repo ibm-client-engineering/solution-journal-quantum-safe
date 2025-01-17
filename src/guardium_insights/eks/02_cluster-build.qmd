@@ -1,24 +1,27 @@
 ---
 title: EKS Cluster build
-description: Running Guardium Insights with QSPM on EKS
-sidebar:
-  label: EKS Cluster Build
-  order: 2
+format:
+  html:
+    toc: true
+    code-line-numbers: true
+lightbox: true
+date: last-modified
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Links
 
 Some of these steps come from this documentation for [Guardium Insights on EKS](https://www.ibm.com/docs/en/guardium-insights/3.x?topic=scenarios-installation-amazon-elastic-kubernetes-service-eks)
 
 :::
 
 
-:::note
+::: {.callout-important}
 This assumes you have already configured `eksctl` and your aws configuration with your account info.
 
-This also assumes you will be creating the cluster in the us-east region. This can be set to whatever region you want.
+Our documented examples here are creating the cluster in the us-east region. This can be set to whatever region you want.
 :::
 
 Run the `eksctl` command below to create your first cluster and perform the following:
@@ -28,7 +31,9 @@ Run the `eksctl` command below to create your first cluster and perform the foll
 -   Define a minimum of one node (`--nodes-min 5`) and a maximum of three-node (`--nodes-max 6`) for this node group managed by EKS.
 -   Create a node group with the name `guardium-workers` and select a machine type for the `guardium-workers` node group.
 
-:::caution[Multiple AZ support]
+::: {.callout-warning}
+  
+## Multiple AZ support]
 As of this writing, GI v3.5.0 does not officially support multiple availability zones.
 This is due to the fact that DB2 will not run across multiple availability zones. The rest of the
 product will run across zones but because DB2 will not, true availability will not be achieved with
@@ -37,19 +42,23 @@ multiple availability zones.
 
 ## Creating the cluster
 
-Let's set some env vars to make our lives easier. 
-:::note[On cluster names]
+::: {.callout-note}
+
+## On cluster names
 
 We're deploying in `us-east-1` and we are naming our cluster `gi-east`. This name will be exclusive to this cluster, so `gi-east` is an example here. You aren't bound to using `gi-east` as your name.
 
 :::
+
+Let's set some env vars to make our lives easier. 
 
 ```bash
 export clustername=gi-east
 export region=us-east-1
 ```
 
-```tsx
+
+```bash
 eksctl create cluster \
 --name ${clustername} \
 --version 1.31 \
@@ -67,56 +76,20 @@ eksctl create cluster \
 ```
 
 Associate an IAM oidc provider with the cluster if you didn't include `--with-oidc` above.
-```tsx
+```bash
 eksctl utils associate-iam-oidc-provider --region=${region} --cluster=${clustername} --approve
 ```
 ## Configure `kubectl`
 
 Once the cluster is up, add it to your kube config. `eksctl` will probably do this for you.
 
-```tsx
+```bash
 aws eks update-kubeconfig --name ${clustername} --region ${region}
 ```
 
-{/*
-### Create the EKS Pod Identity Agent Addon
+::: {.callout-note}
 
-We're going to use the EKS pod identity management addon to as IRSA (IAM Roles for Service Accounts) is deprecated and Pod Identity Management requires less permissions for a user who may not have IAM privileges.
-
-```tsx
-eksctl create addon \
---name eks-pod-identity-agent \
---cluster ${clustername} \
---region ${region} \
---version latest
-```
-
-Let's verify the addon was created
-
-```tsx
-eksctl get addon --cluster ${clustername} --region ${region} --name eks-pod-identity-agent -o json 
-```
-
-Should return something like this
-```tsx
-2024-08-23 12:09:50 [ℹ]  Kubernetes version "1.30" in use by cluster "gi-east"
-2024-08-23 12:09:51 [ℹ]  to see issues for an addon run `eksctl get addon --name <addon-name> --cluster <cluster-name>`
-[
-    {
-        "Name": "eks-pod-identity-agent",
-        "Version": "v1.3.0-eksbuild.1",
-        "NewerVersion": "",
-        "IAMRole": "",
-        "Status": "ACTIVE",
-        "ConfigurationValues": "",
-        "Issues": null,
-        "PodIdentityAssociations": null
-    }
-]
-```
-*/}
-
-:::note[Deploying Optional OPA Security Constraints]
+## Deploying Optional OPA Security Constraints
 
 If you plan to use the Gatekeeper OPA on your cluster, follow the instructions [here](../04_optional_services/#configure-security-constraints-optional)
 
@@ -128,13 +101,13 @@ We install the EBS CSI driver as this gives us access to GP3 block storage.
 
 Download the example ebs iam policy
 
-```tsx
+```bash
 curl -o iam-policy-example-ebs.json https://raw.githubusercontent.com/kubernetes-sigs/aws-ebs-csi-driver/master/docs/example-iam-policy.json
 ```
 
 Create the policy. You can change  `AmazonEKS_EBS_CSI_Driver_Policy` to a different name, but if you do, make sure to change it in later steps too.
 
-```tsx
+```bash
 aws iam create-policy \
 --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
 --tags '{"Key": "Product","Value": "Guardium"}' \
@@ -142,7 +115,7 @@ aws iam create-policy \
 ```
 Output should be similar to below
 
-```tsx
+```bash
 {
     "Policy": {
         "PolicyName": "AmazonEKS_EBS_CSI_Driver_Policy",
@@ -169,18 +142,18 @@ Output should be similar to below
 
 Let's export the returned arn as a env VAR for further use
 
-```tsx
+```bash
 export ebs_driver_policy_arn=$(aws iam list-policies --query 'Policies[?PolicyName==`AmazonEKS_EBS_CSI_Driver_Policy`].Arn' --output text)
 ```
 
 Now let's export the rolename we are going to create as a env var. We're going to append the cluster name to the role to differentiate in case we have multiple clusters in this account. You can share policies, but you cannot share roles.
 
-```tsx
+```bash
 export ebs_driver_role_name=AmazonEKS_EBS_CSI_DriverRole-${clustername}
 ```
 
 Create the service account
-```tsx
+```bash
 eksctl create iamserviceaccount \
   --name ebs-csi-controller-sa \
   --namespace kube-system \
@@ -194,13 +167,13 @@ eksctl create iamserviceaccount \
 ```
 
 Let's export the created role arn as another env var
-```tsx
+```bash
 export ebs_driver_role_arn=$(aws iam list-roles --query 'Roles[?RoleName==`AmazonEKS_EBS_CSI_DriverRole-'$clustername'`].Arn' --output text)
 ```
 
 Create the addon for the cluster
 
-```tsx
+```bash
 eksctl create addon \
 --name aws-ebs-csi-driver \
 --cluster ${clustername} \
@@ -211,7 +184,7 @@ eksctl create addon \
 
 Create the following StorageClass yaml to use gp3
 
-```tsx
+```bash
 cat <<EOF |kubectl apply -f -
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -230,7 +203,7 @@ EOF
 
 Run the following command
 
-```tsx
+```bash
 kubectl apply -f - <<EOF 
 apiVersion: v1 
 kind: PersistentVolumeClaim 
@@ -263,7 +236,7 @@ EOF
 ```
 
 Verify the PVC was created
-```tsx
+```bash
 kubectl get pvc
 NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 block-pvc   Bound    pvc-67193212-3e10-46ab-a0a4-2834e3560c4a   1Gi        RWO            ebs-gp3-sc     <unset>                 7s
@@ -273,7 +246,7 @@ You should see the bound status of the above pvc.
 
 Delete the test pod and pvc
 
-```tsx
+```bash
 kubectl delete -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -313,20 +286,20 @@ By default when we create a cluster with eksctl it defines and installs `gp2` st
 
 Download the IAM policy document from GitHub. You can also view the [policy document](https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/docs/iam-policy-example.json)
         
-```tsx
+```bash
 curl -o iam-policy-example-efs.json https://raw.githubusercontent.com/kubernetes-sigs/aws-efs-csi-driver/master/docs/iam-policy-example.json
 ```
 
 Create the policy. You can change `AmazonEKS_EFS_CSI_Driver_Policy` to a different name, but if you do, make sure to change it in later steps too.
 
-```tsx
+```bash
 aws iam create-policy \
 --policy-name AmazonEKS_EFS_CSI_Driver_Policy \
 --tags '{"Key": "Product","Value": "Guardium"}' \
 --policy-document file://iam-policy-example-efs.json
 ```
 Output should be similar to below
-```tsx
+```bash
 {
     "Policy": {
         "PolicyName": "AmazonEKS_EFS_CSI_Driver_Policy",
@@ -350,20 +323,20 @@ Output should be similar to below
 ```
 
 Let's export that policy arn as another env var
-```tsx
+```bash
 export efs_driver_policy_arn=$(aws iam list-policies --query 'Policies[?PolicyName==`AmazonEKS_EFS_CSI_Driver_Policy`].Arn' --output text)
 ```
 ### Create IAM role
 
 Now let’s export the rolename we are going to create as a env var. We’re going to append the cluster name to the role to differentiate in case we have multiple clusters in this account. You can share policies, but you cannot share roles.
 
-```tsx
+```bash
 export efs_driver_role_name=AmazonEKS_EFS_CSI_DriverRole-${clustername}
 ```
 
 Create an IAM role and attach the IAM policy to it. Annotate the Kubernetes service account with the IAM role ARN and the IAM role with the Kubernetes service account name. 
 
-```tsx
+```bash
 eksctl create iamserviceaccount \
     --cluster ${clustername} \
     --namespace kube-system \
@@ -382,7 +355,7 @@ eksctl get iamserviceaccount --cluster ${clustername} --region ${region}
 
 ```
 Should return
-```tsx
+```bash
 NAMESPACE	NAME			ROLE ARN
 kube-system	ebs-csi-controller-sa	arn:aws:iam::803455550593:role/AmazonEKS_EBS_CSI_DriverRole
 kube-system	efs-csi-controller-sa	arn:aws:iam::803455550593:role/AmazonEKS_EFS_CSI_DriverRole
@@ -392,13 +365,13 @@ kube-system	efs-csi-controller-sa	arn:aws:iam::803455550593:role/AmazonEKS_EFS_C
 
 Now we just need our add-on registry address. This can be found here: https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
 
-:::note
+::: {.callout-note}
 The add-on registry address is per region. So based on the URL above, since our region is `us-east-1`, then our registry address would be `602401143452.dkr.ecr.us-east-1.amazonaws.com/eks/aws-efs-csi-driver`
 :::
 
 Let's install the driver add-on to our clusters. We're going to use `helm` for this.
 
-```tsx
+```bash
 helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
 
 helm repo update
@@ -406,7 +379,7 @@ helm repo update
 
 Install a release of the driver using the Helm chart. Replace the repository address with the cluster's [container image address](https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html).
 
-```tsx
+```bash
 helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
     --namespace kube-system \
     --set image.repository=602401143452.dkr.ecr.us-east-1.amazonaws.com/eks/aws-efs-csi-driver \
@@ -416,12 +389,12 @@ helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
 ```
 
 Verify that it installed correctly with this command
-```tsx
+```bash
 kubectl get pod -n kube-system -l "app.kubernetes.io/name=aws-efs-csi-driver,app.kubernetes.io/instance=aws-efs-csi-driver"
 ```
 
 Should return something like
-```tsx
+```bash
 NAME                                  READY   STATUS    RESTARTS   AGE
 efs-csi-controller-7fc77768fc-2swkw   3/3     Running   0          2m13s
 efs-csi-controller-7fc77768fc-c69rb   3/3     Running   0          2m13s
@@ -436,7 +409,7 @@ Now we need to create the filesystem in EFS so we can use it
 Export the following variables. 
 
 Get our VPC ID
-```tsx
+```bash
 vpc_id=$(aws eks describe-cluster \
     --name $clustername \
     --query "cluster.resourcesVpcConfig.vpcId" \
@@ -445,7 +418,7 @@ vpc_id=$(aws eks describe-cluster \
 ```
 Retrieve the CIDR range for your cluster's VPC and store it in a variable for use in a later step.
 
-```tsx
+```bash
 cidr_range=$(aws ec2 describe-vpcs \
     --vpc-ids $vpc_id \
     --query "Vpcs[].CidrBlock" \
@@ -454,7 +427,7 @@ cidr_range=$(aws ec2 describe-vpcs \
 ```
 Create a security group with an inbound rule that allows inbound NFS traffic for your Amazon EFS mount points.
 
-```tsx
+```bash
 security_group_id=$(aws ec2 create-security-group \
     --group-name EFS4FileNetSecurityGroup-${clustername} \
     --description "EFS security group for Guardium Insight cluster ${clustername}" \
@@ -465,7 +438,7 @@ security_group_id=$(aws ec2 create-security-group \
 
 Create an inbound rule that allows inbound NFS traffic from the CIDR for your cluster's VPC.
 
-```tsx
+```bash
 aws ec2 authorize-security-group-ingress \
     --group-id $security_group_id \
     --protocol tcp \
@@ -475,7 +448,7 @@ aws ec2 authorize-security-group-ingress \
 ```
 
 Create a file system.
-```tsx
+```bash
 file_system_id=$(aws efs create-file-system \
     --region $region \
     --encrypted \
@@ -488,7 +461,7 @@ file_system_id=$(aws efs create-file-system \
 Create mount targets.
 
 Determine the IDs of the subnets in your VPC and which Availability Zone the subnet is in.
-```tsx
+```bash
 aws ec2 describe-subnets \
     --filters "Name=vpc-id,Values=$vpc_id" \
     --query 'Subnets[*].{SubnetId: SubnetId,AvailabilityZone: AvailabilityZone,CidrBlock: CidrBlock}' \
@@ -496,7 +469,7 @@ aws ec2 describe-subnets \
     --output table
 ```
 Should output something like the following
-```tsx
+```bash
 ----------------------------------------------------------------------
 |                           DescribeSubnets                          |
 +------------------+--------------------+----------------------------+
@@ -519,7 +492,7 @@ for subnet in $(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpc_id" 
 ```
 
 This wraps the below command in a for loop that will iterate through your subnet ids.
-```tsx
+```bash
 aws efs create-mount-target \
     --file-system-id $file_system_id \
     --region $region \
@@ -531,7 +504,7 @@ aws efs create-mount-target \
 Create a storage class for dynamic provisioning
 
 Let's get our filesystem ID if we don't already have it above. However if you ran the above steps, `$file_system_id` should already be defined.
-```tsx
+```bash
 aws efs describe-file-systems \
 --query "FileSystems[*].FileSystemId" \
 --region $region \
@@ -540,33 +513,15 @@ aws efs describe-file-systems \
 fs-071439ffb7e10b67b
 ```
 
-{/*
-Download a `StorageClass` manifest for Amazon EFS.
-```tsx
-curl -o EFSStorageClass.yaml https://raw.githubusercontent.com/kubernetes-sigs/aws-efs-csi-driver/master/examples/kubernetes/dynamic_provisioning/specs/storageclass.yaml
-
-```
-*/}
-
-:::note[Super Important!]
+::: {.callout-important}
 
 If you did not export the `$file_system_id` variable, make sure the filesystem id you use in the below command is the filesystem id that was returned to you above!
-
-{/*
-You can retrieve the file system id with the following command:
-
-```tsx
-
-```
-
-Also if you are going to use EFS as your default storage, follow the instructions below. Otherwise just create the `efs-sc` storage class and skip the `efs-sc-pg` storage class as we will set the default to the gp3 block storage.
-*/}
 
 :::
 
 Create the storage class
 
-```tsx
+```bash
 cat <<EOF | envsubst | kubectl apply -f -
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -584,49 +539,10 @@ volumeBindingMode: Immediate
 EOF
 ```
 
-{/*
-Create this second storageclasses for EFS for common-services operator that will be installed as part of IBM Foundational Services. You will only need this second storage class if you intend on using EFS instead of block storage.
+::: {.callout-note}
 
-```tsx
-cat <<EOF | envsubst | kubectl apply -f -
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: efs-sc-pg
-parameters:
-  uid: "26"
-  gid: "65534"
-  directoryPerms: "777"
-  fileSystemId: ${file_system_id}
-  provisioningMode: efs-ap
-provisioner: efs.csi.aws.com
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-EOF
-```
+## Setting Default Storage Class
 
-Update it with the storage class id as well as the following vars
-```bash
-sed -i "s/fileSystemId:.*\/fileSystemId: $file_system_id/" EFSStorageClass.yaml
-sed -i "s/directoryPerms:.*\/directoryPerms: \"777\"/" EFSStorageClass.yaml
-sed -i "/basePath:.*\/d" EFSStorageClass.yaml
-sed -i "/parameters:/a\  gid: \"0\"\n  uid: \"0\"" EFSStorageClass.yaml
-```
-*/}
-
-{/*
-If using the default `sed` command that comes with MacOS
-
-
-Deploy the storage class.
-
-```bash
-kubectl apply -f EFSStorageClass.yaml
-```
-*/}
-
-
-:::note[Setting Default Storage Class]
 Set one of the EFS storage classes as the default storage class only if you intend on primarily using EFS. Otherwise set block storage as default.
 
 If using EFS as primary storage
@@ -640,9 +556,8 @@ kubectl patch storageclass ebs-gp3-sc -p '{"metadata": {"annotations":{"storagec
 ```
 :::
 
-
 Finally, verify they are both there
-```tsx
+```bash
 kubectl get sc
 NAME               PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 ebs-gp3-sc         ebs.csi.aws.com         Delete          WaitForFirstConsumer   false                  6d18h
@@ -654,7 +569,7 @@ gp2                kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer 
 
 Run the following command to create a pod and a PVC using the default EFS storage class
 
-```tsx
+```bash
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -687,17 +602,17 @@ EOF
 ```
 
 Running the following command should verify the PVC was successfully created and bound
-```tsx
+```bash
 kubectl get pvc
 ```
 
-```tsx[OUTPUT]
+```bash
 NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 block-pvc   Bound    pvc-dc711246-02a1-4a9d-b428-a2476b17dd8c   1Gi        RWO            efs-sc         <unset>                 4s
 ```
 
 Now we can delete our test pod and pvc
-```tsx
+```bash
 kubectl delete -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -731,57 +646,35 @@ EOF
 
 ## Install NGINX Controller
 
-{/**/}
-:::note[On Ingresses]
+::: {.callout-note}
+
+## On Ingresses
 
 If you plan on using AWS ALB for ingress, follow the directions [here](../../../guardium_insights/04_optional_services/#optional-install-the-alb-ingress-controller)
 
 :::
+
 Let's install the NGINX helm chart
-```tsx
+```bash
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 ```
 
-{/*
-Modify the NGINX controller deployment file
-
-Pull down the NGINX controller deployment
-```
-wget -O nginx-deploy.yaml https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/aws/deploy.yaml
-```
-
-Export our relevant subnet ids to a comma delimited env variable
-
-```tsx
-export subnets=$(aws eks describe-cluster --name ${clustername} --region ${region} --query "cluster.resourcesVpcConfig.subnetIds" --output json | jq -r 'join(",")' | sed s/,/\\\\,/g)
-```
-*/}
-
 Create the namespace for NGINX
 
-```tsx
+```bash
 kubectl create ns ingress-nginx
 ```
-{/*
-Export our relevant subnet ids to a comma delimited env variable
 
-```tsx
-export subnets=$(aws eks describe-cluster --name ${clustername} --region ${region} --query "cluster.resourcesVpcConfig.subnetIds" --output json | jq -r 'join(",")' | sed s/,/\\\\,/g)
-```
+::: {.callout-note}
 
-Now install the helm chart for nginx
-*/}
-
-{/*--set-string controller.service.annotations.'service\.beta\.kubernetes\.io/aws-load-balancer-subnets'="$subnets" \ */}
-
-:::note[Public vs Private ingress]
+## Public vs Private ingress
 
 Below is for a public facing ingress. Yours might need to be internal only so you would set the `aws-load-balancer-scheme` to `internal` if it needs to be internal.
 
 :::
 
-```tsx
+```bash
 helm install ingress-nginx ingress-nginx/ingress-nginx \
 --set-string controller.service.annotations.'service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol'=tcp \
 --set-string controller.service.annotations.'service\.beta\.kubernetes\.io/aws-load-balancer-cross-zone-load-balancing-enabled'="true" \
@@ -794,85 +687,14 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
 
 Run the following command to verify that a load balancer was assigned
 
-```tsx
+```bash
 kubectl get service --namespace ingress-nginx ingress-nginx-controller
 ```
 
-```tsx[OUTPUT]
+```bash
 NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                                     PORT(S)                      AGE
 ingress-nginx-controller   LoadBalancer   10.100.204.215   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80:30870/TCP,443:31883/TCP   61s
 ```
-
-{/*
-```tsx
-sed "/    service.beta.kubernetes.io\/aws-load-balancer-type: nlb/a\    service.beta.kubernetes.io\/aws-load-balancer-subnets: \"$subnets\"" nginx-deploy.yaml
-```
-
-```zsh
-
-```
-
-Modify the deployment file by adding the annotations that do not exist and editing the one(s) that do:
-```tsx
-service.beta.kubernetes.io/aws-load-balancer-type: "external" // set this to "internal" if not using a public ip
-service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-```
-
-Also search for the following configmap entry in the deployment file:
-
-```tsx
----
-apiVersion: v1
-data:
-  allow-snippet-annotations: "false"
-kind: ConfigMap
-metadata:
-  labels:
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/part-of: ingress-nginx
-    app.kubernetes.io/version: 1.9.1
-  name: ingress-nginx-controller
-  namespace: ingress-nginx
----
-```
-We want to add the following annotations:
-
-```tsx
-allow-snippet-annotations: "true"
-enable-underscores-in-headers: "true"
-nginx.ingress.kubernetes.io/proxy-body-size: "0"
-```
-So now our config map should look like this
-```tsx
----
-apiVersion: v1
-data:
-  allow-snippet-annotations: "false"
-kind: ConfigMap
-metadata:
-  annotations:
-    allow-snippet-annotations: "true"
-    enable-underscores-in-headers: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "0" 
-  labels:
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/part-of: ingress-nginx
-    app.kubernetes.io/version: 1.9.1
-  name: ingress-nginx-controller
-  namespace: ingress-nginx
----
-```
-
-Now apply the deployment
-```bash
-kubectl apply -f nginx-deploy.yaml
-```
-*/}
 
 ### Verify the NGINX deployment
 
@@ -885,25 +707,16 @@ kubectl get ingressclass
 ```
 Example output:
 
-```tsx
+```bash
 NAME    CONTROLLER             PARAMETERS   AGE
 nginx   k8s.io/ingress-nginx   <none>       2m43s
 ```
-{/*
-Once created, check the iam service account is created running the following command.
-
-```bash
-eksctl get iamserviceaccount --cluster <cluster-name>
-
-NAMESPACE	NAME				ROLE ARN
-kube-system	aws-load-balancer-controller	arn:aws:iam::748107796891:role/AmazonEKSLoadBalancerControllerRole
-kube-system	efs-csi-controller-sa		arn:aws:iam::748107796891:role/eksctl-filenet-cluster-east-addon-iamserviceaccount-ku-Role1-1SCBRU1DS52QY
-```
-*/}
 
 ## Install the Operator Lifecycle Manager
 
-:::note[Permissions for OLM]
+::: {.callout-note}
+
+## Permissions for OLM
 The default method of installing OLM is to use the `operator-sdk` command line tool. This method creates `ClusterRole` and
 `ClusterRoleBinding` resources that require wildcard permissions at the cluster level. 
 
@@ -912,68 +725,66 @@ If the security on your cluster is configured to not allow wildcard permissions 
 
 :::
 
-<Tabs syncKey="OLM">
-<TabItem label="operator-sdk">
+::: {.panel-tabset}
+
+## operator-sdk
 
 Run the following command using the `operator-sdk`
 
-```tsx
+```bash
 operator-sdk olm install
 ```
 
-</TabItem>
-<TabItem label="Custom OLM">
+## Custom OLM
 
 Download (Save link as...) the customized [crds.yaml](https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/olm/crds.yaml) and [olm.yaml](https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/olm/olm.yaml) for OLM v0.28.0. Keep in mind, this is a point in time customization for GI 3.5.0 and
 OLM v0.28.0.
 
 Create the CRDs
 
-```
+```bash
 kubectl create -f crds.yaml
 ```
 
 Ensure that CRDs were applied.
 
-```
+```bash
 kubectl wait --for=condition=Established -f crds.yaml
 ```
 
 Create the OLM resources
 
-```
+```bash
 kubectl create -f olm.yaml
 ```
 
 Wait for deployments to be ready.
 
-```
+```bash
 kubectl rollout status -w deployment/olm-operator --namespace="olm"
 kubectl rollout status -w deployment/catalog-operator --namespace="olm"
 ```
-</TabItem>
-</Tabs>
+:::
 
----
 Verify the installation
 
 ```
 kubectl get csv -n olm | grep packageserver
 ```
 
-```tsx[OUTPUT]
+```bash
 packageserver   Package Server   0.28.0               Succeeded
 ```
 
 Set the OLM global namespade to use openshift-marketplace
 
-```tsx
+```bash
 oc set env deploy/catalog-operator GLOBAL_CATALOG_NAMESPACE=openshift-marketplace -n olm
 ```
 
 We further require to change the global namespace for the packageserver as well. To do so, run the following command:
 
-```tsx
+```bash
 kubectl patch csv packageserver -n olm --type='json' -p='[
   {
     "op": "replace",
@@ -985,31 +796,32 @@ kubectl patch csv packageserver -n olm --type='json' -p='[
 
 Verify the global-namespace has been set
 
-```tsx
+```bash
 kubectl get deploy packageserver -n olm -o yaml | grep -A 6 "command:"
 ```
 
 Should return
 
-```tsx {7}
+```r
       - command:
         - /bin/package-server
         - -v=4
         - --secure-port
         - "5443"
         - --global-namespace
-        - openshift-marketplace
+        - openshift-marketplace  # <1>
 ```
+1. This is the value we care about
 
 ## Create the required Namespace
 
-```tsx
+```bash
 kubectl create ns openshift-marketplace
 ```
 
 Set our context to that namespace and export it as an env var
 
-```tsx
+```bash
 export NAMESPACE=openshift-marketplace
 
 kubectl config set-context --current --namespace $NAMESPACE
@@ -1017,7 +829,8 @@ kubectl config set-context --current --namespace $NAMESPACE
 
 ## Install the IBM Cert Manager
 
-:::note[On Cert Managers]
+::: {.callout-note}
+## On Cert Managers
 
 If you cannot use the IBM Cert Manager, follow the directions [here](../../../guardium_insights/04_optional_services/#installing-community-cert-manager)
 :::
@@ -1025,27 +838,25 @@ If you cannot use the IBM Cert Manager, follow the directions [here](../../../gu
 If you followed the directions [here](../01_pre-reqs/#downloading-the-case-file) you should have the `ibm-guardium-insights` case file downloaded and extracted.
 
 Change to the following directory
-```tsx
+```bash
 cd ibm-guardium-data-security-center/inventory/install/files/support/eks
 ```
 
 Create the namespace and then run the installation script
 
-```tsx
+```bash
 kubectl create namespace ibm-cert-manager
 chmod +x ibm-cert-manager.sh
 ./ibm-cert-manager.sh
 ```
 
-{/*If you need to limit the cert manager to a single namespace, edit the `ibm-cert-manager.sh` script.*/}
-
 Give it a few minutes and then verify the cert manager is up
 
-```tsx
+```bash
 kubectl get po -n ibm-cert-manager
 ```
 
-```tsx
+```
 NAME                                                              READY   STATUS      RESTARTS   AGE
 cd6e1c2b84458a4f431f49f499a919d28af0b23693e36f2fc53bc1f2c3hw5pw   0/1     Completed   0          2m1s
 cert-manager-cainjector-85777f77cc-hbzg7                          1/1     Running     0          102s
@@ -1055,20 +866,13 @@ ibm-cert-manager-catalog-rcbvc                                    1/1     Runnin
 ibm-cert-manager-operator-64fc5b4644-rnpqg                        1/1     Running     0          108s
 ```
 
-```tsx
+```bash
 kubectl get csv -n ibm-cert-manager
 ```
 ```
 NAME                               DISPLAY            VERSION   REPLACES   PHASE
 ibm-cert-manager-operator.v4.2.7   IBM Cert Manager   4.2.7                Succeeded
 ```
-
-{/*
-
-:::note[Deploying with ACM]
-If you plan to use AWS ACM to manage your certs with an ALB ingress, follow the install instructions [here](../04_optional_services/#use-aws-ca-acm-for-certs-optional)
-:::
-*/}
 
 ## Configure DNS resolution (Optional)
 
@@ -1089,7 +893,7 @@ For type, select `Private hosted zone`
 
 For the VPCs to associate with the hosted zone, select the proper region, then select the VPC that was created for your cluster.
 
-![843816c6-ced2-4b4c-a554-89903338a4b1](https://github.com/user-attachments/assets/676c77ba-abb0-43e5-9313-d1efaed23dcb)
+![](/images/public_hosted_zone_01.png)
 
 
 Then click `Create Hosted zone` button to create the hosted zone.
@@ -1099,10 +903,10 @@ But first we need the values to use for the internal routing.
 
 Find the external cluster IP address of the load balancer under `EXTERNAL-IP`.
 
-```tsx
+```bash
 kubectl get service --namespace ingress-nginx ingress-nginx-controller
 ```
-```tsx
+```bash
 NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)                      AGE
 ingress-nginx-controller   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h
 ```
@@ -1120,18 +924,20 @@ Click `Create Records`.
 
 ## Install Foundational Services
 
-:::note[Entitlement]
+::: {.callout-important}
+## Entitlement
+
 As noted [here](../guardium_insights/01_pre-reqs/) make sure you have retrieved your entitlement key for the next step
 :::
 
 Export your entitlement key as an env var
 
-```
+```bash
 export IBMKEY="<entitlement key>"
 ```
 
 Change to the following directory
-```tsx
+```bash
 cd ibm-guardium-data-security-center/inventory/install/files/support/eks
 ```
 
@@ -1139,7 +945,7 @@ As of this writing, we are using Guardium Data Security center v3.6.0 which uses
 
 Export the following vars
 
-```tsx
+```bash
 export REPLACE_NAMESPACE=openshift-marketplace
 export NAMESPACE=openshift-marketplace
 export ICS_INVENTORY_SETUP=ibmCommonServiceOperatorSetup
@@ -1155,7 +961,7 @@ export LOCAL_CASE_DIR=$HOME/.ibm-pak/data/cases/$CASE_NAME/$CASE_VERSION
 
 Save the CASE bundle locally
 
-```tsx
+```bash
 oc ibm-pak get $CASE_NAME \
 --version $CASE_VERSION \
 --skip-verify
@@ -1163,9 +969,10 @@ oc ibm-pak get $CASE_NAME \
 
 This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-data-security-center/2.6.0`
 
-{/*We're going to use the loadbalancer name for this as we aren't using any DNS (hope it works)*/}
+::: {.callout-note}
 
-:::note[On DNS]
+## On DNS
+
 Whether you're using Route 53 or external DNS, a CNAME must be created if you're using NGINX as your Ingress Controller.
 
 For our example setup, we are working with the `thinkforward.work` domain. So we set the domain in our remote dns to `apps.gi.thinkforward.work`. Other users may need to configure their FQDN in AWS Route 53.
@@ -1174,11 +981,11 @@ The important part is there must be a wildcard subdomain. It should point to our
 
 Retrieve the loadbalancer ip with this command:
 
-```tsx
+```bash
 kubectl get service --namespace ingress-nginx ingress-nginx-controller
 ```
 Should return
-```tsx {2}
+```bash {2}
 NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                                     PORT(S)                      AGE
 ingress-nginx-controller   LoadBalancer   10.100.129.192   k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.us-east-1.amazonaws.com   80:32113/TCP,443:31457/TCP   24h
 ```
@@ -1187,7 +994,7 @@ Our external IP above is `k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.
 
 So for us, our actual DNS record should be like this:
 
-```tsx
+```bash
 CNAME    *.gi-east.apps.thinkforward.work  ->  k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.us-east-1.amazonaws.com
 ```
 
@@ -1197,132 +1004,42 @@ The `*` wildcard ensures that any subdomain generated by GI will map back to tha
 
 Export the hostname as an env var. It's important to note that your domain must begin with `apps`. If you have multiple clusters, a good practices would be `apps.<CLUSTERNAME>.<DOMAIN>`.
 
-```tsx
+```bash
 export HOSTNAME=apps.gi.thinkforward.work
 ```
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+
+## Using an insecure hostname
+
 For development purposes only, you can avoid registering a domain name and setting up certificates
 by using your local `hosts` file to redirect traffic later in this guide. If taking this route, you can use the following:
 
-```tsx
+```bash
 export HOSTNAME=apps.gi.guardium-insights.com
 ```
 :::
-{/*
-:::note[On Storageclasses]
-
-Make the following modifications to the `CPFS-install-template.sh` ONLY if you are using the custom EFS storage class instead of block storage.
-
-Open the CPFS-install-template.sh in an editor and locate the following code block
-
-```tsx
-operand_request=$(cat <<EOF
-apiVersion: operator.ibm.com/v1alpha1
-kind: OperandRequest
-metadata:
-  name: common-service
-  namespace: $NAMESPACE
-spec:
-  requests:
-    - operands:
-        - name: ibm-im-operator
-        - name: ibm-platformui-operator
-        - name: cloud-native-postgresql
-        - name: ibm-events-operator
-      registry: common-service
-      registryNamespace: $NAMESPACE
-EOF
-)
-```
-
-Insert the following line just before that code block
-
-```tsx
-sleep 30
-kubectl patch --type=merge commonservice common-service -p '{"spec": {"storageClass":"efs-sc-pg"}}'
-```
-
-Now it should look like the following
-
-```tsx
-sleep 30
-kubectl patch --type=merge commonservice common-service -p '{"spec": {"storageClass":"efs-sc-pg"}}'
-
-operand_request=$(cat <<EOF
-apiVersion: operator.ibm.com/v1alpha1
-kind: OperandRequest
-metadata:
-  name: common-service
-  namespace: $NAMESPACE
-spec:
-  requests:
-    - operands:
-        - name: ibm-im-operator
-        - name: ibm-platformui-operator
-        - name: cloud-native-postgresql
-        - name: ibm-events-operator
-      registry: common-service
-      registryNamespace: $NAMESPACE
-EOF
-)
-```
-We're adding the `sleep 30` so the common-services CR will become available
-:::
-### Run the CPFS install script
-
-```tsx
-chmod +x CPFS-install-template.sh
-./CPFS-install-template.sh
-```
-
-If you see the following error out, re-run the command
-```tsx {10-11}
-No resources found in openshift-marketplace namespace.
-operatorgroup.operators.coreos.com/operatorgroup created
-configmap/ibm-cpp-config created
-catalogsource.operators.coreos.com/opencloud-operators created
-catalogsource.operators.coreos.com/cloud-native-postgresql-catalog created
-subscription.operators.coreos.com/ibm-common-service-operator created
-Validate the installation
-Waiting for CRD commonservices.operator.ibm.com to be created in namespace openshift-marketplace... Attempt 1/5
-CRD commonservices.operator.ibm.com exists.
-error: resource mapping not found for name: "common-service" namespace: "openshift-marketplace" from "STDIN": no matches for kind "OperandRequest" in version "operator.ibm.com/v1alpha1"
-ensure CRDs are installed first
-```
-
-Re-run should return
-```tsx
-OperatorGroup already exists in namespace openshift-marketplace.
-configmap/ibm-cpp-config configured
-catalogsource.operators.coreos.com/opencloud-operators unchanged
-catalogsource.operators.coreos.com/cloud-native-postgresql-catalog unchanged
-subscription.operators.coreos.com/ibm-common-service-operator unchanged
-Validate the installation
-CRD commonservices.operator.ibm.com exists.
-operandrequest.operator.ibm.com/common-service unchanged
-```
-
-*/}
 
 Run the following `ibm-pak` command to install the Foundational Services catalogs
 
-:::note[Private Registries for Catalog Sources]
+::: {.callout-note}
+
+## Private Registries for Catalog Sources
 
 This assumes you've mirrored all required GI and CPFS images to your private registry. Export your private registry as an env var (my.registry.io is an example.)
 
-```tsx
+```bash
 export myprivatereg=my.registry.io
 ```
 
 Set the following vars:
 
-```tsx
+```bash
 export ARGS="--registry ${myprivatereg} --recursive --inputDir ${LOCAL_CASE_DIR}"
 ```
 
 Else set it to
-```tsx
+```bash
 export ARGS="--registry icr.io --recursive --inputDir ${LOCAL_CASE_DIR}"
 ```
 :::
@@ -1331,7 +1048,7 @@ export ARGS="--registry icr.io --recursive --inputDir ${LOCAL_CASE_DIR}"
 You will need to install the **[Gatekeeper OPA](../../../guardium_insights/04_optional_services/#configure-security-constraints-optional)** AND **[configure mutations](../../../guardium_insights/04_optional_services/#configure-opa-mutations)** if using a private registry!
 :::
 
-```tsx
+```bash
 oc ibm-pak launch $CASE_NAME \
    --version $CASE_VERSION \
    --action install-catalog \
@@ -1339,22 +1056,18 @@ oc ibm-pak launch $CASE_NAME \
    --namespace $NAMESPACE \
    --args "${ARGS}"
 ```
-{/*
-Let's patch the commonservices cr to accept the license
 
-```tsx
-kubectl patch commonservices common-service --type merge -p '{"spec":{"license":{"accept":true}}}'
-```
-*/}
 Now run the following `ibm-pak` command to install the Foundational Services operators
 
-:::note[Private Registries for Foundational Services Operators]
+::: {.callout-note}
+  
+## Private Registries for Foundational Services Operators
 
 This assumes you've mirrored all required GI and CPFS images to your private registry and exported the `$myprivatereg` as an env var.
 
 Set the following vars:
 
-```tsx
+```bash
 export ARGS="--size ${ICS_SIZE} --ks_flag true --hostname ${HOSTNAME} --registry ${myprivatereg} --user yourprivreguser --pass yourprivateregpass --secret yoursecretkey --recursive --inputDir ${LOCAL_CASE_DIR}"
 ```
 
@@ -1362,17 +1075,20 @@ omit `--user, --pass, --secret` if you did not set these on your private repo.
 
 
 Else set it this to use the public and entitled registries:
-```tsx
+```bash
 export ARGS="--size ${ICS_SIZE} --ks_flag true --hostname ${HOSTNAME} --registry cp.icr.io --user ${CP_REPO_USER} --pass ${CP_REPO_PASS} --secret ibm-entitlement-key --recursive --inputDir ${LOCAL_CASE_DIR}"
 ```
 :::
 
-:::caution[Required for Air Gapped installations]
+::: {.callout-caution}
+
+## Required for Air Gapped installations
+
 You will need to install the **[Gatekeeper OPA](../../../guardium_insights/04_optional_services/#configure-security-constraints-optional)** AND **[configure mutations](../../../guardium_insights/04_optional_services/#configure-opa-mutations)** if using a private registry!
 :::
 
 
-```tsx
+```bash
 oc ibm-pak launch $CASE_NAME \
    --version $CASE_VERSION \
    --action install-operator \
@@ -1381,19 +1097,21 @@ oc ibm-pak launch $CASE_NAME \
    --args "$ARGS"
 ```
 
-:::note[Airgapping CPFS extras]
+::: {.callout-note}
+
+## Airgapping CPFS extras
 
 If you are performing an airgapped install, you must perform the following steps:
 
 After kicking off the `install-operator` above, open another terminal and export your private registry as an env var (my.registry.io is an example). 
 
-```tsx
+```bash
 export myprivatereg=my.registry.io
 ```
 
 Now wait for the `cloud-native-postgreql-image-list` config map to be created.
 
-```tsx
+```bash
 kubectl get cm cloud-native-postgresql-image-list -w
 
 NAME                                 DATA   AGE
@@ -1402,31 +1120,31 @@ cloud-native-postgresql-image-list   6      25h
 
 When it appears, run the following
 
-```tsx
+```bash
 kubectl get cm cloud-native-postgresql-image-list -o yaml | sed -E "s/cp.icr.io|\bicr.io/$myprivatereg/" > cloud-native-postgresql-image-list-patch.yaml
 ```
 
 Then patch the config map.
 
-```tsx
+```bash
 kubectl patch cm cloud-native-postgresql-image-list --patch-file cloud-native-postgresql-image-list-patch.yaml
 ```
 
 Now wait for the `cloud-native-postgresql.v1.18.12` `ClusterServiceVersion` to be created
 
-```tsx
+```bash
 kubectl get csv cloud-native-postgresql.v1.18.12 -w
 ```
 
 When it appears, run the following:
 
-```tsx
+```bash
 kubectl get csv cloud-native-postgresql.v1.18.12 -o yaml | egrep -v "generation:|resourceVersion:" | sed -E "s/cp.icr.io|\bicr.io/$myprivatereg/" | sed -e '/^status:/,$ d' > cloud-native-postgresql.v1.18.12-patch.yaml
 ```
 
 Patch the CSV
 
-```tsx
+```bash
 kubectl patch csv cloud-native-postgresql.v1.18.12 --type merge --patch-file cloud-native-postgresql.v1.18.12-patch.yaml
 ```
 
@@ -1436,54 +1154,9 @@ Now you can return to your previous terminal to wait for the installation to com
 
 This may take a little while to run.
 
-{/*
-
-```tsx
-kubectl get pvc
-NAME                      STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
-common-service-db-1       Bound     pvc-adb72a84-4a21-4b6b-91bd-3b3969ea3a99   10Gi       RWO            efs-sc         <unset>                 2m50s
-common-service-db-1-wal   Pending                                                                        efs-sc         <unset>                 2m50s
-```
-
-It seems the path name was too long. We adjusted it by removing the path directive from the storage class
-*/}
-
-
-{/*
-
-Getting the uid/gid for postgres (for the storage class)
-
-```tsx
-kubectl describe clusters.postgresql.k8s.enterprisedb.io common-service-db | egrep "UID|GID"
-```
-
-Should return a bunch of stuff, but we want this
-
-```tsx
-  UID:                 1cd7dd91-bf67-4fbe-8967-44323dad3b55
-  Postgres GID:               26
-  Postgres UID:               26
-```
-
-So questions....
-
-- How do we specify the storage class for this instead of depending on whatever is set to default?
-
-We updated the efs-sc storage class by deleting it, adding the uid of 26 and setting gid to 65534 and reapplying it.
-
-Now we are testing the deployment again.
-
-BANG IT WORKS
-
-Things to check on
-
-Updating the common-service-db CR to use a specific storage class
-
-*/}
-
 ### Verify Foundational Services are properly installed
 
-```tsx
+```bash
 kubectl get csv | grep ibm
 ```
 
@@ -1500,44 +1173,28 @@ ibm-zen-operator.v5.1.8                       IBM Zen Service                   
 
 ### Verify that the operand requests have completed and installed
 
-```tsx
+```bash
 kubectl get opreq
 ```
 
 Output should look like this:
 
-```tsx
+```bash
 NAME                          AGE     PHASE     CREATED AT
 common-service                4m41s   Running   2024-10-14T20:21:04Z
 ibm-iam-request               4m9s    Running   2024-10-14T20:21:36Z
 postgresql-operator-request   4m8s    Running   2024-10-14T20:21:37Z
 ```
 
-{/*
-### Patch the common-service CR to accept the license
-
-```tsx
-kubectl patch commonservices common-service --type merge -p '{"spec":{"license":{"accept":true}}}'
-```
-
-## Install network policies for Foundational Services
-
-```tsx
-export CS_NAMESPACE=openshift-marketplace
-cp -R ibm-guardium-data-security-center/inventory/ibmCommonServiceOperatorSetup/files/cp3-networkpolicy/ingress ibm-guardium-data-security-center/inventory/install/files/support/eks/
-./install_networkpolicy.sh -n $CS_NAMESPACE
-```
-*/}
-
 Verify the policies have all been created
 
-```tsx
+```bash
 kubectl get netpol
 ```
 
 Output should look like this:
 
-```tsx
+```bash
 NAME                                     POD-SELECTOR                                     AGE
 access-to-audit-svc                      component=zen-audit                              4m1s
 access-to-common-web-ui                  k8s-app=common-web-ui                            4m19s
@@ -1561,21 +1218,26 @@ allow-webhook-access-from-apiserver      <none>                                 
 ```
 
 Verify NGINX ingresses have been created
+
+::: {.hidden}
 {/*
 
 ## Install Kubernetes Ingresses
 
 Export the following values. As above, the example FQDN we are using is `apps.gi.thinkforward.work`. Yours may be different depending on what you've set in your DNS or Route 53.
-```tsx
+```bash
 export REPLACE_NAMESPACE=openshift-marketplace
 export HOSTNAME=apps.gi.thinkforward.work
 ```
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+
+## Using an insecure hostname
+
 For development purposes only, you can avoid registering a domain name and setting up certificates
 by using your local `hosts` file to redirect traffic later in this guide. If taking this route, you can use the following:
 
-```tsx
+```bash
 export REPLACE_NAMESPACE=openshift-marketplace
 export HOSTNAME=apps.gi.guardium-insights.com
 ```
@@ -1584,7 +1246,7 @@ export HOSTNAME=apps.gi.guardium-insights.com
 
 Run the Configmap creation with the following commands
 
-```tsx
+```bash
 while [[ $(kubectl get secret platform-oidc-credentials -ojsonpath='{.data.WLP_CLIENT_SECRET}' | base64 -d | wc -c) -eq 0 ]] ; do echo Waiting 30 seconds for platform-oidc-credentials to be created with the correct content; sleep 30; done
 client_id="$(kubectl get secret platform-oidc-credentials -o yaml |grep 'WLP_CLIENT_ID:' | sed 's/WLP_CLIENT_ID: * //' | awk '{print $1}')"
 client_id=`echo $client_id|base64 --decode`
@@ -1593,15 +1255,16 @@ echo $client_id
 cat cpfs-ingress-template.yaml | sed 's#REPLACE_CLIENT_ID#'$client_id'#g' | sed 's#REPLACE_NAMESPACE#'$NAMESPACE'#g' | sed 's#REPLACE_HOSTNAME#'$HOSTNAME'#g' | kubectl apply -f -
 ```
 */}
+:::
 
 Verify the ingress creation
-```tsx
+```bash
 kubectl get ingress
 ```
 
 Output should look like this:
 
-```tsx
+```
 NAME                         CLASS   HOSTS                                                         ADDRESS                                                                               PORTS   AGE
 cncf-common-web-ui           nginx   cp-console-openshift-marketplace.apps.gi.thinkforward.work    k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.us-east-1.amazonaws.com         80      13s
 cncf-id-mgmt                 nginx   cp-console-openshift-marketplace.apps.gi.thinkforward.work    k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.us-east-1.amazonaws.com         80      13s
@@ -1614,23 +1277,26 @@ cncf-saml-ui-callback        nginx   cp-console-openshift-marketplace.apps.gi.th
 cncf-social-login-callback   nginx   cp-console-openshift-marketplace.apps.gi.thinkforward.work    k8s-ingressn-ingressn-7e06ec0c6b-01363c775f8b7ff9.elb.us-east-1.amazonaws.com         80      13s
 ```
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+
+## Using an insecure hostname
+
 If you used an insecure hostname above, configure your local workstation to redirect traffic
 to the external IP of the ingress.
 
 Find the public hostname address of the ingress under `EXTERNAL-IP`.
 
-```tsx
+```bash
 kubectl get service --namespace ingress-nginx ingress-nginx-controller
 ```
-```tsx
+```
 NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)                      AGE
 ingress-nginx-controller   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h
 ```
 
 Find the public IP address of the of the public hostname.
 
-```tsx
+```
 nslookup a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com
 Server:         10.255.255.254
 Address:        10.255.255.254#53
@@ -1652,14 +1318,14 @@ For Windows that is under `C:\Windows\System32\drivers\etc\hosts`. For Linux tha
 
 Add a line that redirects network traffic from the insecure hostname to the public IP address and save the file.
 
-```tsx
+```bash
 13.58.11.46   cp-console-openshift-marketplace.apps.gi.guardium-insights.com
 ```
 
 After installing Guardium Insights (next step), another ingress will be created that will need to be added to the local hosts file.
 Add that additional line now, even though that hostname will not redirect properly until after Guardium Insights is installed.
 
-```tsx
+```bash
 13.58.11.46   guardium.apps.gi.guardium-insights.com
 ```
 
@@ -1669,7 +1335,9 @@ Add that additional line now, even though that hostname will not redirect proper
 
 Verify that the common webui is now up and available by going to the link above (this will reflect whatever you set for your domain). In our case it is `cp-console-openshift-marketplace.apps.gi.thinkforward.work`
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+## Using an insecure hostname
+
 If you used an insecure hostname above, use `cp-console-openshift-marketplace.apps.gi.guardium-insights.com`
 to verify.
 
@@ -1677,11 +1345,11 @@ to verify.
 
 You can retrieve the `cpadmin` password with the following
 
-```tsx
+```bash
 kubectl get secret platform-auth-idp-credentials -o jsonpath='{.data.admin_password}' | base64 -d
 ```
 
 This will return the password for the `cpadmin` user. You can then use `cpadmin` to login.
 
-![Webui](../../../../assets/images/webui01.png)
+![](/images/webui01.png)
 
