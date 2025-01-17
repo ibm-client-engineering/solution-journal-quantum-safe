@@ -1,0 +1,421 @@
+---
+title: Installation
+description: QSE installation
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+:::note[Useful links]
+
+https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=explorer-installing-quantum-safe-macos
+
+:::
+
+## Pre-Reqs
+
+For any installation, in order to use the VSCode plugin, you need to install VSCode.
+
+- OS: Windows 10 or 11 or MacOS
+- RAM: 16 Gigs
+- OpenJDK 17
+- Git Bash (Windows)
+
+### Installing VSCode
+
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+Grab VSCode for windows from [here](https://code.visualstudio.com/download)
+
+Make sure you download the system installer
+
+
+![Windows1](../../../assets/images/windows-installer01.png)
+
+Double click it and install it to this following path
+
+![Windows2](../../../assets/images/windows-installer02.png)
+
+![Windows3](../../../assets/images/windows-installer03.png)
+
+</TabItem>
+<TabItem label="MacOS">
+
+Grab VSCode for MacOS from [here](https://code.visualstudio.com/download)
+
+![MacOS1](../../../assets/images/macos-installer01.png)
+
+File will be located in your Downloads folder. 
+
+
+</TabItem>
+</Tabs>
+
+### Installing OpenJDK
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+
+Microsoft's OpenJDK 17 can be found [here](https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17)
+
+Download it [here](https://aka.ms/download-jdk/microsoft-jdk-17.0.11-windows-x64.msi)
+
+Go to your `Downloads` folder and double click the `microsoft-jdk-17.0.11-windows-x64.msi` file there.
+
+Let it set the JAVA_HOME var and click `Next` then click `Install`.
+
+![WindowsJDK](../../../assets/images/windows-jdk01.png)
+
+</TabItem>
+<TabItem label="MacOS">
+
+Make sure you have openjdk-17 installed.
+
+```zsh
+brew install openjdk@17
+```
+If you have other versions of Java installed, you might need to add this to your path:
+
+```zsh
+echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+
+. ~/.zshrc
+```
+</TabItem>
+</Tabs>
+
+## Downloading QSE
+
+You can find the required installation files for your OS of choice on IBM's Passport Advantage. Or if you're an IBM Employee, you can find it [here](https://w3south-limited-use.cpc.ibm.com/software/xl/download/ticket.wss).
+
+![QSE1](../../../assets/images/qse-download.png)
+
+It's important to note that these files all use the same name 
+
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+
+![QSE2](../../../assets/images/windows-qse1.png)
+
+Extract them all to the same folder
+
+![QSE3](../../../assets/images/windows-qse2.png)
+
+File listing
+
+```powershell
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> tree /F
+Folder PATH listing
+Volume serial number is 1EA9-8239
+C:.
+├───M0GT5EN
+│       ibm-quantum-safe-explorer-1.0.1.vsix
+│
+├───M0GT6EN
+│   │   cli.sh
+│   │   LicenseAcceptance.config
+│   │   version
+│   │
+│   ├───la_home
+│   │       LA_cs
+│   │       LA_de
+│   │       LA_el
+│   │       LA_en
+│   │       LA_es
+│   │       LA_fr
+│   │       LA_in
+│   │       LA_it
+│   │       LA_ja
+│   │       LA_ko
+│   │       LA_lt
+│   │       LA_pl
+│   │       LA_pt
+│   │       LA_ru
+│   │       LA_sl
+│   │       LA_tr
+│   │       LA_zh
+│   │       LA_zh_TW
+│   │       notices
+│   │
+│   ├───lib
+│   │       apiguardian-api-1.1.2.jar
+│   │       commons-cli-1.5.0.jar
+│   │       commons-codec-1.15.jar
+│   │       commons-collections4-4.4.jar
+│   │       commons-compress-1.21.jar
+│   │       commons-io-2.11.0.jar
+│   │       commons-lang3-3.12.0.jar
+│   │       commons-math3-3.6.1.jar
+│   │       commons-text-1.10.0.jar
+│   │       curvesapi-1.07.jar
+│   │       gson-2.10.1.jar
+│   │       hamcrest-core-1.1.jar
+│   │       json-simple-1.1.1.jar
+│   │       jsoup-1.16.1.jar
+│   │       junit-4.10.jar
+│   │       junit-platform-commons-1.9.0.jar
+│   │       license_metric_logger-2.1.2.202009181115.jar
+│   │       log4j-api-2.18.0.jar
+│   │       log4j-core-2.20.0.jar
+│   │       poi-5.2.3.jar
+│   │       poi-ooxml-5.2.3.jar
+│   │       poi-ooxml-lite-5.2.3.jar
+│   │       quantum-safe-sca-tng-0.0.1-SNAPSHOT.jar
+│   │       slf4j-api-1.7.36.jar
+│   │       SparseBitSet-1.2.jar
+│   │       sqlite-jdbc-3.42.0.0.jar
+│   │       tika-core-2.4.1.jar
+│   │       xmlbeans-5.1.1.jar
+│   │
+│   └───swidtag
+│           ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag
+│
+└───M0GT7EN
+        IBM Quantum Safe Explorer.exe
+```
+</TabItem>
+
+<TabItem label="MacOS">
+```tsx
+-rw-r--r--@    1 kramerro  staff    35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN(2).zip
+-rw-r--r--@    1 kramerro  staff    73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip
+-rw-r--r--@    1 kramerro  staff   446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN(1).zip
+```
+
+Unzip them all to the same folder
+
+File listing
+
+```zsh
+➜  QSE git:(ross-updates) ✗ tree
+.
+├── M0GT4EN
+│   └── IBM Quantum Safe Explorer-1.0.1.pkg
+├── M0GT5EN
+│   └── ibm-quantum-safe-explorer-1.0.1.vsix
+└── M0GT6EN
+    ├── LicenseAcceptance.config
+    ├── cli.sh
+    ├── la_home
+    │   ├── LA_cs
+    │   ├── LA_de
+    │   ├── LA_el
+    │   ├── LA_en
+    │   ├── LA_es
+    │   ├── LA_fr
+    │   ├── LA_in
+    │   ├── LA_it
+    │   ├── LA_ja
+    │   ├── LA_ko
+    │   ├── LA_lt
+    │   ├── LA_pl
+    │   ├── LA_pt
+    │   ├── LA_ru
+    │   ├── LA_sl
+    │   ├── LA_tr
+    │   ├── LA_zh
+    │   ├── LA_zh_TW
+    │   └── notices
+    ├── lib
+    │   ├── SparseBitSet-1.2.jar
+    │   ├── apiguardian-api-1.1.2.jar
+    │   ├── commons-cli-1.5.0.jar
+    │   ├── commons-codec-1.15.jar
+    │   ├── commons-collections4-4.4.jar
+    │   ├── commons-compress-1.21.jar
+    │   ├── commons-io-2.11.0.jar
+    │   ├── commons-lang3-3.12.0.jar
+    │   ├── commons-math3-3.6.1.jar
+    │   ├── commons-text-1.10.0.jar
+    │   ├── curvesapi-1.07.jar
+    │   ├── gson-2.10.1.jar
+    │   ├── hamcrest-core-1.1.jar
+    │   ├── json-simple-1.1.1.jar
+    │   ├── jsoup-1.16.1.jar
+    │   ├── junit-4.10.jar
+    │   ├── junit-platform-commons-1.9.0.jar
+    │   ├── license_metric_logger-2.1.2.202009181115.jar
+    │   ├── log4j-api-2.18.0.jar
+    │   ├── log4j-core-2.20.0.jar
+    │   ├── poi-5.2.3.jar
+    │   ├── poi-ooxml-5.2.3.jar
+    │   ├── poi-ooxml-lite-5.2.3.jar
+    │   ├── quantum-safe-sca-tng-0.0.1-SNAPSHOT.jar
+    │   ├── slf4j-api-1.7.36.jar
+    │   ├── sqlite-jdbc-3.42.0.0.jar
+    │   ├── tika-core-2.4.1.jar
+    │   └── xmlbeans-5.1.1.jar
+    ├── swidtag
+    │   └── ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag
+    └── version
+
+7 directories, 53 files
+```
+
+</TabItem>
+</Tabs>
+
+## Installing the Services
+
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+
+```powershell
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT7EN\
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT7EN>
+
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT7EN> & '.\IBM Quantum Safe Explorer.exe'
+
+```
+
+The following window will pop up. Go with all the defaults.
+
+![QSEwindows1](../../../assets/images/windows-qse-service1.png)
+
+When installation is complete, the following window will pop up. Click `Finish` and allow it to start up the service.
+
+![QSEwindows2](../../../assets/images/windows-qse-service2.png)
+
+Click `Accept`
+![QSEwindows3](../../../assets/images/windows-qse-service3.png)
+
+Once it's running, don't close the window.
+
+![QSEwindows4](../../../assets/images/windows-qse-service4.png)
+
+</TabItem>
+
+<TabItem label="MacOS">
+
+In our extracted directory, run the following command with `sudo` and enter your admin password when prompted.
+
+```zsh
+sudo installer -pkg M0GT4EN/IBM\ Quantum\ Safe\ Explorer-1.0.1.pkg -target /Applications
+Password:
+installer: Package name is IBM Quantum Safe Explorer
+installer: Installing at base path /
+installer: The install was successful.
+```
+Locate the desktop shortcut for `IBM Quantum Safe Explorer` and kick it off.
+
+![QSEmacos1](../../../assets/images/macos-qse-service1.png)
+
+You should see the following windows pop up:
+![QSEmacos2](../../../assets/images/macos-qse-service2.png)
+Make sure to click `Accept`
+
+The QSE service should now be running.
+
+![QSEmacos3](../../../assets/images/macos-qse-service3.png)
+
+:::caution
+Do not close this window as apparently it DOES NOT continue running in the background.
+:::
+</TabItem>
+</Tabs>
+
+
+## Installing the IBM Quantum Safe Explorer CLI
+
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+
+Simply change directory to where ever you extracted the extension. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `\Downloads` directory:
+
+```powershell
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT6EN\
+```
+
+</TabItem>
+<TabItem label="MacOS">
+
+Simply change directory to wherever you extracted the extension. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `~/Downloads` directory:
+
+```zsh
+cd ~/Downloads/M0GT6EN
+```
+</TabItem>
+</Tabs>
+
+
+
+
+## Installing VSCode plugin
+
+:::note
+
+If using MacOS, make sure you have the `code` cli for MacOS enabled. This is how you do [that](https://code.visualstudio.com/docs/setup/mac)
+:::
+
+Change directory to where ever you extracted the extension
+
+<Tabs syncKey="OS">
+<TabItem label="Windows">
+
+```powershell
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT5EN\
+```
+Install the extension
+```
+PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT5EN> code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix
+Installing extensions...
+Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.
+```
+</TabItem>
+<TabItem label="MacOS">
+
+```zsh
+cd M0GT5EN
+```
+
+Install the extension
+```zsh
+code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix 
+Installing extensions...
+Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.
+```
+</TabItem>
+</Tabs>
+
+In your running VSCode instance, click the `Extensions` icon in the left-hand side bar and select `IBM Quantum Safe Explorer`
+
+![Extension1](../../../assets/images/extension1.png)
+
+Click on the settings for the extension
+![Extension2](../../../assets/images/extension2.png)
+
+Per the current [guide](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=vsce-configuring-quantum-safe-explorer-visual-studio-code-extension), the following settings must be configured:
+
+:::note
+Currently as of 1.0.x only `localhost` is supported as `qs-explorer.hostname`.
+:::
+
+The following configuration settings should be followed:
+
+Required settings:
+
+- **qs-explorer.hostname** – Enter the hostname of the IBM Quantum Safe Explorer API server. Currently only localhost is supported.
+- **qs-explorer.sourceFileExtensions** – Enter the list of source file types to be scanned. For example, .java, .py, and so on.
+
+sourceFileExtensions would be edited in the setting json. They should currently default to the following supported extensions for code scanning:
+```json
+    "qs-explorer.sourceFileExtensions": [
+        ".java",
+        ".jar",
+        ".dart",
+        ".py",
+        ".c"
+    ]
+```
+
+## Uninstalling the Services
+
+:::note[Important]
+
+There is a bug in v1.0.1 uninstall on Windows that will later cause issues when v2.x is installed, please note the instructions below.
+
+:::
+
+For Windows, after running the normal "Remove Programs" to uninstall the QSE service, manually delete the `qs-explorer` folder from the user's home 
+directory. If this is not done and v2.x is later installed, it will cause the scanning to fail.
+
+This is only an issue with the v1.0.1 uninstallation on Windows. This issue has been resolved in the v2.x
+uninstallation.
