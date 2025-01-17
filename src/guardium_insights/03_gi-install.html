@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Installing Guardium Insights">
+
+<title>Guardium Insights Installation – IBM Quantum Safe Encryption</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../src/guardium_insights/04_optional_services.html" rel="next">
+<link href="../../src/guardium_insights/eks/02_cluster-build.html" rel="prev">
+<link href="../../images/bee.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": true,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Search",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/IBMlogo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IBM Quantum Safe Encryption</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-github" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/ibm-client-engineering">
+ <span class="dropdown-text">Check us out on Github</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/ibm-client-engineering/solution-journal-quantum-safe">
+ <span class="dropdown-text">Look at this repo on Github</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-linkedin" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-linkedin">    
+        <li>
+    <a class="dropdown-item" href="http://linkedin.com/post">
+ <span class="dropdown-text">Share on your LinkedIn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.linkedin.com/company/ibm/">
+ <span class="dropdown-text">IBM LinkedIn</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Guardium Insights</li><li class="breadcrumb-item"><a href="../../src/guardium_insights/03_gi-install.html">Guardium Insights Installation</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem Definition</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">QSR</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Adaptive Proxy</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/02_configuration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuration</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Performance Test Harness</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/02_usage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Usage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">QSE</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/02_scanning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scanning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Guardium Insights</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">EC2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/01-prereqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">EKS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/01_pre-reqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/02_cluster-build.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EKS Cluster Build</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/03_gi-install.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Guardium Insights Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/04_optional_services.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Services</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/key-takeaway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Key Takeaways</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#obtaining-the-case-bundle-for-gi" id="toc-obtaining-the-case-bundle-for-gi" class="nav-link active" data-scroll-target="#obtaining-the-case-bundle-for-gi">Obtaining the CASE bundle for GI</a></li>
+  <li><a href="#install-the-gi-operator" id="toc-install-the-gi-operator" class="nav-link" data-scroll-target="#install-the-gi-operator">Install the GI Operator</a>
+  <ul class="collapse">
+  <li><a href="#collect-the-node-names" id="toc-collect-the-node-names" class="nav-link" data-scroll-target="#collect-the-node-names">Collect the node names</a></li>
+  <li><a href="#run-the-pre-install" id="toc-run-the-pre-install" class="nav-link" data-scroll-target="#run-the-pre-install">Run the pre-install</a></li>
+  <li><a href="#verify-the-node-labeling" id="toc-verify-the-node-labeling" class="nav-link" data-scroll-target="#verify-the-node-labeling">Verify the node labeling</a></li>
+  <li><a href="#install-the-operator-catalogs" id="toc-install-the-operator-catalogs" class="nav-link" data-scroll-target="#install-the-operator-catalogs">Install the operator catalogs</a></li>
+  <li><a href="#install-the-operators" id="toc-install-the-operators" class="nav-link" data-scroll-target="#install-the-operators">Install the Operators</a></li>
+  </ul></li>
+  <li><a href="#deploying-an-instance-of-guardium-insights" id="toc-deploying-an-instance-of-guardium-insights" class="nav-link" data-scroll-target="#deploying-an-instance-of-guardium-insights">Deploying an instance of Guardium Insights</a>
+  <ul class="collapse">
+  <li><a href="#configure-dns-resolution-optional" id="toc-configure-dns-resolution-optional" class="nav-link" data-scroll-target="#configure-dns-resolution-optional">Configure DNS resolution (Optional)</a></li>
+  <li><a href="#guardium-cr" id="toc-guardium-cr" class="nav-link" data-scroll-target="#guardium-cr">Guardium CR</a></li>
+  <li><a href="#verifying-instance-is-up" id="toc-verifying-instance-is-up" class="nav-link" data-scroll-target="#verifying-instance-is-up">Verifying instance is up</a></li>
+  </ul></li>
+  <li><a href="#creating-the-qs-tenant" id="toc-creating-the-qs-tenant" class="nav-link" data-scroll-target="#creating-the-qs-tenant">Creating the QS tenant</a>
+  <ul class="collapse">
+  <li><a href="#scale-down-services" id="toc-scale-down-services" class="nav-link" data-scroll-target="#scale-down-services">Scale down services</a></li>
+  <li><a href="#create-the-tenant" id="toc-create-the-tenant" class="nav-link" data-scroll-target="#create-the-tenant">Create the tenant</a></li>
+  <li><a href="#verify-the-tenant-creation" id="toc-verify-the-tenant-creation" class="nav-link" data-scroll-target="#verify-the-tenant-creation">Verify the tenant creation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Guardium Insights</li><li class="breadcrumb-item"><a href="../../src/guardium_insights/03_gi-install.html">Guardium Insights Installation</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Guardium Insights Installation</h1>
+</div>
+
+<div>
+  <div class="description">
+    Installing Guardium Insights
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>:::note[Useful Links] A lot of content cribbed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-install-guardium-insights-operator-related-components">here</a></p>
+<p>You will need your IBM Entitlement Key for the next steps. You should already have it available at this point, but it can also be retrieved from <a href="https://myibm.ibm.com/products-services/containerlibrary">here</a> :::</p>
+<section id="obtaining-the-case-bundle-for-gi" class="level2">
+<h2 class="anchored" data-anchor-id="obtaining-the-case-bundle-for-gi">Obtaining the CASE bundle for GI</h2>
+<p>Export the following env vars. This assumes we have been installing in the <code>openshift-marketplace</code> namespace.</p>
+<p>As of this writing, we are using Guardium Insights version <code>3.5.0</code> which uses the <code>2.5.0</code> bundle file.</p>
+<pre class="tsx"><code>export CP_REPO_USER="cp"
+export CP_REPO_PASS=&lt;Your Password / Entitlement Key to cp.icr.io&gt;
+export NAMESPACE="openshift-marketplace"
+export CLUSTERNAME="&lt;your-cluster-name&gt;"
+export CASE_NAME=ibm-guardium-data-security-center
+export CASE_VERSION=2.6.0
+export LOCAL_CASE_DIR=$HOME/.ibm-pak/data/cases/$CASE_NAME/$CASE_VERSION
+export GI_INVENTORY_SETUP=install
+export IBMPAK_LAUNCH_SKIP_PREREQ_CHECK=true</code></pre>
+<p>Save the CASE bundle locally</p>
+<pre class="tsx"><code>oc ibm-pak get $CASE_NAME \
+--version $CASE_VERSION \
+--skip-verify</code></pre>
+<p>This will download the CASE bundle to <code>$HOME/.ibm-pak/data/cases/ibm-guardium-data-security-center/2.6.0</code></p>
+</section>
+<section id="install-the-gi-operator" class="level2">
+<h2 class="anchored" data-anchor-id="install-the-gi-operator">Install the GI Operator</h2>
+<p>Set the context to the correct namespace</p>
+<pre class="tsx"><code>kubectl config set-context --current --namespace=${NAMESPACE}</code></pre>
+<section id="collect-the-node-names" class="level3">
+<h3 class="anchored" data-anchor-id="collect-the-node-names">Collect the node names</h3>
+<p>In most installations you can label specific nodes to be used for DB2. In our case, we are just going to label all the compute nodes as part of the pre-install.</p>
+<pre class="tsx"><code>NODES=$(kubectl get nodes -o jsonpath='{.items[*].metadata.name}')
+NODES=$(echo $NODES | tr ' ' ',')
+echo $NODES</code></pre>
+<p>Should return output similar to this</p>
+<pre class="tsx"><code>ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal</code></pre>
+</section>
+<section id="run-the-pre-install" class="level3">
+<h3 class="anchored" data-anchor-id="run-the-pre-install">Run the pre-install</h3>
+<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
+   --version $CASE_VERSION \
+   --inventory $GI_INVENTORY_SETUP \
+   --action pre-install \
+   --namespace $NAMESPACE \
+   --args "-n ${NAMESPACE} -h ${NODES} -t false -l true -e true"</code></pre>
+<p>This should return the following</p>
+<pre class="tsx"><code>Welcome to the CASE launcher
+Attempting to retrieve and extract the CASE from the specified location
+[✓] CASE has been retrieved and extracted
+Attempting to validate the CASE
+[✓] CASE has been successfully validated
+Attempting to locate the launch inventory item, script, and action in the specified CASE
+[✓] Found the specified launch inventory item, action, and script for the CASE
+Skipping CASE defined prerequisite checks for the specified action
+Executing inventory item install, action preInstall : launch.sh
+-------------Installing dependent GI preinstall: /var/folders/tp/zkf5_qld1wn_ms51xys8d0m00000gn/T/extractedCASELauncher1330610821/ibm-guardium-insights-------------
+PRE-INSTALL VALUES:
+ -n openshift-marketplace -h ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal -t false -l true -e true
+Warning : One or more optional parameters not passed, default values will be used
+OpenSSL is working with parameters -pbkdf2
+#####IBM Guardium Insights Pre-installation: Starting Preparation#####
+The system properties of the nodes
+Skipping due to NON_OCP being true
+The system properties of the nodes
+Skipping the system properties due to NON_OCP being true
+node/ip-192-168-10-208.ec2.internal labeled
+node/ip-192-168-17-40.ec2.internal labeled
+node/ip-192-168-23-220.ec2.internal labeled
+Skipping data node(s) tainting.
+Node ip-192-168-10-208.ec2.internal already labelled.
+Node ip-192-168-17-40.ec2.internal already labelled.
+Node ip-192-168-23-220.ec2.internal already labelled.
+##### IBM Guardium Insights Pre-installation: Custom SCC creation#####
+Skipping custom scc creation
+#####IBM Guardium Insights Pre-installation: Ingress Certificate Recreation#####
+Overwrite existing secrets mode: no
+--------------------------------------------------------------
+Starting: IBM Guardium Insights: Ingress creation script.
+Skipping certificate generation. Certificate creation is handled by the Guardium Insights Deployment.
+Completed: IBM Guardium Insights : Ingress creation script.
+--------------------------------------------------------------
+[✓] CASE launch script completed successfully</code></pre>
+</section>
+<section id="verify-the-node-labeling" class="level3">
+<h3 class="anchored" data-anchor-id="verify-the-node-labeling">Verify the node labeling</h3>
+<pre class="tsx"><code>kubectl get nodes --no-headers -o custom-columns=":metadata.name" | xargs -I {} sh -c 'oc describe node {} | grep db2 | grep -v $NAMESPACE'</code></pre>
+<p>Should return</p>
+<pre class="tsx"><code>                    icp4data=database-db2wh
+                    icp4data=database-db2wh
+                    icp4data=database-db2wh</code></pre>
+</section>
+<section id="install-the-operator-catalogs" class="level3">
+<h3 class="anchored" data-anchor-id="install-the-operator-catalogs">Install the operator catalogs</h3>
+<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
+   --version $CASE_VERSION \
+   --inventory $GI_INVENTORY_SETUP \
+   --action install-catalog \
+   --namespace $NAMESPACE \
+   --args "--inputDir ${LOCAL_CASE_DIR}"</code></pre>
+<p>Verify the Catalog Sources were installed</p>
+<pre class="tsx"><code>kubectl get catsrc</code></pre>
+<p>Output should look like this:</p>
+<p><code>tsx {3-5} NAME                                     DISPLAY                                  TYPE   PUBLISHER   AGE cloud-native-postgresql-catalog          Cloud Native Postgresql Catalog          grpc   IBM         3d21h ibm-db2uoperator-catalog                 IBM Db2U Catalog                         grpc   IBM         3m18s ibm-guardium-insights-operator-catalog   IBM Security Guardium Insights Catalog   grpc   IBM         2m31s ibm-redis-cp-operator-catalog            IBM Redis CP Catalog                     grpc   IBM         2m37s opencloud-operators                      IBMCS Operators                          grpc   IBM         3d21h</code></p>
+</section>
+<section id="install-the-operators" class="level3">
+<h3 class="anchored" data-anchor-id="install-the-operators">Install the Operators</h3>
+<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
+   --version $CASE_VERSION \
+   --inventory $GI_INVENTORY_SETUP \
+   --action install-operator \
+   --namespace ${NAMESPACE} \
+   --args "--registry cp.icr.io --user ${CP_REPO_USER} --pass ${CP_REPO_PASS} --secret ibm-entitlement-key --inputDir ${LOCAL_CASE_DIR}"</code></pre>
+<p>Verify the installation of the operators</p>
+<pre class="tsx"><code>kubectl get sub</code></pre>
+<p>Output should look like this:</p>
+<p><code>tsx {4,6,10} NAME                                          PACKAGE                          SOURCE                                   CHANNEL cloud-native-postgresql                       cloud-native-postgresql          cloud-native-postgresql-catalog          stable ibm-common-service-operator                   ibm-common-service-operator      opencloud-operators                      v4.6 ibm-db2uoperator-catalog-subscription         db2u-operator                    ibm-db2uoperator-catalog                 v110509.0 ibm-events-operator                           ibm-events-operator              opencloud-operators                      v3 ibm-guardium-insights-operator-subscription   ibm-guardium-insights-operator   ibm-guardium-insights-operator-catalog   v3.6 ibm-idp-config-ui-operator                    ibm-commonui-operator-app        opencloud-operators                      v4.4 ibm-im-operator                               ibm-iam-operator                 opencloud-operators                      v4.5 ibm-platformui-operator                       ibm-zen-operator                 opencloud-operators                      v4.4 ibm-redis-cp-operator-catalog-subscription    ibm-redis-cp                     ibm-redis-cp-operator-catalog            v1.1 operand-deployment-lifecycle-manager-app      ibm-odlm                         opencloud-operators                      v4.3</code></p>
+</section>
+</section>
+<section id="deploying-an-instance-of-guardium-insights" class="level2">
+<h2 class="anchored" data-anchor-id="deploying-an-instance-of-guardium-insights">Deploying an instance of Guardium Insights</h2>
+<p>:::note[Useful Links] Content heavily borrowed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-deploying-guardium-insights-instance">here</a></p>
+<p>:::</p>
+<section id="configure-dns-resolution-optional" class="level3">
+<h3 class="anchored" data-anchor-id="configure-dns-resolution-optional">Configure DNS resolution (Optional)</h3>
+<p>If you previously used AWS Route 53 to configure DNS resoluion as part of an insecure hostname configuration, then follow these instructions to add additional routing that is needed for the Guardium Insights deployment.</p>
+<p>In AWS Route 53, open the previously created private hosted zone created during cluster build.</p>
+<p>As we did previously, first find the private cluster IP address of the load balancer under <code>CLUSTER-IP</code>.</p>
+<pre class="tsx"><code>kubectl get service --namespace ingress-nginx ingress-nginx-controller</code></pre>
+<pre class="tsx"><code>NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)                      AGE
+ingress-nginx-controller   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h</code></pre>
+<p>Capture that <code>CLUSTER-IP</code> value for the next steps.</p>
+<p>Back on the hosted zone details page, click the <code>Create record</code> button.</p>
+<p>We want to create a record that routes <code>guardium.apps.gi.guardium-insights.com</code> to the private IP address captured above.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.github.ibm.com/user/207188/files/0b0c741e-3a87-425e-a416-d9cb1aac4e6d.png" class="img-fluid figure-img"></p>
+<figcaption>image</figcaption>
+</figure>
+</div>
+<p>Click <code>Create Records</code>.</p>
+</section>
+<section id="guardium-cr" class="level3">
+<h3 class="anchored" data-anchor-id="guardium-cr">Guardium CR</h3>
+<p>This is a usable example. Copy this to a new yaml file. The name should be the cluster-name and the namespace should be <code>openshift-marketplace</code>.</p>
+<p>We want to set the following values in this file</p>
+<pre class="tsx"><code>  name: gi-eks
+  namespace: openshift-marketplace
+</code></pre>
+<p>And under <code>ingress</code> set the hostname (<code>guardium.apps.gi.thinkforward.work</code> in our example) and make sure the FQDN is the one we set.</p>
+<pre class="tsx"><code>      ingress:
+        hostName: guardium.apps.gi.thinkforward.work
+        domainName: apps.gi.thinkforward.work</code></pre>
+<p>:::note[Using an insecure hostname] If using the insecure hostname, use the following values instead.</p>
+<pre class="tsx"><code>      ingress:
+        hostName: guardium.apps.gi.guardium-insights.com
+        domainName: apps.gi.guardium-insights.com</code></pre>
+<p>:::</p>
+<p>Also we will be setting the RWO storage classes to use the gp3 block storage class we created <code>ebs-gp3-sc</code></p>
+<p>This will install an instance with the sizing set to <code>values-small</code></p>
+<p><code>gdsc-custom-eks.yaml</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;EOF</span> <span class="op">&gt;</span> gi-custom-eks.yaml</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">apiVersion: gi.ds.isc.ibm.com/v1</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">kind: GuardiumDataSecurityCenter</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">metadata:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">  name: </span><span class="va">${CLUSTERNAME}</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">  namespace: </span><span class="va">${NAMESPACE}</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">spec:</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">  version: 3.6.0</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">  license:</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">    accept: true</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="st">    licenseType: "L-QABB-9QRLFB"</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="st">  guardiumGlobal:</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="st">    deploymentOptions:</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="st">      prometheusType: disabled</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="st">    fsGroupGid: 0</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="st">    networkPolicyPodToPod:</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: false</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="st">    backupsupport:</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: "false"</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="st">      name: backup-pvc-support</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="st">    image:</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="st">      insightsPullSecret: ibm-entitlement-key</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="st">      repository: cp.icr.io/cp/ibm-guardium-data-security-center</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="st">    size: values-small</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="st">    instance:</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="st">      ingress:</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="st">        hostName: guardium.</span><span class="va">${HOSTNAME}</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="st">        domainName: </span><span class="va">${HOSTNAME}</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="st">      ics:</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="st">        namespace: </span><span class="va">${NAMESPACE}</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="st">        registry: common-service</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassName: efs-sc</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassNameRWO: ebs-gp3-sc</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="st">    deploySettings:</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="st">      nonOCP: true</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="st">      ensureDb2InstallPlacement: true</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="st">  capabilities:</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: quantum-safe</span></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations: {}</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: platform</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations:</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="st">      ssh-service:</span></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="st">        serviceAnnotations:</span></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a><span class="st">          service.beta.kubernetes.io/aws-load-balancer-internal: "false"</span></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-security:</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="st">        networkPolicy:</span></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="st">          egresses:</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: false</span></span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="st">            egress-required-allow:</span></span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a><span class="st">              egress:</span></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="st">                - ports:</span></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: UDP</span></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: TCP</span></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-postgres:</span></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: true</span></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-kafka:</span></span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a><span class="st">        kafka:</span></span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 250Gi</span></span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="st">        zookeeper:</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 20Gi</span></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-redis:</span></span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="st">      guardium-agent-cert-generator:</span></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="st">      mini-snif:</span></span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a><span class="st">          allowPrivilegeEscalation: false</span></span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a><span class="st">          capabilities:</span></span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a><span class="st">            drop:</span></span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a><span class="st">            - ALL</span></span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a><span class="st">          privileged: false</span></span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="st">          readOnlyRootFilesystem: false</span></span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: false</span></span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="st">        replicaCount: 1</span></span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-db2:</span></span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a><span class="st">        db2instance:</span></span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a><span class="st">          nodes: 2</span></span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a><span class="st">          storage:</span></span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: meta</span></span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: data</span></span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 100Gi</span></span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: backup</span></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 2000Gi</span></span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: tempts</span></span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: archivelogs</span></span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 500Gi</span></span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Apply the above CR</p>
+<pre class="tsx"><code>kubectl apply -f gdsc-custom-eks.yaml</code></pre>
+<p>The deployment may take a little while.</p>
+</section>
+<section id="verifying-instance-is-up" class="level3">
+<h3 class="anchored" data-anchor-id="verifying-instance-is-up">Verifying instance is up</h3>
+<p>Check to make sure the Guardium Insights custom resource (CR) has been completely reconciled.</p>
+<pre class="tsx"><code>kubectl get gdsc</code></pre>
+<p>Output should look like this:</p>
+<p><code>tsx {2} NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
+<p>Check that the tenant has been created</p>
+<pre class="tsx"><code>kubectl get tenantminisnif</code></pre>
+<p>Output should look like this:</p>
+<p><code>tsx {2} NAME                           TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
+<p>Verify all ingress paths have been created</p>
+<pre class="tsx"><code>kubectl get ingress -n openshift-marketplace</code></pre>
+<p>Output should look like this:</p>
+<p><code>tsx {11-17} NAME                                            CLASS    HOSTS                                                          ADDRESS                                                                         PORTS     AGE cncf-common-web-ui                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-id-mgmt                                    nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-auth                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-id-auth                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-id-provider                       nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-login                             nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-oidc                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-saml-ui-callback                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-social-login-callback                      nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h gi-eks-apigateway-api                           nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-apigateway-docs-dev                      nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-insights                                 nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-s3                                       nginx    s3.guardium.apps.gi.thinkforward.work                          a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   21h gi-eks-ssh-service                              &lt;none&gt;   guardium.apps.gi.thinkforward.work                                                                                                             80, 443   23h gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-feed   nginx    feed-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-unix   nginx    unix-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h</code></p>
+<p>Since we installed everything into the <code>openshift-marketplace</code> namespace, we should see everything there.</p>
+</section>
+</section>
+<section id="creating-the-qs-tenant" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-qs-tenant">Creating the QS tenant</h2>
+<div class="note[Important!]">
+<p>In the current release of GI, in order to create the Quantum Security tenant, you need to scale down all the unnecessary services that are spun up by default in Guardium Insights. Future GI revisions will allow for disabling these services in the CR.</p>
+</div>
+<section id="scale-down-services" class="level3">
+<h3 class="anchored" data-anchor-id="scale-down-services">Scale down services</h3>
+<p>Our example GI instance cluster is called <code>gi-eks</code>. Let’s export that as an env var.</p>
+<p>If you’re unsure as to what your instance cluster is called, it can be found with the following command:</p>
+<pre class="tsx"><code>kubectl get gi</code></pre>
+<p>Output should look like this:</p>
+<pre class="tsx"><code>NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
+gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></pre>
+<pre class="tsx"><code>export cluster_name="gi-eks"</code></pre>
+<p>Now scale down the following deployments</p>
+<p>{/* ${cluster_name}-rm-risk-controller &nbsp;<em>/} {/</em> ${cluster_name}-risk-analytics-controller &nbsp;<em>/} {/</em> ${cluster_name}-ssh-service &nbsp;*/}</p>
+<pre class="tsx"><code>kubectl scale deploy \
+${cluster_name}-risk-analytics-engine \
+${cluster_name}-risk-analytics-ml-classification \
+${cluster_name}-rm-risk-engine \
+${cluster_name}-outliers-engine \
+${cluster_name}-analytics-events \
+${cluster_name}-assets \
+${cluster_name}-compliance-accelerator \
+${cluster_name}-pam-connector-thycotic \
+${cluster_name}-policy-builder \
+${cluster_name}-postgres-proxy \
+${cluster_name}-postgres-sentinel \
+${cluster_name}-rm-data-collector \
+${cluster_name}-snif-assist \
+${cluster_name}-streams \
+--replicas=0</code></pre>
+</section>
+<section id="create-the-tenant" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-tenant">Create the tenant</h3>
+<p>Retrieve the <code>cpadmin</code> password and set it as an env var</p>
+<pre class="tsx"><code>export CPPASS=$(kubectl get secret platform-auth-idp-credentials -o jsonpath='{.data.admin_password}' | base64 -d)</code></pre>
+<p>Create an auth header</p>
+<pre class="tsx"><code>export AUTH=$(echo -ne "cpadmin:$CPPASS" | base64)</code></pre>
+<p>{/* Create a JSON <code>payload.json</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"async"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"external_id"</span><span class="fu">:</span> <span class="st">"adv_gi41_qspm_allcom"</span><span class="fu">,</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"adv_gi41_qspm_allcom"</span><span class="fu">,</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"part_number"</span><span class="fu">:</span> <span class="st">"gi_dedicated_qspm"</span><span class="fu">,</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"uid"</span><span class="fu">:</span> <span class="st">"cpadmin"</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>*/}</p>
+<p>And now let’s submit the request. Our API url is <code>https://guardium.apps.gi.thinkforward.work/api/v3/tenants</code>. This is the URL we set in the CR.</p>
+<p>:::note[Using an insecure hostname] If you are using an insecure hostname, make sure to use that value for the API URL. The local resolution to the external IP of the load balancer should have already been configured in your local <code>hosts</code> file.</p>
+<p>For example</p>
+<pre><code>https://guardium.apps.gi.guardium-insights.com/api/v3/tenants</code></pre>
+<p>:::</p>
+<pre class="tsx"><code>curl -k -X 'POST' \
+  'https://guardium.apps.gi.thinkforward.work/api/v3/tenants' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Basic $AUTH" \
+  -d '{
+  "async": false,
+  "external_id": "adv_gi41_qspm_allcom",
+  "name": "adv_gi41_qspm_allcom",
+  "part_number": "gi_dedicated_qspm",
+  "uid": "cpadmin"
+}'</code></pre>
+<p>Sometimes the command runs and nothing happens for awhile. To fix this problem change <code>"async": false</code> to <code>"async": true</code>.</p>
+<p>When the tenant is created, the tenant id should be returned</p>
+<pre class="tsx"><code>{"tenant_id":"TNT_ACCKEBT4ZIRQW9YRRKCRJH"}</code></pre>
+</section>
+<section id="verify-the-tenant-creation" class="level3">
+<h3 class="anchored" data-anchor-id="verify-the-tenant-creation">Verify the tenant creation</h3>
+<p>We set the URL for Guardium Insights to <code>guardium.apps.gi.thinkforward.work</code> in our CR. Now open this in a browser.</p>
+<p>The console url should open. Login with <code>cpadmin</code> and the password you retrieved and set to <code>$CPPASS</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/guardium_login01.png" class="img-fluid figure-img"></p>
+<figcaption>GuardiumLogin01</figcaption>
+</figure>
+</div>
+<p>Select the upper rightmost icon and select the QS tenant under <code>Account</code> dropdown. Then click the <code>IBM Guardium</code> logo in the upper left to open the console for the QS tenant.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/guardium_login03.png" class="img-fluid figure-img"></p>
+<figcaption>GuardiumLogin02</figcaption>
+</figure>
+</div>
+<p>The console should open.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/guardium_login04.png" class="img-fluid figure-img"></p>
+<figcaption>GuardiumLogin03</figcaption>
+</figure>
+</div>
+<p>{/* ### Stupid error tricks</p>
+<p>ldap pods are stuck. One is in an error state due to insufficient ephemeral storage (wtf)</p>
+<pre class="tsx"><code>kubectl get pods | grep ldap
+c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b                                0/1     Error                   0                 18h
+c-gi-eks-db2-ldap-6bdbdf8fc7-kmqdx                                0/1     Running                 0                 7h1m
+</code></pre>
+<p>We describe the errored pod</p>
+<p>```tsx {21-23} kubectl describe pod c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b</p>
+<p>Name: c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b Namespace: openshift-marketplace Priority: 0 Service Account: account-openshift-marketplace-gi-eks-db2 Node: ip-192-168-17-40.ec2.internal/192.168.17.40 Start Time: Tue, 03 Sep 2024 15:50:04 -0400 Labels: app=gi-eks-db2 formation_id=gi-eks-db2 pod-template-hash=6bdbdf8fc7 role=ldap Annotations: cloudpakId: 5ed3ce3e032545a0a2a17bf2b6c23dcd cloudpakMetric: RESOURCE_UNIT cloudpakName: IBM Security Guardium Package SW productChargedContainers: All productCloudpakRatio: 1:100 productID: 4c49ee7d8da44cf9bf2da48fc8fabb11 productMetric: MANAGED_VIRTUAL_SERVER productName: IBM Security Guardium Insights Status: Failed Reason: Evicted Message: Pod ephemeral local storage usage exceeds the total limit of containers 5Mi.</p>
+<pre><code>
+The other pod is hung because this pod hasn't come up. They both have the same resource restrictions. Just WTF.
+
+Other errors
+
+```tsx
+kubectl get pods | grep db2u
+c-gi-eks-db2-db2u-0                                               0/1     Init:CrashLoopBackOff   211 (2m41s ago)   18h</code></pre>
+<p>db2 pod is stuck in a crash loop.</p>
+<pre class="tsx"><code>Status:           Pending
+IP:               192.168.31.213
+IPs:
+  IP:  192.168.31.213
+Init Containers:
+  instdb:
+    Container ID:  containerd://28ce603c5c63398d080938e3d37dbfaa7fdea60f5b71ca5e53c0a51a5ecdc5f6
+    Image:         icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
+    Image ID:      icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Command:
+      /bin/sh
+      -c
+      /Db2wh_preinit/instdb_entrypoint.sh
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Wed, 04 Sep 2024 09:54:45 -0400
+      Finished:     Wed, 04 Sep 2024 09:54:54 -0400
+    Ready:          False
+    Restart Count:  211</code></pre>
+<p>the <code>initdb</code> init container in the pod is failing for… reasons. Just awesome. */}</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ibm-client-engineering\.github\.io\/solution-journal-quantum-safe\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../src/guardium_insights/eks/02_cluster-build.html" class="pagination-link" aria-label="EKS Cluster Build">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">EKS Cluster Build</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../src/guardium_insights/04_optional_services.html" class="pagination-link" aria-label="Optional Services">
+        <span class="nav-page-text">Optional Services</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<div class="listitem">
+<a href="https://ibm.com" rel="noopener noreferrer" class="footerLogo"><img src="https://www.ibm.com/brand/experience-guides/developer/8f4e3cc2b5d52354a6d43c8edba1e3c9/02_8-bar-reverse.svg" alt="IBM Logo" class="footer__logo themedComponent_node_modules-@docusaurus-theme-common-lib-components-ThemedComponent-styles-module themedComponent--light_node_modules-@docusaurus-theme-common-lib-components-ThemedComponent-styles-module" width="250" height="250"></a>
+</div>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
