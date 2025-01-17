@@ -37,14 +37,38 @@ website:
       contents:
         - href: index.qmd
           text: Problem Definition
-        - section: Solution Overview
+        - href: overview.qmd
+          text: Overview
+#        - section: Solution Overview
+#          contents:
+#          - text: Prepare
+#            href: src/solution_overview/prepare.qmd
+#          - text: Environment 
+#            href: src/solution_overview/environment.qmd
+#          - text: Troubleshooting
+#            href: src/solution_overview/troubleshooting.qmd
+        - section: QSR
           contents:
-          - text: Prepare
-            href: src/solution_overview/prepare.qmd
-          - text: Environment 
-            href: src/solution_overview/environment.qmd
-          - text: Troubleshooting
-            href: src/solution_overview/troubleshooting.qmd
+            - section: Adaptive Proxy
+              contents:
+                - text: Installation
+                  href: src/qsr/adaptive_proxy/01_installation.qmd
+                - text: Configuration
+                  href: src/qsr/adaptive_proxy/02_configuration.qmd
+            - section: Performance Test Harness
+              contents:
+                - text: Installation
+                  href: src/qsr/performance_test_harness/01_installation.qmd
+                - text: Usage
+                  href: src/qsr/performance_test_harness/02_usage.qmd
+        - section: QSE 
+          contents:
+            - text: Installation
+              href: src/qse/01_installation.qmd
+            - text: Scanning
+              href: src/qse/02_scanning.qmd
+
+
         - section: Implementation Methodology
           contents:
           - text: Step One
