@@ -1,54 +1,55 @@
 ---
 title: Pre-Reqs
-description: Running Guardium Insights with QSPM on EKS
-sidebar:
-  label: Pre-Requisites
-  order: 1
+format:
+  html:
+    toc: true
+lightbox: true
+date: last-modified
 ---
 
-:::note[IBM Entitlement Key]
+::: {.callout-note}
+## IBM Entitlement Key
 It's important to note that you will need an IBM Entitlement Key to install the IBM Foundational Services as well as Guardium Insights.
 
 This can be retrieved from [here](https://myibm.ibm.com/products-services/containerlibrary)
 :::
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
 ## Installing required cli tools
 
-### Windows Exec Path
+#### Windows Exec Path
 If your environment is Windows, let's set a path for some of these executables to run from:
 
 Right click on the Windows badge at the lower left hand slide and select `System`
 
-![WindowsPath01](../../../../assets/images/WindowsPath01.png)
+![](/images/WindowsPath01.png)
 
 Scroll down and select `Advanced system settings`
 
-![WindowsPath02](../../../../assets/images/WindowsPath02.png)
+![](/images/WindowsPath02.png)
 
 Select `Environment Variables`
 
-![WindowsPath03](../../../../assets/images/WindowsPath03.png)
+![](/images/WindowsPath03.png)
 
 Under the env variables, select Path under `System variables` and hit `Edit`
 
-![WindowsPath04](../../../../assets/images/WindowsPath04a.png)
+![](/images/WindowsPath04a.png)
 
 Click `New` and let's create a new directory under `C:` called `Bin`
 
-![WindowsPath06](../../../../assets/images/WindowsPath06.png)
+![](/images/WindowsPath06.png)
 
 Once that is saved, create the new directory under `C:`
 
-![WindowsPath07](../../../../assets/images/WindowsPath07.png)
+![](/images/WindowsPath07.png)
 
 `C:\Bin` is where we will drop some of our executables.
 
 ### Package managers
 
-<Tabs syncKey="OS">
-<TabItem label="MacOS">
+::: {.panel-tabset}
+
+## MacOS
 
 **[Homebrew for MacOS](https://brew.sh/)**
 
@@ -66,8 +67,7 @@ MacOS and Linux use different versions of `sed`. Let's install `Gnu-Sed` for Mac
 brew install gnu-sed
 ```
 
-</TabItem>
-<TabItem label="Windows">
+## Windows
 
 **[Scoop for Windows](https://scoop.sh/)**
 
@@ -79,15 +79,13 @@ Run the following commands in a powershell window one line at a time:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 ```
-</TabItem>
-</Tabs>
-
+:::
 
 ### Installing AWS CLI
 
-<Tabs syncKey="OS">
-  <TabItem label="MacOS">
-Download the client
+::: {.panel-tabset}
+
+## MacOS
 
 ```zsh
 curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
@@ -98,13 +96,14 @@ Install it with sudo (to use for all users)
 ```zsh
 sudo installer -pkg ./AWSCLIV2.pkg -target /
 ```
-</TabItem>
-<TabItem label="Windows">
+
+## Windows
+
 ```powershell
 msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
 ```
-</TabItem>
-</Tabs>
+
+:::
 
 Now let's configure our client env
 
@@ -116,34 +115,38 @@ Answer all the questions with the info you got for your account.
 
 ### Installing helm
 
-<Tabs syncKey="OS">
-  <TabItem label="MacOS">
+::: {.panel-tabset}
+
+## MacOS
+
 
 ```zsh
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
-  </TabItem>
-  <TabItem label="Windows">
+
+## Windows
+
 To install `helm` to windows with `scoop`
 
 ```powershell
 scoop install helm
 ```
-  </TabItem>
-</Tabs>
+
+:::
 
 ### Installing `kubectl`
 
-<Tabs syncKey="OS">
-  <TabItem label="MacOS">
+::: {.panel-tabset}
+
+## MacOS
 
 
-Then install `kubectl` with
+Install `kubectl` with
 ```zsh
 brew install kubectl
 ```
-  </TabItem>
-  <TabItem label="Windows">
+
+## Windows
 
 In a powershell window, download the `kubectl` binary from Amazon S3
 
@@ -152,31 +155,25 @@ curl.exe -OL https://s3.us-west-2.amazonaws.com/amazon-eks/1.30.2/2024-07-12/bin
 ```
 Copy the binary to `C:\Bin`
 
-  </TabItem>
-</Tabs>
+:::
 
 ### Installing `eksctl`
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+::: {.panel-tabset}
+
+## MacOS
+
 To install `eksctl` we're going to use `homebrew`
 
-```
+```zsh
 brew tap weaveworks/tap
 
 brew install weaveworks/tap/eksctl
 ```
-</TabItem>
-<TabItem label="Windows">
+
+## Windows
 
 In a powershell window:
-
-{/*
-```powershell
-curl.exe -OL https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_windows_amd64.zip
-Expand-Archive -LiteralPath 'C:\Users\Administrator\eksctl_windows_amd64.zip' -DestinationPath 'C:\Bin'
-```
-*/}
 
 ```powershell
 scoop install eksctl
@@ -191,13 +188,13 @@ kubectl version: v1.30.2-eks-1552ad0
 OS: windows
 ```
 
-
-</TabItem>
-</Tabs>
+:::
 
 ### Installing Openshift CLI
 
-:::note
+
+::: {.callout-note}
+
 the `oc` cli is required to work with the IBM Cloud Pak plugin. This plugin is needed for part of the GI installation.
 
 It also needs to be `4.10.x`
@@ -206,8 +203,9 @@ We are installing `4.10.67`
 
 :::
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+::: {.panel-tabset}
+
+## MacOS
 
 If `/usr/local/bin` doesn't exist, create the directory path.
 
@@ -228,8 +226,9 @@ Verify this with:
 oc version --client
 Client Version: 4.10.67
 ```
-</TabItem>
-<TabItem label="Windows">
+
+## Windows
+
 In a powershell window, download the `openshift-cli` tar gz.
 
 ```powershell
@@ -249,15 +248,16 @@ Client Version: 4.10.67
 ```
 Verify the installation in a powershell window
 
-</TabItem>
-</Tabs>
+:::
 
 ### Installing oc-ibm_pak
 
 `oc-ibm_pak` is a plugin for the `oc` cli for managing cloud-paks. 
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+::: {.panel-tabset}
+
+## MacOS
+
 Download the plugin with `curl`. At this writing, version `1.15.1` is the most recent.
 
 
@@ -277,8 +277,7 @@ Verify the installation
 oc ibm-pak --help
 ```
 
-</TabItem>
-<TabItem label="Windows">
+## Windows
 
 In a powershell window, download the plugin with `curl.exe`. At this writing, version `1.15.1` is the most recent.
 
@@ -301,15 +300,15 @@ Verify the installation
 oc ibm-pak --help
 ```
 
-</TabItem>
-</Tabs>
+:::
+
+::: {.hidden}
 
 ### Install IBM Case CLI
 
-{/*This seems to only be available internally https://github.ibm.com/CloudPakOpenContent/case-spec-cli/releases/tag/v2.7.2 */}
+::: {.panel-tabset}
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+## MacOS
 
 Download the latest release of the Case CLI
 ```zsh
@@ -324,18 +323,19 @@ TBD
 Verify that it's available
 ```zsh
 ```
-</TabItem>
-<TabItem label="Windows">
+
+## Windows
 
 **TBD**
 
-</TabItem>
-</Tabs>
+:::
+:::
 
 ### Installing the Operator-SDK
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+::: {.panel-tabset}
+
+## MacOS
 
 Install the `operator-sdk` with homebrew
 ```zsh
@@ -349,8 +349,7 @@ operator-sdk version
 operator-sdk version: "v1.35.0", commit: "e95abdbd5ccb7ca0fd586e0c6f578e491b0a025b", kubernetes version: "v1.28.0", go version: "go1.21.11", GOOS: "darwin", GOARCH: "arm64"
 ```
 
-</TabItem>
-<TabItem label="Windows">
+## Windows
 
 Windows installation for the operator-sdk is a little more complicated...
 
@@ -359,17 +358,16 @@ Install golang
 scoop install go
 ```
 
-{/* Still in progress */}
+:::
 
-</TabItem>
-</Tabs>
-
-## Downloading the case file
+### Downloading the case file
 
 Retrieve the `ibm-guardium-data-security-center` case file. As of this writing the latest is 2.6.0.
 
-<Tabs syncKey="OS">
-<TabItem label="MacOs">
+::: {.panel-tabset}
+
+## MacOS
+
 ```tsx
 wget https://github.com/IBM/cloud-pak/raw/master/repo/case/ibm-guardium-data-security-center/2.6.0/ibm-guardium-data-security-center-2.6.0.tgz
 ```
@@ -381,9 +379,8 @@ tar zxf ibm-guardium-data-security-center-2.6.0.tgz
 
 This should create a directory called `ibm-guardium-data-security-center`
 
-</TabItem>
-<TabItem label="Windows">
-**TBD**
-</TabItem>
-</Tabs>
+## Windows
 
+**TBD**
+
+:::
