@@ -6,7 +6,7 @@ language:
       search-text-placeholder: Search
 
 website:
-  title: Solutions Hub
+  title: IBM Quantum Safe Encryption
   favicon: images/bee.png
   page-navigation: true
   search: 
@@ -18,7 +18,11 @@ website:
     logo: images/IBMlogo.png
     right: 
       - icon: github
-        href: https://github.com/ibm-client-engineering
+        menu: 
+          - text: Check us out on Github
+            href: https://github.com/ibm-client-engineering
+          - text: Look at this repo on Github
+            href: https://github.com/ibm-client-engineering/solution-journal-quantum-safe
       - icon: linkedin
         menu:
           - text: Share on your LinkedIn
@@ -33,22 +37,64 @@ website:
       contents:
         - href: index.qmd
           text: Problem Definition
-        - section: Solution Overview
+        - href: overview.qmd
+          text: Overview
+#        - section: Solution Overview
+#          contents:
+#          - text: Prepare
+#            href: src/solution_overview/prepare.qmd
+#          - text: Environment 
+#            href: src/solution_overview/environment.qmd
+#          - text: Troubleshooting
+#            href: src/solution_overview/troubleshooting.qmd
+        - section: QSR
           contents:
-          - text: Prepare
-            href: src/solution_overview/prepare.qmd
-          - text: Environment 
-            href: src/solution_overview/environment.qmd
-          - text: Troubleshooting
-            href: src/solution_overview/troubleshooting.qmd
-        - section: Implementation Methodology
+            - section: Adaptive Proxy
+              contents:
+                - text: Installation
+                  href: src/qsr/adaptive_proxy/01_installation.qmd
+                - text: Configuration
+                  href: src/qsr/adaptive_proxy/02_configuration.qmd
+            - section: Performance Test Harness
+              contents:
+                - text: Installation
+                  href: src/qsr/performance_test_harness/01_installation.qmd
+                - text: Usage
+                  href: src/qsr/performance_test_harness/02_usage.qmd
+        - section: QSE 
           contents:
-          - text: Step One
-            href: src/implementation_methodology/stepone-imp.qmd
-          - text: Step Two
-            href: src/implementation_methodology/steptwo-imp.qmd
-          - text: Step Three
-            href: src/implementation_methodology/stepthree-imp.qmd
+            - text: Installation
+              href: src/qse/01_installation.qmd
+            - text: Scanning
+              href: src/qse/02_scanning.qmd
+        - section: Guardium Insights
+          contents:
+            - section: EC2
+              contents:
+                - text: Prerequisites
+                  href: src/guardium_insights/ec2/01-prereqs.qmd
+                - text: Preparation
+                  href: src/guardium_insights/ec2/02-preparation.qmd
+#                - text: UPI Installation
+#                  href: src/guardium_insights/ec2/03-upi_install.qmd
+            - section: EKS
+              contents:
+                - text: Prerequisites
+                  href: src/guardium_insights/eks/01_pre-reqs.qmd
+                - text: EKS Cluster Build
+                  href: src/guardium_insights/eks/02_cluster-build.qmd
+            - text: Guardium Insights Installation
+              href: src/guardium_insights/03_gi-install.qmd
+            - text: Optional Services
+              href: src/guardium_insights/04_optional_services.qmd
+#        - section: Implementation Methodology
+#          contents:
+#          - text: Step One
+#            href: src/implementation_methodology/stepone-imp.qmd
+#          - text: Step Two
+#            href: src/implementation_methodology/steptwo-imp.qmd
+#          - text: Step Three
+#            href: src/implementation_methodology/stepthree-imp.qmd
         - text: Key Takeaways
           href: src/key-takeaway.qmd
 
