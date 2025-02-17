@@ -1,6 +1,8 @@
 ---
 title: Installation
-description: QSR Adaptive Proxy installation
+format: 
+  html:
+    toc: true
 ---
 
 :::{.callout-note}
