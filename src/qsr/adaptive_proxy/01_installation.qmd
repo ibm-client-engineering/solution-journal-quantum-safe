@@ -3,7 +3,9 @@ title: Installation
 description: QSR Adaptive Proxy installation
 ---
 
-:::note[Useful links]
+:::{.callout-note}
+
+# Useful Links
 
 https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-installing-adaptive
 
@@ -25,7 +27,9 @@ The adaptive proxy requires a docker or podman host to run the container.
 
 For our example, we're going to set up the adaptive proxy to act as a loadbalancer for a kubernetes cluster.
 
-:::note[Useful Links]
+:::{.callout-note}
+
+# Useful Links
 
 https://docs.docker.com/engine/install/
 
@@ -34,11 +38,11 @@ https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=pro
 
 ## Pre-Reqs
 
-:::note
+:::{.callout-note}
 
 For Fedora, make sure the following packages are installed for `cron`.
 
-```tsx
+```bash
 sudo dnf -y install cronie
 ```
 
@@ -48,7 +52,7 @@ sudo dnf -y install cronie
 
 On our gateway host we are running Fedora 40 Server:
 
-```tsx
+```bash
 sudo dnf remove docker \
                   docker-client \
                   docker-client-latest \
@@ -63,49 +67,49 @@ sudo dnf remove docker \
 ```
 
 Set up the repository
-```tsx
+```bash
 sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 ```
 
 Install Docker Engine, containerd, and Docker Compose
 
-```tsx
+```bash
 sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 Add your local user to the `docker` group
 
-```tsx 
+```bash
 sudo usermod -G docker,wheel kramerro
 ```
 
 Start up docker
-```tsx
+```bash
 sudo systemctl start docker
 ```
 
 ### Installing jq
 
 Install jq v1.7+
-```tsx
+```bash
 sudo dnf -y install jq
 ```
 
 ### Installing Java
 
 Install [sdkman](https://sdkman.io/install/)
-```tsx
+```bash
 curl -s "https://get.sdkman.io" | sudo bash
 ```
 
 Login as root to source the environment
-```tsx
+```bash
 sudo su -
 ```
 
 Install Java 21 (as root)
-```tsx
+```bash
 sdk install java 21.0.2-open
 ```
 
@@ -117,7 +121,7 @@ Search for `IBM Quantum Safe Remediator Adaptive Proxy`.
 Once downloaded, the file should be named `IQSRAP_<version>_Linux_EN.zip`
 
 Extract to your gateway host
-```tsx
+```bash
 [kramerro@eksa-admin ~]$ unzip IQSRAP_<version>_Linux_EN.zip
 Archive:  IQSRAP_<version>_Linux_EN.zip
   inflating: M0J90EN/adaptiveproxy_<version>.tar
@@ -125,13 +129,13 @@ Archive:  IQSRAP_<version>_Linux_EN.zip
 
 Make the adaptive proxy directory in `/opt` and extract the tar file there
 
-```tsx
+```bash
 sudo tar xvf M0J90EN/adaptiveproxy_<version>.tar -C /opt/adaptive-proxy
 ```
 
 Now run the installer script
 
-```tsx
+```bash
 cd /opt/adaptive-proxy/workdir
 
 sudo ./install.sh
@@ -143,7 +147,7 @@ For all the algorithms, just hit enter to accept the defaults.
 
 After installation, verify that the certificates have been generated
 
-```tsx
+```bash
 ll certificates/ca
 
 -rw-r--rw- 1 1012 1012  635 Jun 27 11:30 CA_default.crt
@@ -176,7 +180,7 @@ ll certificates/leaf
 
 Finally verify the images are available
 
-```tsx
+```bash
 $ docker images
 REPOSITORY                                                  TAG       IMAGE ID       CREATED         SIZE
 de.icr.io/qs-remediator/adaptive-proxy-provider-ubi-micro   1.0.1     1f345e88fb04   2 weeks ago     530MB

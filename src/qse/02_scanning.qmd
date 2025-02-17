@@ -3,7 +3,6 @@ title: Scanning
 description: QSE Usage
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Scanning in VSCode
 
@@ -19,7 +18,7 @@ Let's scan the code base for the `cli` for QSE
 
 In our example, we've created a directory called `QSE` and extracted all the installation elements of QSE.
 
-![Scanning1](../../../assets/images/scanning1.png)
+![Scanning1](/images/scanning1.png)
 
 Open that directory in VSCode.
 
@@ -28,31 +27,31 @@ cd QSE
 
 code .
 ```
-![Scanning2](../../../assets/images/scanning2.png)
+![Scanning2](/images/scanning2.png)
 
 On VSCode, open a new terminal in the code window. This can be done with the following key combo: Ctrl-Shift-Backtick(`)
 
-![Scanning3](../../../assets/images/scanning3.png)
+![Scanning3](/images/scanning3.png)
 
 In windows this will open a powershell terminal
 
 Press Ctlr-Shift-P to open the Command Palette and search for `Quantum Safe Explorer`. Select Quantum Safe Explorer Scan.
 
-![Scanning4](../../../assets/images/scanning4.png)
+![Scanning4](/images/scanning4.png)
 
 The following notification should pop up
 
-![Scanning5](../../../assets/images/scanning5.png)
+![Scanning5](/images/scanning5.png)
 
 Let it scan until it completes.
 
 When the scan completes, you should see the following directories show up in the Explorer window of VSCode
 
-![Scanning6](../../../assets/images/scanning6.png)
+![Scanning6](/images/scanning6.png)
 
 We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs and charts.
 
-![Scanning7](../../../assets/images/scanning7.png)
+![Scanning7](/images/scanning7.png)
 
 ## Executing the IBM Quantum Safe Explorer CLI
 
@@ -88,11 +87,11 @@ Next, run the following **help** command
 
 Before you officially perform the script run, it is helpful to know the list of required parameters:
 
-![QSEmacos1](../../../assets/images/macos-qse-cli-required-params.png)
+![QSEmacos1](/images/macos-qse-cli-required-params.png)
 
 As well as the optional parameters:
 
-![QSEmacos2](../../../assets/images/macos-qse-cli-optional-params.png)
+![QSEmacos2](/images/macos-qse-cli-optional-params.png)
 
 You initiate a scan using the required **program package path**. The command can be run for single or multiple languages. Here is an example:
 
@@ -192,7 +191,7 @@ The results of your scan are written to a `findings.json` file and can be found 
 
 The file is quite verbose. Here's a snippet of the result:
 
-![Accessing1](../../../assets/images/scan-results-json.png)
+![Accessing1](/images/scan-results-json.png)
 
 
 
@@ -204,7 +203,7 @@ As of IBM Quantum Safe Explorer 1.0.1 release, you can now view the CLI scan res
 
 When you execute a scan, a **qs_explorer_result** folder is generated along with the **qs_scan_result** folder.
 
-![Opening1](../../../assets/images/scan-results-directory.png)
+![Opening1](/images/scan-results-directory.png)
 
 > **Note:**
 > To view the results, you need to have the Visual Studio Code extension installed on your system. 
@@ -213,20 +212,20 @@ When you execute a scan, a **qs_explorer_result** folder is generated along with
 
 Navigate to the **File** menu drop down, select the **Open Folder** to locate your `/<package-path>` folder:
 
-![Opening2](../../../assets/images/vs-code-find-project.png)
+![Opening2](/images/vs-code-find-project.png)
 
 Once you have found your `/<package-path>` simply open it to populate the project in the Visual Studio Code Explorer view:
 
-![Opening3](../../../assets/images/vs-code-open-project.png)
+![Opening3](/images/vs-code-open-project.png)
 
 To populate the **SCAN RESULTS**, we must first navigate to the **QUANTUM SAFE EXPLORER** tab. This then populates the **SCAN RESULTS** menu. That menu drop down then brings you to the `Crypto Artifacts`. For example:
 
-![Opening4](../../../assets/images/vs-code-quantum-safe-explorer.png)
+![Opening4](/images/vs-code-quantum-safe-explorer.png)
 
 To view the results dashboard, you simply toggle to the **QUANTUM SAFE EXPLORER DASHBOARD** tab and click the **+** symbol on the right hand side to expand the view:
 
-![Opening5](../../../assets/images/vs-code-quantum-safe-dashboard-tab.png)
+![Opening5](/images/vs-code-quantum-safe-dashboard-tab.png)
 
 This should then expose the dashboard as shown below:
 
-![Opening6](../../../assets/images/vs-code-quantum-safe-dashboard-view.png)
+![Opening6](/images/vs-code-quantum-safe-dashboard-view.png)
