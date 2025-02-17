@@ -344,34 +344,6 @@ Click the `Security` panel
 
 Here we can see that `X25519Kyber768Draft00` is one of the encryption algorithms and that's Quantum Safe.
 
-## Diagram of the Proxied Site
-
-```d2 sketch pad=50
-direction: left
-dockerbot1: "dockerbot21:8443\n(adaptive proxy)\nTLS encryption\n happens here" {
-  style.fill: transparent
-  style.font-size: 12
-  style.font: mono
-  width: 141
-  height: 95
-}
-Image: "" {
-  icon: https://icons.terrastruct.com/aws/_General/Users_light-bg.svg
-  shape: image
-}
-Image -> dockerbot1: TLS
-Square: "apache-host01\n(example site)\nNo TLS" {
-  style.fill: transparent
-  style.font-size: 12
-  style.font: mono
-  width: 141
-  height: 95
-}
-dockerbot1 -> Square: "No-TLS\n"
-Square -> dockerbot1: "No-TLS\n"
-dockerbot1 -> Image: TLS
-```
-
 ## Troubleshooting
 
 ### Adaptive Proxy docker container will not start
@@ -383,7 +355,7 @@ the docker container.
 If you see the following message, it means that from within the docker container, the
 host name of your site cannot be resolved.
 
-```
+```bash
 [emerg] 1#1: host not found in upstream "quantum-site" in /etc/nginx/conf.d/adaptive.proxy.location.conf:18
 ```
 

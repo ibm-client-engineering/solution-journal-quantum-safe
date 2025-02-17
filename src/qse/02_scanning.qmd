@@ -1,12 +1,16 @@
 ---
 title: Scanning
-description: QSE Usage
+format: 
+  html:
+    toc: true
 ---
 
 
 ## Scanning in VSCode
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Useful Links
 
 Initiating scans as described [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=extension-initiating-scan)
 
@@ -22,7 +26,7 @@ In our example, we've created a directory called `QSE` and extracted all the ins
 
 Open that directory in VSCode.
 
-```zsh
+```bash
 cd QSE
 
 code .
@@ -55,7 +59,9 @@ We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs
 
 ## Executing the IBM Quantum Safe Explorer CLI
 
-:::note[Windows]
+::: {.callout-note}
+
+## Windows
 
 Make sure that Git Bash is installed and use a Git Bash terminal window for the instructions below.
 
@@ -65,25 +71,25 @@ Make sure that Git Bash is installed and use a Git Bash terminal window for the 
 Change directory to `M0GT6EN` where ever you had it extracted and run the following command:
 
 
-```zsh
+```bash
 /usr/bin/sed -i 's/^RSP_LICENSE_ACCEPTED=.*/RSP_LICENSE_ACCEPTED=true/' LicenseAcceptance.config
 ```
 
 To make sure you have the correct permissions to run the shell script first run:
 
-```zsh
+```bash
 chmod +x cli.sh
 ```
 
 Next, run the following **help** command 
 
-```zsh
+```bash
 ./cli.sh -h 
 ```
 
-> **Note:**
-> 
-> The run will also point out that you have already accepted the licensing agreement.
+::: {.callout-note}
+The run will also point out that you have already accepted the licensing agreement.
+:::
 
 Before you officially perform the script run, it is helpful to know the list of required parameters:
 
@@ -97,9 +103,10 @@ You initiate a scan using the required **program package path**. The command can
 
 `/cli.sh -i <package-path> -clean -nmo -ccdir resource:class-catalog -l .java`
 
-> **Note:**
-> 
-> If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the **Help** command by running `./cli.sh -h` for more details on the various parameters.
+::: {.callout-note}
+
+If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the **Help** command by running `./cli.sh -h` for more details on the various parameters.
+:::
 
 Here is an example of a completed scan with a specified program *package path*:
 
@@ -176,10 +183,10 @@ Version 1.23.0.1065 -- Generated On Tue Jul 23 13:22:12 PDT 2024
 [23/07/2024 13:22:15.756] Running Task                  : com.ibm.quantumsafe.sca.framework.common.impl.ProfileProcessImpl
 ```
 
-> **Note:**
-> When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application. 
-> 
->
+::: {.callout-note}
+When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application. 
+::: 
+
 
 
 ## Accessing the IBM Quantum Safe Explorer CLI scan results
@@ -205,10 +212,10 @@ When you execute a scan, a **qs_explorer_result** folder is generated along with
 
 ![Opening1](/images/scan-results-directory.png)
 
-> **Note:**
-> To view the results, you need to have the Visual Studio Code extension installed on your system. 
-> 
->
+::: {.callout-note}
+To view the results, you need to have the Visual Studio Code extension installed on your system. 
+:::
+
 
 Navigate to the **File** menu drop down, select the **Open Folder** to locate your `/<package-path>` folder:
 
