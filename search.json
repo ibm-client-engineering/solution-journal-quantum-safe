@@ -833,19 +833,39 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Project Name",
+    "title": "Quantum Safe",
     "section": "",
-    "text": "SL",
+    "text": "PL",
     "crumbs": [
       "Problem Definition"
     ]
   },
   {
-    "objectID": "index.html#the-why",
-    "href": "index.html#the-why",
-    "title": "Project Name",
-    "section": "The Why",
-    "text": "The Why\n(High-level description of the business challenges and client pain points)\n\nProblem Details\nSed elementum convallis quam, sed tempor massa dictum sit amet. Phasellus ultricies ante id massa scelerisque interdum. Vestibulum vitae volutpat felis. Sed metus magna, malesuada vitae odio eu, volutpat aliquam odio. Mauris eget purus ex. Praesent nec gravida lorem. Nam rhoncus bibendum nulla at viverra. Curabitur at diam sem. Pellentesque semper venenatis lorem quis pharetra. Cras venenatis consectetur ante vitae mattis. Etiam in augue vel nunc euismod sodales vitae eu arcu.\nMaecenas tempus ultricies sapien, porta suscipit est facilisis quis. Ut imperdiet massa condimentum sapien lobortis, dictum eleifend enim cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean interdum vel velit non dictum. Suspendisse bibendum neque ut nulla condimentum, quis dictum sem consectetur. Integer quis arcu sem. Sed condimentum dolor sed libero posuere, sed tristique nulla cursus. In hac habitasse platea dictumst. Aenean ullamcorper condimentum risus, at semper tortor consequat eu.\nPellentesque a semper nisl, a vehicula libero. Mauris aliquam porttitor nibh ut porttitor. Praesent eu sem lacinia, volutpat dolor id, interdum enim. Etiam sit amet urna rhoncus, iaculis ex hendrerit, suscipit urna. Duis id porta massa, ac ultrices nulla. Vestibulum ut rutrum lacus, ac vulputate libero. Sed metus massa, maximus ac vulputate nec, lacinia sit amet felis.\n\n\nAdditional Context\nSed elementum convallis quam, sed tempor massa dictum sit amet. Phasellus ultricies ante id massa scelerisque interdum. Vestibulum vitae volutpat felis. Sed metus magna, malesuada vitae odio eu, volutpat aliquam odio. Mauris eget purus ex. Praesent nec gravida lorem. Nam rhoncus bibendum nulla at viverra. Curabitur at diam sem. Pellentesque semper venenatis lorem quis pharetra. Cras venenatis consectetur ante vitae mattis. Etiam in augue vel nunc euismod sodales vitae eu arcu.\nMaecenas tempus ultricies sapien, porta suscipit est facilisis quis. Ut imperdiet massa condimentum sapien lobortis, dictum eleifend enim cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean interdum vel velit non dictum. Suspendisse bibendum neque ut nulla condimentum, quis dictum sem consectetur. Integer quis arcu sem. Sed condimentum dolor sed libero posuere, sed tristique nulla cursus. In hac habitasse platea dictumst. Aenean ullamcorper condimentum risus, at semper tortor consequat eu.\nPellentesque a semper nisl, a vehicula libero. Mauris aliquam porttitor nibh ut porttitor. Praesent eu sem lacinia, volutpat dolor id, interdum enim. Etiam sit amet urna rhoncus, iaculis ex hendrerit, suscipit urna. Duis id porta massa, ac ultrices nulla. Vestibulum ut rutrum lacus, ac vulputate libero. Sed metus massa, maximus ac vulputate nec, lacinia sit amet felis.",
+    "objectID": "index.html#business-statement",
+    "href": "index.html#business-statement",
+    "title": "Quantum Safe",
+    "section": "Business Statement",
+    "text": "Business Statement\nQuantum computing is ushering in a new cryptographic era.\n\nQuantum Computers can in principle, perform certain mathematical computations exponentially faster than a classical computer will.\nThere will be a time when the power of quantum computing may crack public key cryptographic security protection.\n\nYour data and security is already at risk for quantum attacks.\n\nCryptography impacts everything. Consider your cryptographic use in four broad areas.\n\nInfrastructure\n\nApplications\n\nData protection\n\nKey Management",
+    "crumbs": [
+      "Problem Definition"
+    ]
+  },
+  {
+    "objectID": "index.html#threats",
+    "href": "index.html#threats",
+    "title": "Quantum Safe",
+    "section": "Threats",
+    "text": "Threats\n\nHarvest now, decrypt later Hackers can collect data now for decryption when quantum computers are powerful enough.\nReplacing most of the public-key systems currently in use will take 5 to 15 years\nLifetime of data means that sensitive data generated today that is not protected with quantum-safe algorithms is at risk now\n\nWith these considerations, many customers are asking the question: Ok, where do I start?\n\nIBM’s leadership in the quantum space will guide customers in preparing for a post-quantum cryptography world.",
+    "crumbs": [
+      "Problem Definition"
+    ]
+  },
+  {
+    "objectID": "index.html#proof-of-technology---scope",
+    "href": "index.html#proof-of-technology---scope",
+    "title": "Quantum Safe",
+    "section": "Proof of Technology - Scope",
+    "text": "Proof of Technology - Scope\nGoal Prove out the IBM Quantum Safe technologies. Demonstrate how they will help identify Cryptographic vulnerabilities and offer a plan of attack to protect their landscape from future Quantum Attacks. IBM Portfolio Products\n\nQuantum Safe Explorer Scan applications to discover cryptographic artifacts and vulnerabilities. Creates cryptographic inventory reports (CBOM).\nQuantum Safe Remediator\n\nAdaptive Proxy - protects communications between apps and end-user devices from quantum attacks. Positions proxy between your server & client’s\nPerformance Test Harness - test quantum safe algorithms performance in environment before deploying to production\n\n\n\n\n\nIBM Team Engaged\n\n\n\n\nClient Engineering\n\n\nQuantum Research\n\n\nCustomer Account Team\n\n\nIBM Consulting",
     "crumbs": [
       "Problem Definition"
     ]
