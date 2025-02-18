@@ -1,38 +1,67 @@
-
 ---
-title: "Project Name"
-subtitle: "Subtitle"
+title: "Quantum Safe"
 format: html
 ---
 ```{=html}
-<span class="dot">SL</span> &ensp;Samuel Lee&ensp;
+<span class="dot">PL</span> &ensp;Patrick Leddy&ensp;
 ```
 ```{=html}
-<span class="dot">BK</span> &ensp;Bo Kulbacki&ensp;
+<span class="dot">RK</span> &ensp;Ross Kramer&ensp;
+```
+```{=html}
+<span class="dot">MD</span> &ensp;Mat Davis&ensp;
+```
+```{=html}
+<span class="dot">FA</span> &ensp;Faraz Ahmad&ensp;
 ```
 <br>
 ---
 Description: "Project Name"
 ---
 
-## The Why
+## Business Statement
 
-(High-level description of the business challenges and client pain points)
+Quantum computing is ushering in a new cryptographic era.
 
-### Problem Details
+- Quantum Computers can in principle, perform certain mathematical computations exponentially **faster than a classical computer will**. 
+- There will be a time when the power of quantum computing may **crack public key cryptographic security protection**.  
+- Your **data and security** is already at risk for quantum attacks.  
+- Cryptography impacts **everything**. Consider your cryptographic use in four broad areas.  
+    - Infrastructure  
+    - Applications  
+    - Data protection  
+    - Key Management  
 
-Sed elementum convallis quam, sed tempor massa dictum sit amet. Phasellus ultricies ante id massa scelerisque interdum. Vestibulum vitae volutpat felis. Sed metus magna, malesuada vitae odio eu, volutpat aliquam odio. Mauris eget purus ex. Praesent nec gravida lorem. Nam rhoncus bibendum nulla at viverra. Curabitur at diam sem. Pellentesque semper venenatis lorem quis pharetra. Cras venenatis consectetur ante vitae mattis. Etiam in augue vel nunc euismod sodales vitae eu arcu.
+## Threats
 
-Maecenas tempus ultricies sapien, porta suscipit est facilisis quis. Ut imperdiet massa condimentum sapien lobortis, dictum eleifend enim cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean interdum vel velit non dictum. Suspendisse bibendum neque ut nulla condimentum, quis dictum sem consectetur. Integer quis arcu sem. Sed condimentum dolor sed libero posuere, sed tristique nulla cursus. In hac habitasse platea dictumst. Aenean ullamcorper condimentum risus, at semper tortor consequat eu.
+1. **Harvest now, decrypt later** Hackers can collect data now for decryption when quantum computers are powerful enough.
+2. **Replacing most of the public-key systems** currently in use will take 5 to 15 years
+3. **Lifetime of data** means that sensitive data generated today that is not protected with quantum-safe algorithms is at risk now
 
-Pellentesque a semper nisl, a vehicula libero. Mauris aliquam porttitor nibh ut porttitor. Praesent eu sem lacinia, volutpat dolor id, interdum enim. Etiam sit amet urna rhoncus, iaculis ex hendrerit, suscipit urna. Duis id porta massa, ac ultrices nulla. Vestibulum ut rutrum lacus, ac vulputate libero. Sed metus massa, maximus ac vulputate nec, lacinia sit amet felis.
+With these considerations, many customers are asking the question: **Ok, where do I start?**  
+
+#### <span style="color: blue;">IBM's leadership in the quantum space will guide customers in preparing for a post-quantum cryptography world.</span>
 
 
-### Additional Context
+## Proof of Technology - Scope
 
-Sed elementum convallis quam, sed tempor massa dictum sit amet. Phasellus ultricies ante id massa scelerisque interdum. Vestibulum vitae volutpat felis. Sed metus magna, malesuada vitae odio eu, volutpat aliquam odio. Mauris eget purus ex. Praesent nec gravida lorem. Nam rhoncus bibendum nulla at viverra. Curabitur at diam sem. Pellentesque semper venenatis lorem quis pharetra. Cras venenatis consectetur ante vitae mattis. Etiam in augue vel nunc euismod sodales vitae eu arcu.
+**Goal** Prove out the IBM Quantum Safe technologies. Demonstrate how they will help identify Cryptographic vulnerabilities and offer a plan of attack to protect their landscape from future Quantum Attacks.
+IBM Portfolio Products  
 
-Maecenas tempus ultricies sapien, porta suscipit est facilisis quis. Ut imperdiet massa condimentum sapien lobortis, dictum eleifend enim cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean interdum vel velit non dictum. Suspendisse bibendum neque ut nulla condimentum, quis dictum sem consectetur. Integer quis arcu sem. Sed condimentum dolor sed libero posuere, sed tristique nulla cursus. In hac habitasse platea dictumst. Aenean ullamcorper condimentum risus, at semper tortor consequat eu.
+- **Quantum Safe Explorer** Scan applications to discover cryptographic artifacts and vulnerabilities. Creates cryptographic inventory reports (CBOM).
+- **Quantum Safe Remediator** 
+    - *Adaptive Proxy* - protects communications between apps and end-user devices from quantum attacks. Positions proxy between your server & client's
+    - *Performance Test Harness* - test quantum safe algorithms performance in environment before deploying to production
 
-Pellentesque a semper nisl, a vehicula libero. Mauris aliquam porttitor nibh ut porttitor. Praesent eu sem lacinia, volutpat dolor id, interdum enim. Etiam sit amet urna rhoncus, iaculis ex hendrerit, suscipit urna. Duis id porta massa, ac ultrices nulla. Vestibulum ut rutrum lacus, ac vulputate libero. Sed metus massa, maximus ac vulputate nec, lacinia sit amet felis.
+**IBM Team Engaged**
 
+| Team                  |
+|-----------------------|
+| Client Engineering    |
+| Quantum Research      |
+| Fidelity Account Team |
+| IBM Consulting        |    
+    
+<br><br>
+
+![](images/QS POT.png)
