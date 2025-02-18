@@ -1,13 +1,15 @@
 ---
 title: Installation
-description: QSR Performance Test Harness Installation
+format: 
+  html:
+    toc: true
 ---
-
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Performance Test Harness
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Useful Links
 
 A lot of info cribbed from [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=harness-installing-performance-test)
 
@@ -21,23 +23,24 @@ A lot of info cribbed from [here](https://www.ibm.com/docs/en/quantum-safe/quant
 
 ### Installing pre-requisite packages
 
-<Tabs syncKey="OS">
-  <TabItem label="Red Hat/CentOS">
-```tsx
+::: {.panel-tabset}
+
+## Red Hat/CentOS
+
+```bash
 sudo dnf -y install jq bc
 ```
-</TabItem>
-<TabItem label="Ubuntu/Debian">
-```tsx
+## Ubuntu/Debian
+
+```bash
 sudo apt-get -y update
 sudo apt-get -y install jq bc
 ```
-</TabItem>
-</Tabs>
+:::
 
 Download the Performance Test Pack from IBM Passport Advantage:
 
-![QSRPTH1](../../../../assets/images/QSRPTH1.png)
+![QSRPTH1](/images/QSRPTH1.png)
 
 The file downloaded will likely be named `IQSR_1.0_Linux_EN.zip`. Extract the file.
 
@@ -51,7 +54,7 @@ Upload the resultant `pqc-performance-test_1.0.0.tar` to your docker host.
 
 On your docker host
 
-```tsx
+```bash
 mkdir -p ~/perftest
 tar -xf pqc-performance-test_1.0.0.tar -C ~/perftest/
 
@@ -59,13 +62,15 @@ tar -xf pqc-performance-test_1.0.0.tar -C ~/perftest/
 
 Change over to the newly extracted directory
 
-```tsx
+```bash
 cd ~/perftest/pqc-performance-test/test_utils/build_images/
 ```
 
 ## Install the Performance Test Harness
 
-:::note[IBM Docs]
+::: {.callout-note}
+
+## IBM Docs
 
 A lot of this stuff is take verbatim from here:
 
@@ -78,7 +83,8 @@ https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=har
 Execute the `build_images.sh` script and select `1` when prompted for the License Agreement.
 
 Should show the images available now for Docker
-```tsx {6-8}
+
+```bash
 docker images
 
 REPOSITORY                                          TAG          IMAGE ID       CREATED         SIZE
@@ -91,7 +97,7 @@ localhost:5000/qsc-openssl-provider-9.2.0-1.1.1t    1.0          8b69ff2c49da   
 
 ### Configuring the build images
 
-:::note
+::: {.callout-note}
 This build config needs to happen for every host ip you want to check. So if you have multiple addresses, add them to the space delimited list below.
 :::
 
@@ -106,7 +112,7 @@ Breaking down the below requirements:
 
 For our test, we will use the ip of our docker host
 
-```tsx
+```bash
 ./build_config.sh
 
 Enter the target FQDN list seperated by space (TARGET_FQDN_LIST): 9.46.72.93
@@ -118,7 +124,7 @@ The build will take a while.
 
 After awhile you should see
 
-```tsx
+```bash
 Performance test server build completed successfully.
 Launching performance test server ...
 Launching localhost:5000/qsc-perf-server-ubuntu:provider.
@@ -129,7 +135,7 @@ Building PQC client container ...
 
 When all is done, you should see the running test harness server container running:
 
-```tsx
+```bash
 docker ps -a
 
 CONTAINER ID   IMAGE                                            COMMAND                  CREATED          STATUS                    PORTS                                                                                                  NAMES

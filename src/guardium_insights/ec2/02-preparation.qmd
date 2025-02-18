@@ -1,9 +1,10 @@
 ---
 title: Preparation
-description: Running Guardium Insights with QSPM on EC2
-sidebar:
-  label: Preparation
-  order: 2
+format:
+  html:
+    toc: true
+lightbox: true
+date: last-modified
 ---
 
 ### Obtain RedHat Pull Secret
@@ -11,8 +12,8 @@ sidebar:
 Use this URL to download your RedHat Pull Secret:
 https://console.redhat.com/openshift/install/pull-secret
 
-:::tip
-If your organization does not have an existing RedHat account, you can create a RedHat trial account for a temporary OCP deployment (60 days). Instructions [here](../05-prerequisites/#redhat-ocp-account-and-pull-secret) under the expandable section "Obtain a RedHat Trial Account"
+::: {.callout-tip}
+If your organization does not have an existing RedHat account, you can create a RedHat trial account for a temporary OCP deployment (60 days). Instructions [here](01-prereqs.html#redhat-ocp-account-and-pull-secret) under the expandable section "Obtain a RedHat Trial Account"
 :::
 
 ### Obtain the AWS IAM credentials
@@ -30,18 +31,18 @@ If you can use your permanent security credentials for the AWS account, you will
 
 Run the following command and then enter your Access Key ID, Secret Access Key, Region, and Output.
 
-```
+```bash
 aws configure
-````
+```
 
 ### Redhat pull secret
 
-The Red Hat pull secret must be downloaded from https://console.redhat.com/openshift/downloads#tool-pull-secret. 
+The Red Hat pull secret must be downloaded from [here](https://console.redhat.com/openshift/downloads#tool-pull-secret). 
 Rename the file from ```pull-secret.txt``` to ```pull-secret.json```
 
 ### Create s3 bucket
 
-```
+```bash
 # name must be unique in region
 BUCKET="bucket-customer-date"
 aws s3api create-bucket --bucket $BUCKET --region us-east-1
@@ -49,25 +50,21 @@ aws s3api create-bucket --bucket $BUCKET --region us-east-1
 
 ### Create pull-secrets folder in s3 bucket
 
-```
+```bash
 aws s3api put-object --bucket $BUCKET --key "pull-secrets" --region us-east-1
 ```
 
 ### Upload pull-secret.json to s3bucket/pull-secrets
 
-```
+```bash
 aws s3 cp pull-secret.json s3://$BUCKET/pull-secrets/pull-secret.json
 ```
-
-
-
-
 
 ### Create AWS KeyPair
 
 The following commands create the KeyPair, outputs the file to the default ssh folder. The second command modifies the permissions of the file.
 
-```
+```bash
 KEYPAIR_NAME=ec2_ocp
 aws ec2 create-key-pair  --key-name $KEYPAIR_NAME --key-type rsa --key-format pem --query "KeyMaterial" --output text > ~/.ssh/$KEYPAIR_NAME.pem
 chmod 400 ~/.ssh/$KEYPAIR_NAME.pem
@@ -110,14 +107,18 @@ specified in `parameters-override.yaml`.
 ### Create OCPInstall Role
 [Download the OCPInstallRole.yaml](https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/Cloudformation/OCPInstallRole.yaml)
 
-***Note***: This template assumes that roles `BootNodeRole` and `DevOps-Role` already exist.
+::: {.callout-note}
+This template assumes that roles `BootNodeRole` and `DevOps-Role` already exist.
+
 - Download DefaultRoles.yaml and apply if needed
 - Edit the OCPInstall role yaml and add account or add substitution and set role names appropriately
 - Set optional tags on the command
 
+:::
+
 Create the role by running the following command:
 
-```
+```bash
 aws cloudformation deploy --stack-name OCPInstall-role-1 --template-file OCPInstallRole.yaml --capabilities CAPABILITY_NAMED_IAM --tags *add Key=Value tag here*
 ```
 
@@ -125,10 +126,9 @@ aws cloudformation deploy --stack-name OCPInstall-role-1 --template-file OCPInst
 [Download the LambdaExecutionRole.yaml](https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/Cloudformation/LambdaExecutionRole.yaml)
 Create the role by running the following command:
 
-```
+```bash
 aws cloudformation deploy --stack-name LambdaExecutionRole --template-file LambdaExecutionRole.yaml --capabilities CAPABILITY_NAMED_IAM --tags *add Key=Value tag here*
 ```
-
 
 ### Deploy CloudFormation templates using AWS CLI
 
@@ -145,7 +145,7 @@ Download the following file:
 
 Create a file called `vpc-params.json`
 
-```tsx
+```bash
 cat << EOF > vpc-params.json
 [
   {
@@ -238,7 +238,7 @@ EOF
 
 Using the OCPInstall role arn, run the following command to create the VPC:
 
-```tsx
+```bash
 aws cloudformation create-stack \
 --stack-name ${CLUSTERNAME} \
 --template-body file://vpc-template.yaml \
@@ -248,12 +248,12 @@ aws cloudformation create-stack \
 
 Using the OCPInstall role arn, run the following command to start the main cloudformation deployment:
 
-:::tip
+::: {.callout-tip}
 If you are developing, add `--disable-rollback` flag to the following command to disable the automatic rollback and deletion of the bastion node on failures.
 This will allow you to troubleshoot in the event that the stack does not complete successfully.
 :::
 
-```
+```bash
 aws cloudformation deploy \
 --stack-name stack-deployment-1 \
 --template-file cluster.yaml \
@@ -268,7 +268,8 @@ Check the AWS Console to see when the cloudformation template has progressed far
 Using the ssh key from the Key Pair name used in parameters-override.yaml, ssh to the bootnode. The status of the install
 will be found in the log files under `~ec2-user/cpd-status/logs`.
 
-:::tip
+::: {.callout-tip}
+
 If the install fails but some resources were already created, some clean up might be required in addition to deleting the stack.
 Find and delete the following before running the installation again.
 
@@ -290,19 +291,19 @@ The cloudform template creates a boot node that will begin executing commands. O
 
 Once the instance has started the ssm agent a connection can be initiated with following command:
 
-```
+```bash
 aws ssm start-session --target $InstanceID
 ```
 Once a connection has been opened, you may need to change users to the 'ec2-user'. This can be accomplished with the following commands:
 
 Become ```root```
 
-```
+```bash
 sudo su
 ```
 Become ```ec2-user```
 
-```
+```bash
 su ec2-user
 ```
 
@@ -315,12 +316,12 @@ SSM does not work exactly the same as SSH. If you intend to use any additional c
 Check the output of running the  ```aws``` command,
 If there is an error message like this:
 
-```
+```bash
 [47863] Error loading Python lib '/usr/bin/libpython3.11.so.1.0': dlopen: /usr/bin/libpython3.11.so.1.0: cannot open shared object file: No such file or directory
 ```
 Another possible error message:
 
-```
+```bash
 $ aws
 Python path configuration:
   PYTHONHOME = '/usr/bin'
@@ -352,29 +353,29 @@ ModuleNotFoundError: No module named 'encodings'
 Current thread 0x00007fed39a06c00 (most recent call first):
   <no Python frame>
 ```
-You may not have the correct $PATH. 
+You may not have the correct `$PATH.` 
 
-Incorrect $PATH:
-```
+Incorrect `$PATH:`
+```bash
 $ echo $PATH
 /home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/bin:/usr/sbin
 ```
 
-How to Correct $PATH:
+How to Correct `$PATH:`
 
-```
+```bash
 export PATH="/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
 ```
 
-How to persist the change to $PATH:
+How to persist the change to `$PATH:`
 
-```
+```bash
 echo 'export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"' >> .bashrc
 ```
 
 Confirm this change works:
 
-```
+```bash
 $ echo $PATH
 /home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
 $ aws
@@ -395,7 +396,7 @@ aws: error: the following arguments are required: command
 
 Check what folders exist in the ec2-home directory. if "cpd-status" has not been created yet, then wait a few minutes. Once "cpd-status" directory appears, run the following command:
 
-```
+```bash
 tail -f ~/cpd-status/log/cloud-pak-deployer.log
 ```
 

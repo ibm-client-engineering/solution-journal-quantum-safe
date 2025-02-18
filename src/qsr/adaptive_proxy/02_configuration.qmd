@@ -1,14 +1,14 @@
 ---
 title: Configuration
-description: QSR Adaptive Proxy Configuration and Usage
+format: 
+  html:
+    toc: true
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+::: {.callout-note}
+## Useful links
 
-:::note
-Useful links:
-
-https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-configuring-adaptive
+[IBM Configuring Adaptive Proxy](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-configuring-adaptive)
 :::
 
 ## Browser configuration
@@ -25,7 +25,7 @@ clients are connecting to a legacy encrypted application or site.
 
 For configuration instructions, see [Enable Post Quantum Cryptography Support in Web Browsers](https://evertrust.io/education/enable-post-quantum-cryptography-support-in-web-browsers/)
 
-:::note
+::: {.callout-note}
 As of Dec 2024, only Chromium-based browsers work in the kyber encrypted front end scenario. Use Chrome (properly configured)
 for kyber encrypted client connection to the Adaptive Proxy and use Firefox for a legacy encrypted client connection.
 :::
@@ -35,7 +35,7 @@ for kyber encrypted client connection to the Adaptive Proxy and use Firefox for 
 For quantum-safe kyber encryption through the Adaptive Proxy, you must disable the use of ML-KEM in TLS 1.3 in Chrome.
 In a chrome tab, open `chrome://flags` and look for "Use ML-KEM in TLS 1.3". Select "Disabled" and relaunch the browser.
 
-![41f0f37b-b4dc-4e59-a894-2b7d102a7574](https://github.com/user-attachments/assets/30c87d59-5b8b-471f-b55c-d09ac37aa4a7)
+![](/images/chrome_config_01.png)
 
 The "TLS 1.3 post-quantum key agreement" flag can remain "Default", as default enables that flag in Chrome.
 
@@ -58,7 +58,7 @@ Some of the below was pulled out of [How To Create a Self-Signed SSL Certificate
 
 On our Linux host (Ubuntu 24.0.4 LTS), let's install httpd and npm, install corepack, enable yarn, and configure the firewall.
 
-```
+```bash
 sudo apt update
 
 sudo apt-get -y install apache2
@@ -80,19 +80,19 @@ sudo a2enmod ssl
 
 Restart Apache to activate the module:
 
-```
+```bash
 sudo systemctl restart apache2
 ```
 #### Create the SSL Certificate
 
 Create the SSL key and certificate files with the openssl command:
 
-```
+```bash
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
 ```
 
 The entirety of the prompts will look something like this:
-```
+```bash
 Country Name (2 letter code) [XX]:US
 State or Province Name (full name) []:Example
 Locality Name (eg, city) [Default City]:Example 
@@ -106,20 +106,21 @@ Email Address []:webmaster@example.com
 
 You can build a basic Hello World site or a more complex test site using Astro.
 
-<Tabs syncKey="TestSite">
-<TabItem label="Hello World">
+::: {.panel-tabset}
+
+## Hello World
 
 Now let's build a basic Hello World page for Apache.
 
 Create a directory to act as the document root.
 
-```
+```bash
 sudo mkdir -p /var/www/html/test-app/build
 ```
 
 Open a new `index.html` file with your text editor.
 
-```
+```bash
 sudo vi /var/www/html/test-app/build/index.html
 ```
 
@@ -129,18 +130,19 @@ Paste the following into the blank file:
 <h1>Hello world!</h1>
 ```
 
-</TabItem>
-<TabItem label="Astro with Starlight">
+## Astro with Starlight
 
 Now let's build an Astro site with a Starlight template.
 
-:::note[Internet access]
+::: {.callout-note}
+
+## Internet Access
 The following requires access to various public websites. If you are using a proxy 
 that is restrictive, you may run into connection issues.
 :::
 
 
-```
+```bash
 sudo yarn create astro --install --no-git --typescript relaxed --template starlight /var/www/html/test-app
 ```
 
@@ -180,16 +182,17 @@ export default defineConfig({
     ],
 });
 ```
+
 Now run the build
 
-```
+```bash
 sudo yarn build
 
 ```
 
 This will build a viable site in `/var/www/html/test-app/build`
-</TabItem>
-</Tabs>
+
+:::
 
 #### Update apache config
 
@@ -217,23 +220,23 @@ Listen 8080
 
 Enable the new config
 
-```
+```bash
 cd /etc/apache2/sites-enabled
 
 sudo ln -s ../sites-available/test-site.conf
 ```
 
 Now restart apache2
-```
+```bash
 sudo systemctl restart apache2
 
 ```
 
 Verify the site is now up by navigating to https://apache-host01.fyre.ibm.com:8080.
 
-![QSRAP-config1](../../../../assets/images/QSRAP-config1.png)
+![QSRAP-config1](/images/QSRAP-config1.png)
 
-:::note
+::: {.callout-note}
 If you created the "Hello world" test site then you will see a simple site that says "Hello world!"
 instead of the "Welcome to Starlight" page shown above.
 :::
@@ -246,7 +249,9 @@ After following the instructions to install the Adaptive Proxy [here](../01_inst
 
 Edit the following file `/opt/adaptive-proxy/workdir/adaptive.proxy.location.conf`
 
-:::note[On NGINX configuration]
+::: {.callout-note}
+
+# On NGINX configuration
 
 By default, the best encryption Apache supports is TLSv1.2, so be sure to include 
 `proxy_ssl_protocols TLSv1.2` in the config as shown below.
@@ -279,7 +284,7 @@ location ^~ / {
 
 Start up the adaptive proxy
 
-```
+```bash
 cd /opt/adaptive-proxy/workdir
 
 ./runAdaptiveProxyServer.sh
@@ -287,16 +292,18 @@ cd /opt/adaptive-proxy/workdir
 
 Proxy should come up and our test site should be available now
 
-![QSRAP-config2](../../../../assets/images/QSRAP-config2.png)
+![QSRAP-config2](/images/QSRAP-config2.png)
 
-:::note
+::: {.callout-note}
 If you created the "Hello world" test site then you will see a simple site that says "Hello world!"
 instead of the "Welcome to Starlight" page shown above.
 :::
 
 In our case, we're pointing the proxy_pass to the FQDN virtual host we configured on our web server.
 
-:::note[How it works]
+::: {.callout-note}
+
+## How it works
 
 The magic is the PORT. You must go to the URL at port 8443 which is where the proxy listens.
 
@@ -325,45 +332,17 @@ Currently there is no PQC encryption available for any TLS certs available from 
 
 In a Chrome brower, go to the site and click the three dots.
 
-![QSRAP-config3](../../../../assets/images/QSRAP-config3.png)
+![QSRAP-config3](/images/QSRAP-config3.png)
 
 Open the Developer Tools
 
-![QSRAP-config4](../../../../assets/images/QSRAP-config4.png)
+![QSRAP-config4](/images/QSRAP-config4.png)
 
 Click the `Security` panel
 
-![QSRAP-config5](../../../../assets/images/QSRAP-config5.png)
+![QSRAP-config5](/images/QSRAP-config5.png)
 
 Here we can see that `X25519Kyber768Draft00` is one of the encryption algorithms and that's Quantum Safe.
-
-## Diagram of the Proxied Site
-
-```d2 sketch pad=50
-direction: left
-dockerbot1: "dockerbot21:8443\n(adaptive proxy)\nTLS encryption\n happens here" {
-  style.fill: transparent
-  style.font-size: 12
-  style.font: mono
-  width: 141
-  height: 95
-}
-Image: "" {
-  icon: https://icons.terrastruct.com/aws/_General/Users_light-bg.svg
-  shape: image
-}
-Image -> dockerbot1: TLS
-Square: "apache-host01\n(example site)\nNo TLS" {
-  style.fill: transparent
-  style.font-size: 12
-  style.font: mono
-  width: 141
-  height: 95
-}
-dockerbot1 -> Square: "No-TLS\n"
-Square -> dockerbot1: "No-TLS\n"
-dockerbot1 -> Image: TLS
-```
 
 ## Troubleshooting
 
@@ -376,7 +355,7 @@ the docker container.
 If you see the following message, it means that from within the docker container, the
 host name of your site cannot be resolved.
 
-```
+```bash
 [emerg] 1#1: host not found in upstream "quantum-site" in /etc/nginx/conf.d/adaptive.proxy.location.conf:18
 ```
 

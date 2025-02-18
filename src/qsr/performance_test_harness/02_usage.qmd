@@ -1,9 +1,13 @@
 ---
 title: Usage
-description: QSR Performance Test Harness Usage
+format: 
+  html:
+    toc: true
 ---
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Useful Links
 
 A lot of info cribbed from [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=harness-executing-performance-test)
 
@@ -14,7 +18,7 @@ For a complete list of tested algorithms, see above link.
 
 Depending on where you extracted the PTH, change directory to the `test_utils` folder.
 
-```tsx
+```bash
 cd ~/perftest/pqc-performance-test/test_utils
 ```
 
@@ -22,7 +26,7 @@ cd ~/perftest/pqc-performance-test/test_utils
 
 Run the test with the ip address you set as `TARGET_IP_LIST`. In our example we used `9.46.72.93`. Select `11` to test all algorithms.
 
-```tsx
+```bash
 ./all_h2load.sh -c 6 -n 100000 -s 9.46.72.93 -t 3 -o ~/perftest/perf_results/h2load
 
 /root/perftest/perf_results/h2load exists and will be appended.
@@ -48,7 +52,7 @@ Enter your choice (1-11): 11
 ```
 
 The test should run for a little while. In our example case, the last lines returned were the following:
-```tsx
+```bash
 2024/07/31 11:14:45: 100000 total requests with 6 concurrent connections to https://9.46.72.93 from 10.21.71.145/cluster-nfs-nfs01.fyre.ibm.com.
 Request Time: Time taken for a single request and response.
 Connect Time: Time to connect to the server including TLS handshake.
@@ -59,7 +63,7 @@ First Byte Time: Time to get the first byte of decrypted application data from t
 
 We're testing against our docker host again (`9.46.72.93`). Select `11` for all algorithms.
 
-```tsx
+```bash
 ./all_openssl.sh -t 30 -s 9.46.72.93 -w / -o ~/perftest/perf_results/openssl
 
 openssl s_time performance tests with a variety of key agreement algorithms
@@ -82,7 +86,7 @@ Choose a signature algorithm or select 'all' to test all signatures:
 ```
 
 The test should run for quite a while. In our example case, the last lines returned were the following:
-```tsx
+```bash
 2024/07/31 12:01:53: 30 seconds of requests to 9.46.72.93 from 10.21.71.145/cluster-nfs-nfs01.fyre.ibm.com using cipher TLS_AES_256_GCM_SHA384.
 Total Reqeusts: Total number of connections initiaged (no session reuse).
 User Time: User CPU time consumed durring test loop execution.
@@ -97,10 +101,10 @@ Run `./gen_visulizations.sh`
 
 We're going to use port 8080 for our example.
 
-```tsx
+```bash
 ./gen_visulizations.sh 
 Enter infrastructure name: Test Infra
-nter the PTH Dashboard target port: 8080
+Enter the PTH Dashboard target port: 8080
 [+] Building 17.5s (12/12) FINISHED                                                                                            docker:default
  => [internal] load build definition from Dockerfile                                                                                     0.1s
  => => transferring dockerfile: 895B                                                                                                     0.0s
@@ -138,7 +142,7 @@ nter the PTH Dashboard target port: 8080
 All output files are converted and stored.
 The script then builds and deploys the dashboard container
 
-```tsx {3}
+```bash
 docker ps -a
 CONTAINER ID   IMAGE                                            COMMAND                  CREATED          STATUS          PORTS                                                                           NAMES
 4b6dd6935d47   pth_dashboard                                    "docker-entrypoint.s…"   39 seconds ago   Up 38 seconds   0.0.0.0:8080->8080/tcp                                                          pthdashboard
@@ -147,5 +151,5 @@ a7011b81d849   localhost:5000/qsc-perf-server-ubuntu:provider   "/bin/bash /opt/
 
 In our case, the dash can now be seen at port 8080 at our docker host
 
-![PTH-Dashboard](../../../../assets/images/pth-dashboard.png)
+![PTH-Dashboard](/images/pth-dashboard.png)
 

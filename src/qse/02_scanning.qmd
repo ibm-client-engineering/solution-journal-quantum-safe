@@ -1,13 +1,16 @@
 ---
 title: Scanning
-description: QSE Usage
+format: 
+  html:
+    toc: true
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Scanning in VSCode
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Useful Links
 
 Initiating scans as described [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=extension-initiating-scan)
 
@@ -19,44 +22,46 @@ Let's scan the code base for the `cli` for QSE
 
 In our example, we've created a directory called `QSE` and extracted all the installation elements of QSE.
 
-![Scanning1](../../../assets/images/scanning1.png)
+![Scanning1](/images/scanning1.png)
 
 Open that directory in VSCode.
 
-```zsh
+```bash
 cd QSE
 
 code .
 ```
-![Scanning2](../../../assets/images/scanning2.png)
+![Scanning2](/images/scanning2.png)
 
 On VSCode, open a new terminal in the code window. This can be done with the following key combo: Ctrl-Shift-Backtick(`)
 
-![Scanning3](../../../assets/images/scanning3.png)
+![Scanning3](/images/scanning3.png)
 
 In windows this will open a powershell terminal
 
 Press Ctlr-Shift-P to open the Command Palette and search for `Quantum Safe Explorer`. Select Quantum Safe Explorer Scan.
 
-![Scanning4](../../../assets/images/scanning4.png)
+![Scanning4](/images/scanning4.png)
 
 The following notification should pop up
 
-![Scanning5](../../../assets/images/scanning5.png)
+![Scanning5](/images/scanning5.png)
 
 Let it scan until it completes.
 
 When the scan completes, you should see the following directories show up in the Explorer window of VSCode
 
-![Scanning6](../../../assets/images/scanning6.png)
+![Scanning6](/images/scanning6.png)
 
 We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs and charts.
 
-![Scanning7](../../../assets/images/scanning7.png)
+![Scanning7](/images/scanning7.png)
 
 ## Executing the IBM Quantum Safe Explorer CLI
 
-:::note[Windows]
+::: {.callout-note}
+
+## Windows
 
 Make sure that Git Bash is installed and use a Git Bash terminal window for the instructions below.
 
@@ -66,41 +71,42 @@ Make sure that Git Bash is installed and use a Git Bash terminal window for the 
 Change directory to `M0GT6EN` where ever you had it extracted and run the following command:
 
 
-```zsh
+```bash
 /usr/bin/sed -i 's/^RSP_LICENSE_ACCEPTED=.*/RSP_LICENSE_ACCEPTED=true/' LicenseAcceptance.config
 ```
 
 To make sure you have the correct permissions to run the shell script first run:
 
-```zsh
+```bash
 chmod +x cli.sh
 ```
 
 Next, run the following **help** command 
 
-```zsh
+```bash
 ./cli.sh -h 
 ```
 
-> **Note:**
-> 
-> The run will also point out that you have already accepted the licensing agreement.
+::: {.callout-note}
+The run will also point out that you have already accepted the licensing agreement.
+:::
 
 Before you officially perform the script run, it is helpful to know the list of required parameters:
 
-![QSEmacos1](../../../assets/images/macos-qse-cli-required-params.png)
+![QSEmacos1](/images/macos-qse-cli-required-params.png)
 
 As well as the optional parameters:
 
-![QSEmacos2](../../../assets/images/macos-qse-cli-optional-params.png)
+![QSEmacos2](/images/macos-qse-cli-optional-params.png)
 
 You initiate a scan using the required **program package path**. The command can be run for single or multiple languages. Here is an example:
 
 `/cli.sh -i <package-path> -clean -nmo -ccdir resource:class-catalog -l .java`
 
-> **Note:**
-> 
-> If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the **Help** command by running `./cli.sh -h` for more details on the various parameters.
+::: {.callout-note}
+
+If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the **Help** command by running `./cli.sh -h` for more details on the various parameters.
+:::
 
 Here is an example of a completed scan with a specified program *package path*:
 
@@ -177,10 +183,10 @@ Version 1.23.0.1065 -- Generated On Tue Jul 23 13:22:12 PDT 2024
 [23/07/2024 13:22:15.756] Running Task                  : com.ibm.quantumsafe.sca.framework.common.impl.ProfileProcessImpl
 ```
 
-> **Note:**
-> When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application. 
-> 
->
+::: {.callout-note}
+When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application. 
+::: 
+
 
 
 ## Accessing the IBM Quantum Safe Explorer CLI scan results
@@ -192,7 +198,7 @@ The results of your scan are written to a `findings.json` file and can be found 
 
 The file is quite verbose. Here's a snippet of the result:
 
-![Accessing1](../../../assets/images/scan-results-json.png)
+![Accessing1](/images/scan-results-json.png)
 
 
 
@@ -204,29 +210,29 @@ As of IBM Quantum Safe Explorer 1.0.1 release, you can now view the CLI scan res
 
 When you execute a scan, a **qs_explorer_result** folder is generated along with the **qs_scan_result** folder.
 
-![Opening1](../../../assets/images/scan-results-directory.png)
+![Opening1](/images/scan-results-directory.png)
 
-> **Note:**
-> To view the results, you need to have the Visual Studio Code extension installed on your system. 
-> 
->
+::: {.callout-note}
+To view the results, you need to have the Visual Studio Code extension installed on your system. 
+:::
+
 
 Navigate to the **File** menu drop down, select the **Open Folder** to locate your `/<package-path>` folder:
 
-![Opening2](../../../assets/images/vs-code-find-project.png)
+![Opening2](/images/vs-code-find-project.png)
 
 Once you have found your `/<package-path>` simply open it to populate the project in the Visual Studio Code Explorer view:
 
-![Opening3](../../../assets/images/vs-code-open-project.png)
+![Opening3](/images/vs-code-open-project.png)
 
 To populate the **SCAN RESULTS**, we must first navigate to the **QUANTUM SAFE EXPLORER** tab. This then populates the **SCAN RESULTS** menu. That menu drop down then brings you to the `Crypto Artifacts`. For example:
 
-![Opening4](../../../assets/images/vs-code-quantum-safe-explorer.png)
+![Opening4](/images/vs-code-quantum-safe-explorer.png)
 
 To view the results dashboard, you simply toggle to the **QUANTUM SAFE EXPLORER DASHBOARD** tab and click the **+** symbol on the right hand side to expand the view:
 
-![Opening5](../../../assets/images/vs-code-quantum-safe-dashboard-tab.png)
+![Opening5](/images/vs-code-quantum-safe-dashboard-tab.png)
 
 This should then expose the dashboard as shown below:
 
-![Opening6](../../../assets/images/vs-code-quantum-safe-dashboard-view.png)
+![Opening6](/images/vs-code-quantum-safe-dashboard-view.png)
