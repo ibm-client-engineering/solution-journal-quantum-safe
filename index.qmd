@@ -21,7 +21,7 @@ Description: "Project Name"
 
 ## Business Statement
 
-Quantum computing is ushering in a new cryptographic era.
+Quantum computing presents a growing threat to enterprise security, impacting everything from data encryption to core business operations across diverse industries. Customers are looking for guidance in starting their quantum safe journey.
 
 - Quantum Computers can in principle, perform certain mathematical computations exponentially **faster than a classical computer will**. 
 - There will be a time when the power of quantum computing may **crack public key cryptographic security protection**.  
@@ -32,7 +32,7 @@ Quantum computing is ushering in a new cryptographic era.
     - Data protection  
     - Key Management  
 
-## Threats
+## Challenges
 
 1. **Harvest now, decrypt later** Hackers can collect data now for decryption when quantum computers are powerful enough.
 2. **Replacing most of the public-key systems** currently in use will take 5 to 15 years
@@ -45,22 +45,22 @@ With these considerations, many customers are asking the question: **Ok, where d
 
 ## Proof of Technology - Scope
 
-**Goal** Prove out the IBM Quantum Safe technologies. Demonstrate how they will help identify Cryptographic vulnerabilities and offer a plan of attack to protect their landscape from future Quantum Attacks.
-IBM Portfolio Products  
+**Goal** Prove out the IBM Quantum Safe technologies. Demonstrate how they will help identify Cryptographic vulnerabilities and offer a plan of attack to protect their landscape from future Quantum Attacks.    
 
 - **Quantum Safe Explorer** Scan applications to discover cryptographic artifacts and vulnerabilities. Creates cryptographic inventory reports (CBOM).
 - **Quantum Safe Remediator** 
     - *Adaptive Proxy* - protects communications between apps and end-user devices from quantum attacks. Positions proxy between your server & client's
-    - *Performance Test Harness* - test quantum safe algorithms performance in environment before deploying to production
+    - *Performance Test Harness* - test quantum safe algorithms performance in environment before deploying to production.   
+    
+<br><br>
 
+![](images/ProjectPOTTImelinev3.png)
+
+<br><br>
 
 | **IBM Team Engaged**  |
 |-----------------------|
 | Client Engineering    |
 | Quantum Research      |
 | Customer Account Team |
-| IBM Consulting        |    
-    
-<br><br>
-
-![](images/QS POT.png)
+| IBM Consulting        |   
