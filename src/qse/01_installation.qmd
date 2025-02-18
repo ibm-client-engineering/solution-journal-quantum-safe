@@ -381,7 +381,7 @@ Click on the settings for the extension
 
 Per the current [guide](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=vsce-configuring-quantum-safe-explorer-visual-studio-code-extension), the following settings must be configured:
 
-:::note
+::: {.callout-note}
 Currently as of 1.0.x only `localhost` is supported as `qs-explorer.hostname`.
 :::
 

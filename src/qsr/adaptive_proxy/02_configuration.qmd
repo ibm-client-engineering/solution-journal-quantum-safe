@@ -319,14 +319,14 @@ Our apache host is `apache-host01.fyre.ibm.com`
 
 ### Verifying the encryption algorithms
 
-:::note
+::: {.callout-note}
 If you created the "Hello world" test site then you will see a simple site that says "Hello world!"
 instead of the "Welcome to Starlight" page shown above, but the instructions will be the same.
 :::
 
 Now that our site is up and proxied, let's verify that it's using a Quantum Safe algorithm for encryption.
 
-:::warn
+::: {.callout-warning}
 Currently there is no PQC encryption available for any TLS certs available from any legitimate Certificate Authority.
 :::
 
