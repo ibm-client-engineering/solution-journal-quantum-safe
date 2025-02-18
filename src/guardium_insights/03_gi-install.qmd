@@ -1,12 +1,16 @@
 ---
 title: Guardium Insights Installation
-description: Installing Guardium Insights
-sidebar:
-  label: Guardium Insights Installation
-  order: 3
+format:
+  html:
+    toc: true
+lightbox: true
+date: last-modified
 ---
 
-:::note[Useful Links]
+
+::: {.callout-note}
+
+## Useful Links
 A lot of content cribbed from [here](https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-install-guardium-insights-operator-related-components)
 
 You will need your IBM Entitlement Key for the next steps. You should already have it available at this point, but it can also be retrieved from [here](https://myibm.ibm.com/products-services/containerlibrary)
@@ -18,7 +22,7 @@ Export the following env vars. This assumes we have been installing in the `open
 
 As of this writing, we are using Guardium Insights version `3.5.0` which uses the `2.5.0` bundle file.
 
-```tsx
+```bash
 export CP_REPO_USER="cp"
 export CP_REPO_PASS=<Your Password / Entitlement Key to cp.icr.io>
 export NAMESPACE="openshift-marketplace"
@@ -32,7 +36,7 @@ export IBMPAK_LAUNCH_SKIP_PREREQ_CHECK=true
 
 Save the CASE bundle locally
 
-```tsx
+```bash
 oc ibm-pak get $CASE_NAME \
 --version $CASE_VERSION \
 --skip-verify
@@ -44,16 +48,15 @@ This will download the CASE bundle to `$HOME/.ibm-pak/data/cases/ibm-guardium-da
 
 Set the context to the correct namespace
 
-```tsx
+```bash
 kubectl config set-context --current --namespace=${NAMESPACE}
 ```
-
 
 ### Collect the node names
 
 In most installations you can label specific nodes to be used for DB2. In our case, we are just going to label all the compute nodes as part of the pre-install.
 
-```tsx
+```bash
 NODES=$(kubectl get nodes -o jsonpath='{.items[*].metadata.name}')
 NODES=$(echo $NODES | tr ' ' ',')
 echo $NODES
@@ -61,13 +64,13 @@ echo $NODES
 
 Should return output similar to this
 
-```tsx
+```bash
 ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal
 ```
 
 ### Run the pre-install
 
-```tsx
+```bash
 oc ibm-pak launch $CASE_NAME \
    --version $CASE_VERSION \
    --inventory $GI_INVENTORY_SETUP \
@@ -77,7 +80,7 @@ oc ibm-pak launch $CASE_NAME \
 ```
 
 This should return the following
-```tsx
+```bash
 Welcome to the CASE launcher
 Attempting to retrieve and extract the CASE from the specified location
 [✓] CASE has been retrieved and extracted
@@ -118,12 +121,12 @@ Completed: IBM Guardium Insights : Ingress creation script.
 
 ### Verify the node labeling
 
-```tsx
+```bash
 kubectl get nodes --no-headers -o custom-columns=":metadata.name" | xargs -I {} sh -c 'oc describe node {} | grep db2 | grep -v $NAMESPACE'
 ```
 
 Should return
-```tsx
+```bash
                     icp4data=database-db2wh
                     icp4data=database-db2wh
                     icp4data=database-db2wh
@@ -131,7 +134,7 @@ Should return
 
 ### Install the operator catalogs
 
-```tsx
+```bash
 oc ibm-pak launch $CASE_NAME \
    --version $CASE_VERSION \
    --inventory $GI_INVENTORY_SETUP \
@@ -142,13 +145,13 @@ oc ibm-pak launch $CASE_NAME \
 
 Verify the Catalog Sources were installed
 
-```tsx 
+```bash 
 kubectl get catsrc
 ```
 
 Output should look like this:
 
-```tsx {3-5}
+```bash
 NAME                                     DISPLAY                                  TYPE   PUBLISHER   AGE
 cloud-native-postgresql-catalog          Cloud Native Postgresql Catalog          grpc   IBM         3d21h
 ibm-db2uoperator-catalog                 IBM Db2U Catalog                         grpc   IBM         3m18s
@@ -159,7 +162,7 @@ opencloud-operators                      IBMCS Operators                        
 
 ### Install the Operators
 
-```tsx
+```bash
 oc ibm-pak launch $CASE_NAME \
    --version $CASE_VERSION \
    --inventory $GI_INVENTORY_SETUP \
@@ -170,13 +173,13 @@ oc ibm-pak launch $CASE_NAME \
 
 Verify the installation of the operators
 
-```tsx 
+```bash 
 kubectl get sub
 ```
 
 Output should look like this:
 
-```tsx {4,6,10}
+```bash
 NAME                                          PACKAGE                          SOURCE                                   CHANNEL
 cloud-native-postgresql                       cloud-native-postgresql          cloud-native-postgresql-catalog          stable
 ibm-common-service-operator                   ibm-common-service-operator      opencloud-operators                      v4.6
@@ -192,7 +195,10 @@ operand-deployment-lifecycle-manager-app      ibm-odlm                         o
 
 ## Deploying an instance of Guardium Insights
 
-:::note[Useful Links]
+::: {.callout-note}
+
+## Useful Links
+
 Content heavily borrowed from [here](https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-deploying-guardium-insights-instance)
 
 :::
@@ -206,10 +212,10 @@ In AWS Route 53, open the previously created private hosted zone created during 
 
 As we did previously, first find the private cluster IP address of the load balancer under `CLUSTER-IP`.
 
-```tsx
+```bash
 kubectl get service --namespace ingress-nginx ingress-nginx-controller
 ```
-```tsx
+```bash
 NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)                      AGE
 ingress-nginx-controller   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h
 ```
@@ -221,8 +227,6 @@ Back on the hosted zone details page, click the `Create record` button.
 We want to create a record that routes `guardium.apps.gi.guardium-insights.com` to
 the private IP address captured above.
 
-![image](https://media.github.ibm.com/user/207188/files/0b0c741e-3a87-425e-a416-d9cb1aac4e6d)
-
 Click `Create Records`.
 
 ### Guardium CR
@@ -230,22 +234,25 @@ Click `Create Records`.
 This is a usable example. Copy this to a new yaml file. The name should be the cluster-name and the namespace should be `openshift-marketplace`.
 
 We want to set the following values in this file
-```tsx
+```bash
   name: gi-eks
   namespace: openshift-marketplace
 
 ```
 And under `ingress` set the hostname (`guardium.apps.gi.thinkforward.work` in our example) and make sure the FQDN is the one we set. 
-```tsx
+```bash
       ingress:
         hostName: guardium.apps.gi.thinkforward.work
         domainName: apps.gi.thinkforward.work
 ```
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+
+## Using an insecure hostname
+
 If using the insecure hostname, use the following values instead.
 
-```tsx
+```bash
       ingress:
         hostName: guardium.apps.gi.guardium-insights.com
         domainName: apps.gi.guardium-insights.com
@@ -417,7 +424,7 @@ EOF
 
 Apply the above CR 
 
-```tsx
+```bash
 kubectl apply -f gdsc-custom-eks.yaml
 ```
 
@@ -427,38 +434,38 @@ The deployment may take a little while.
 
 Check to make sure the Guardium Insights custom resource (CR) has been completely reconciled.
 
-```tsx 
+```bash 
 kubectl get gdsc
 ```
 
 Output should look like this:
 
-```tsx {2}
+```bash {2}
 NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
 gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
 Check that the tenant has been created
 
-```tsx 
+```bash 
 kubectl get tenantminisnif
 ```
 
 Output should look like this:
 
-```tsx {2}
+```bash {2}
 NAME                           TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
 gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
 Verify all ingress paths have been created
-```tsx 
+```bash 
 kubectl get ingress -n openshift-marketplace
 ```
 
 Output should look like this:
 
-```tsx {11-17}
+```bash
 NAME                                            CLASS    HOSTS                                                          ADDRESS                                                                         PORTS     AGE
 cncf-common-web-ui                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h
 cncf-id-mgmt                                    nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h
@@ -482,7 +489,8 @@ Since we installed everything into the `openshift-marketplace` namespace, we sho
 
 ## Creating the QS tenant
 
-:::note[Important!]
+::: {.callout-important}
+
 In the current release of GI, in order to create the Quantum Security tenant, you need to scale down all the unnecessary services that are spun up by default in Guardium Insights. Future GI revisions will allow for disabling these services in the CR.
 :::
 
@@ -492,28 +500,24 @@ Our example GI instance cluster is called `gi-eks`. Let's export that as an env 
 
 If you're unsure as to what your instance cluster is called, it can be found with the following command:
 
-```tsx
+```bash
 kubectl get gi
 ```
 
 Output should look like this:
 
-```tsx
+```bash
 NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
 gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0
 ```
 
-```tsx
+```bash
 export cluster_name="gi-eks"
 ```
 
 Now scale down the following deployments
 
-{/* ${cluster_name}-rm-risk-controller \ */}
-{/* ${cluster_name}-risk-analytics-controller \ */}
-{/* ${cluster_name}-ssh-service \ */}
-
-```tsx
+```bash
 kubectl scale deploy \
 ${cluster_name}-risk-analytics-engine \
 ${cluster_name}-risk-analytics-ml-classification \
@@ -535,43 +539,32 @@ ${cluster_name}-streams \
 ### Create the tenant
 Retrieve the `cpadmin` password and set it as an env var
 
-```tsx
+```bash
 export CPPASS=$(kubectl get secret platform-auth-idp-credentials -o jsonpath='{.data.admin_password}' | base64 -d)
 ```
 
 Create an auth header
 
-```tsx
+```bash
 export AUTH=$(echo -ne "cpadmin:$CPPASS" | base64)
 ```
-{/*
-Create a JSON
-`payload.json`
-```json
-{
-  "async": false,
-  "external_id": "adv_gi41_qspm_allcom",
-  "name": "adv_gi41_qspm_allcom",
-  "part_number": "gi_dedicated_qspm",
-  "uid": "cpadmin"
-}
-
-```
-*/}
 
 And now let's submit the request. Our API url is `https://guardium.apps.gi.thinkforward.work/api/v3/tenants`. This is the URL we set in the CR. 
 
-:::note[Using an insecure hostname]
+::: {.callout-note}
+
+## Using an insecure hostname
+
 If you are using an insecure hostname, make sure to use that value for the API URL. The local resolution to the external IP of the load balancer should have already been configured in your local `hosts` file.
 
 For example
 
-```
+```bash
 https://guardium.apps.gi.guardium-insights.com/api/v3/tenants
 ```
 :::
 
-```tsx
+```bash
 curl -k -X 'POST' \
   'https://guardium.apps.gi.thinkforward.work/api/v3/tenants' \
   -H 'accept: application/json' \
@@ -589,7 +582,7 @@ curl -k -X 'POST' \
 Sometimes the command runs and nothing happens for awhile. To fix this problem change ```"async": false``` to ```"async": true```.
 
 When the tenant is created, the tenant id should be returned
-```tsx
+```bash
 {"tenant_id":"TNT_ACCKEBT4ZIRQW9YRRKCRJH"}
 ```
 
@@ -599,94 +592,12 @@ We set the URL for Guardium Insights to `guardium.apps.gi.thinkforward.work` in 
 
 The console url should open. Login with `cpadmin` and the password you retrieved and set to `$CPPASS`
 
-![GuardiumLogin01](../../../assets/images/guardium_login01.png)
+![GuardiumLogin01](/images/guardium_login01.png)
 
 Select the upper rightmost icon and select the QS tenant under `Account` dropdown. Then click the `IBM Guardium` logo in the upper left to open the console for the QS tenant.
 
-![GuardiumLogin02](../../../assets/images/guardium_login03.png)
+![GuardiumLogin02](/images/guardium_login03.png)
 
 The console should open.
 
-![GuardiumLogin03](../../../assets/images/guardium_login04.png)
-
-
-{/*
-### Stupid error tricks
-
-ldap pods are stuck. One is in an error state due to insufficient ephemeral storage (wtf)
-
-```tsx
-kubectl get pods | grep ldap
-c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b                                0/1     Error                   0                 18h
-c-gi-eks-db2-ldap-6bdbdf8fc7-kmqdx                                0/1     Running                 0                 7h1m
-
-```
-
-We describe the errored pod
-
-```tsx {21-23}
-kubectl describe pod c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b
-
-Name:             c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b
-Namespace:        openshift-marketplace
-Priority:         0
-Service Account:  account-openshift-marketplace-gi-eks-db2
-Node:             ip-192-168-17-40.ec2.internal/192.168.17.40
-Start Time:       Tue, 03 Sep 2024 15:50:04 -0400
-Labels:           app=gi-eks-db2
-                  formation_id=gi-eks-db2
-                  pod-template-hash=6bdbdf8fc7
-                  role=ldap
-Annotations:      cloudpakId: 5ed3ce3e032545a0a2a17bf2b6c23dcd
-                  cloudpakMetric: RESOURCE_UNIT
-                  cloudpakName: IBM Security Guardium Package SW
-                  productChargedContainers: All
-                  productCloudpakRatio: 1:100
-                  productID: 4c49ee7d8da44cf9bf2da48fc8fabb11
-                  productMetric: MANAGED_VIRTUAL_SERVER
-                  productName: IBM Security Guardium Insights
-Status:           Failed
-Reason:           Evicted
-Message:          Pod ephemeral local storage usage exceeds the total limit of containers 5Mi.
-```
-
-The other pod is hung because this pod hasn't come up. They both have the same resource restrictions. Just WTF.
-
-Other errors
-
-```tsx
-kubectl get pods | grep db2u
-c-gi-eks-db2-db2u-0                                               0/1     Init:CrashLoopBackOff   211 (2m41s ago)   18h
-```
-
-db2 pod is stuck in a crash loop.
-
-```tsx
-Status:           Pending
-IP:               192.168.31.213
-IPs:
-  IP:  192.168.31.213
-Init Containers:
-  instdb:
-    Container ID:  containerd://28ce603c5c63398d080938e3d37dbfaa7fdea60f5b71ca5e53c0a51a5ecdc5f6
-    Image:         icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
-    Image ID:      icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
-    Port:          <none>
-    Host Port:     <none>
-    Command:
-      /bin/sh
-      -c
-      /Db2wh_preinit/instdb_entrypoint.sh
-    State:          Waiting
-      Reason:       CrashLoopBackOff
-    Last State:     Terminated
-      Reason:       Error
-      Exit Code:    1
-      Started:      Wed, 04 Sep 2024 09:54:45 -0400
-      Finished:     Wed, 04 Sep 2024 09:54:54 -0400
-    Ready:          False
-    Restart Count:  211
-```
-
-the `initdb` init container in the pod is failing for... reasons. Just awesome.
-*/}
+![GuardiumLogin03](/images/guardium_login04.png)

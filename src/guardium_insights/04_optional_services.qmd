@@ -1,9 +1,10 @@
 ---
 title: Optional Services
-description: Running Guardium Insights with QSPM on EKS
-sidebar:
-  label: Optional Services
-  order: 4
+format:
+  html:
+    toc: true
+lightbox: true
+date: last-modified
 ---
 
 ## Export the following vars. 
@@ -23,19 +24,19 @@ Unlike NGINX Ingress, ALB generates a load balancer when a external service is c
 
 Download an IAM policy for the AWS Load Balancer Controller that allows it to make calls to AWS APIs on your behalf.
 
-:::info 
+::: {.callout-note}
 
 As of this writing, the latest version of AWS Load Balancer Controller is [v2.9.0](https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/tag/v2.9.0)
 
 :::
 
-```tsx
+```bash
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.9.0/docs/install/iam_policy.json
 ```
 
 Create an IAM policy using the policy downloaded in the previous step. 
 
-```tsx
+```bash
 aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --tags '{"Key": "Product","Value": "Guardium"}' \
@@ -44,7 +45,7 @@ aws iam create-policy \
 
 Should return
 
-```tsx
+```bash
 {
     "Policy": {
         "PolicyName": "AWSLoadBalancerControllerIAMPolicy",
@@ -70,18 +71,18 @@ Should return
 
 Let’s export that policy arn as another env var
 
-```tsx
+```bash
 export alb_policy_arn=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
 ```
 
 Export the role name as a env var. We're going to append the cluster name to the role name to help identify it in AWS and in case we have multiple clusters in the same account.
-```tsx
+```bash
 export alb_role_name=AWSLoadBalancerControllerRole-${clustername}
 ```
 
 Create a Kubernetes service account named aws-load-balancer-controller in the kube-system namespace for the AWS Load Balancer Controller and annotate the Kubernetes service account with the name of the IAM role.
 
-```tsx
+```bash
 eksctl create iamserviceaccount \
     --cluster ${clustername} \
     --namespace kube-system \
@@ -98,14 +99,14 @@ Now let's use helm to install the AWS Load Balancer Controller
 
 Install the helm repo
 
-```tsx
+```bash
 helm repo add eks https://aws.github.io/eks-charts
 helm repo update
 ```
 
 Now install the ALB controller
 
-```tsx
+```bash
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=${clustername} \
@@ -115,7 +116,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 ```
 
 Should return something like this
-```tsx
+```bash
 NAME: aws-load-balancer-controller
 LAST DEPLOYED: Mon Sep 30 17:21:43 2024
 NAMESPACE: kube-system
@@ -128,276 +129,35 @@ AWS Load Balancer controller installed!
 
 Verify the ingress class has been created
 
-```tsx
+```bash
 kubectl get ingressclass
 ```
 
 should return
 
-```tsx {2}
+```bash {2}
 NAME    CONTROLLER             PARAMETERS   AGE
 alb     ingress.k8s.aws/alb    <none>       79s
 nginx   k8s.io/ingress-nginx   <none>       35d
 ```
-
-{/*
-
-## Use AWS CA (ACM) for certs (optional)
-
-If you plan to use a private CA via AWS ACM instead of something like LetsEncrypt by default, follow these steps
-
-The AWS PrivateCA Issuer plugin acts as an addon (see external cert configuration) to cert-manager that signs certificate requests using ACM Private CA.
-
-### Create the namespace
-
-```tsx
-kubectl create namespace aws-pca-issuer
-```
-
-Add the helm repo
-
-```tsx
-helm repo add awspca https://cert-manager.github.io/aws-privateca-issuer
-helm repo update
-helm install awspca/aws-privateca-issuer --generate-name --namespace aws-pca-issuer
-```
-
-### Create the private CA in ACM
-
-:::note[Links]
-This is using an example from this helpful AWS [link](https://docs.aws.amazon.com/privateca/latest/userguide/create-CA.html)
-
-Generating and installing the CA cert [here](https://docs.aws.amazon.com/privateca/latest/userguide/PCACertInstall.html)
-:::
-
-:::note
-In our example we are using the subdomain `apps.gi.thinkforward.work`. This will not be the domain you will likely use.
-:::
-
-Create the following file and populate it with appropriate values. This file is an EXAMPLE:
-
-```tsx
-cat <<EOF > ca_config.txt
-{
-   "KeyAlgorithm":"RSA_2048",
-   "SigningAlgorithm":"SHA256WITHRSA",
-   "Subject":{
-      "Country":"US",
-      "Organization":"IBM",
-      "OrganizationalUnit":"Client Engineering",
-      "State":"MA",
-      "Locality":"Cambridge",
-      "CommonName":"$HOSTNAME"
-   }
-}
-EOF
-```
-
-We're going to use the default OCSP settings. Now create a revocation file
-```tsx
-cat <<EOF > revoke_config.txt
-{
-   "OcspConfiguration":{
-      "Enabled":true
-   }
-}
-EOF
-```
-
-Finally, create the CA
-```tsx
-aws acm-pca create-certificate-authority \
-     --certificate-authority-configuration file://ca_config.txt \
-     --revocation-configuration file://revoke_config.txt \
-     --certificate-authority-type "ROOT" \
-     --idempotency-token 01234567 \
-     --region $region \
-     --tags Key=Product,Value=Guardium
-```
-
-This should return the new CA's arn.
-
-```tsx
-{
-    "CertificateAuthorityArn": "arn:aws:acm-pca:us-east-1:748107796891:certificate-authority/00c9d3eb-c837-4cef-917a-fd87ec608a04"
-}
-```
-
-Let's collect that arn into an env var
-
-```tsx
-export ca_arn="arn:aws:acm-pca:us-east-1:748107796891:certificate-authority/00c9d3eb-c837-4cef-917a-fd87ec608a04"
-```
-
-### Generate and install the CA cert
-
-Generate a certificate signing request (CSR).
-
-```tsx
-aws acm-pca get-certificate-authority-csr \
-     --certificate-authority-arn $ca_arn \
-     --output text \
-     --region $region > ca.csr
-```
-
-Using the CSR from the previous step as the argument for the --csr parameter, issue the root certificate and export the arn as another env var.
-
-We're going to set the validity to 999 days.
-
-```tsx
-export root_cert_arn=$(aws acm-pca issue-certificate \
-     --certificate-authority-arn $ca_arn \
-     --csr fileb://ca.csr \
-     --signing-algorithm SHA256WITHRSA \
-     --region $region \
-     --template-arn arn:aws:acm-pca:::template/RootCACertificate/V1 \
-     --validity Value=999,Type=DAYS \
-     --output text)
-```
-
-Retrieve the cert and let's stick it in `cert.pem`
-
-```tsx
-aws acm-pca get-certificate \
-	--certificate-authority-arn $ca_arn \
-	--certificate-arn $root_cert_arn \
-  --region $region \
-	--output text > cert.pem
-```
-
-Finally import it into the CA
-
-```tsx
-aws acm-pca import-certificate-authority-certificate \
-    --region $region \
-    --certificate-authority-arn $ca_arn \
-    --certificate fileb://cert.pem
-```
-
-Verify the status of the CA
-
-```tsx
-aws acm-pca describe-certificate-authority \
-  --region $region \
-	--certificate-authority-arn $ca_arn \
-  --query "CertificateAuthority.Status" \
-	--output text
-```
-
-This should return `ACTIVE`.
-
-### Create an ACM Private CA
-
-Download the CA certificate using the following command.
-```tsx
-aws acm-pca get-certificate-authority-certificate \
---certificate-authority-arn $ca_arn \
---region $region \
---output text > cacert.pem
-```
-
-### Set EKS node permission for ACM Private CA
-
-Add the IAM policy to your EKS NodeInstanceRole
-
-Create the following file
-
-```tsx
-cat <<EOF > EKS-CA-NodePerms-policy.json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "awspcaissuer",
-            "Action": [
-                "acm-pca:DescribeCertificateAuthority",
-                "acm-pca:GetCertificate",
-                "acm-pca:IssueCertificate"
-            ],
-            "Effect": "Allow",
-            "Resource": "$ca_arn"
-        }
-    ]
-}
-EOF
-```
-
-Create the policy in IAM. This needs to be specific for your cluster using the CA we created.
-
-Export the following var:
-
-```tsx
-export awscapolicy="AWSCAPolicy-${clustername}"
-```
-
-```tsx
-aws iam create-policy \
---policy-name ${awscapolicy} \
---policy-document file://EKS-CA-NodePerms-policy.json
-```
-
-Let's retrieve the policy arn as an env var
-
-```tsx
-export ca_policy_arn=$(aws iam list-policies --query 'Policies[?PolicyName==`'${awscapolicy}'`].Arn' --output text)
-```
-
-Let's gather our NodeInstance role name
-
-```tsx
-export node_instance_role=$(aws iam list-roles --region $region --query 'Roles[?starts_with(RoleName, `eksctl-'${clustername}'`)]|[?contains(RoleName, `NodeInstanceRole`)].RoleName' --output text)
-```
-Now let's attach the policy to our EKS node role. In our case the role name is `gi-eks-nodes-role`. This may be different for you.
-```tsx
-aws iam attach-role-policy \
---role-name "${node_instance_role}" \
---policy-arn "${ca_policy_arn}" \
---region "${region}"
-```
-
-### Create an issuer
-
-We're going to create a namespace scoped issuer for now.
-
-Create a yaml file for the issuer
-```tsx
-cat <<EOF > awpca-issuer.yaml
-apiVersion: awspca.cert-manager.io/v1beta1
-kind: AWSPCAIssuer
-metadata:
-  name: acm-issuer
-  namespace: $NAMESPACE
-spec:
-  arn: $ca_arn
-  region: $region
-EOF
-```
-
-Deploy the AWSPCAIssuer: 
-
-```tsx
-kubectl apply -f awpca-issuer.yaml
-```
-
-*/}
 
 ## Community Cert Manager (optional)
 
 ### Installing community Cert Manager
 
 Install the helm repo
-```tsx
+```bash
 helm repo add jetstack https://charts.jetstack.io
 ```
 
 Create the namespace
-```tsx
+```bash
 kubectl create ns cert-manager
 ```
 
 Now install the Community Cert Manager
 
-```tsx
+```bash
 helm install cert-manager jetstack/cert-manager \
 --namespace cert-manager \
 --set installCRDs=true \
@@ -417,12 +177,12 @@ you can skip this section as it's meant for development environments.
 
 Deploy OPA Gatekeeper using prebuilt docker images
 
-:::note
+::: {.callout-note}
 By default, the violations audit runs every 60 seconds and will report a maximum of 20 audits in the constraint yaml.
 If you want to increase the number of violations shown on the constraint yaml to 500 (not recommended to increase further),
 update the gatekeeper.yaml below before applying and add the following argument to the audit deployment.
 
-```yaml {17}
+```yaml
   template:
     metadata:
       labels:
@@ -443,19 +203,19 @@ update the gatekeeper.yaml below before applying and add the following argument 
 ```
 :::
 
-```tsx
+```bash
 kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.17/deploy/gatekeeper.yaml
 ```
 
 Check the pods in gatekeeper-system namespace
 
-```tsx
+```bash
 kubectl get pods -n gatekeeper-system
 ```
 
 The output will be similar to:
 
-```tsx
+```bash
 NAME                                             READY   STATUS    RESTARTS   AGE
 gatekeeper-audit-5bc9b59c57-9d9hc                1/1     Running   0          25s
 gatekeeper-controller-manager-744cdc8556-hxf2n   1/1     Running   0          25s
@@ -468,7 +228,7 @@ To ease in the deployment of the templates and constraints, install [kustomize](
 
 The following script detects your OS and downloads the appropriate kustomize binary to your current working directory.
 
-```tsx
+```bash
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 ```
 
@@ -480,25 +240,25 @@ constraints.
 
 If you haven't yet, clone this github repository.
 
-```
+```bash
 git clone https://github.com/ibm-client-engineering/engineering-journal-quantum-safe.git
 ```
 
 Go to the opa library templates directory.
 
-```
+```bash
 cd engineering-journal-quantum-safe/opa/library/templates
 ```
 
 Apply the templates using `kustomize`
 
-```
+```bash
 kustomize build . | kubectl apply -f -
 ```
 
 Sample output
 
-```
+```bash
 constrainttemplate.templates.gatekeeper.sh/k8sallowedrepos created
 constrainttemplate.templates.gatekeeper.sh/k8sblockendpointeditdefaultrole created
 constrainttemplate.templates.gatekeeper.sh/k8sblockloadbalancer created
@@ -533,19 +293,19 @@ allows us to see what resources are violating the constraints without the resour
 
 Go to the opa library constraints directory.
 
-```
+```bash
 cd engineering-journal-quantum-safe/opa/library/constraints
 ```
 
 Apply the templates using `kustomize`
 
-```
+```bash
 kustomize build . | kubectl apply -f -
 ```
 
 Sample output
 
-```
+```bash
 k8sallowedrepos.constraints.gatekeeper.sh/repo-is-amazonaws created
 k8sallowedrepos.constraints.gatekeeper.sh/repo-is-openpolicyagent created
 k8sblockendpointeditdefaultrole.constraints.gatekeeper.sh/block-endpoint-edit-default-role created
@@ -570,13 +330,13 @@ k8suniqueingresshost.constraints.gatekeeper.sh/unique-ingress-host created
 
 Use the following command to list the violations.
 
-```
+```bash
 kubectl get constraints
 ```
 
 Sample output
 
-```
+```bash
 NAME                                                                                     ENFORCEMENT-ACTION   TOTAL-VIOLATIONS
 k8srequiredresources.constraints.gatekeeper.sh/container-must-have-limits-and-requests   dryrun               4
 
@@ -607,7 +367,7 @@ k8sblocknodeport.constraints.gatekeeper.sh/block-node-port   dryrun             
 To see the details of the violations, you can look at the constraint yaml. For example, to see the 
 `container-must-have-limits-and-requests` constraint violations, run the following command.
 
-```
+```bash
 kubectl get k8srequiredresources container-must-have-limits-and-requests -o yaml
 ```
 
@@ -648,15 +408,14 @@ Near the end of the yaml output, you will see violations listed.
 If you want a CSV of all of the violations (up to the constraints violation limit set at install),
 run the following command. Note that the header will be repeated.
 
-```
+```bash
 kubectl get constraints -o json | yq -o=json eval '.items[].status.violations' | jq -r '(.[0] | keys_unsorted) as $keys | $keys, map([.[ $keys[] ]])[] | @csv' > violations.csv 2>/dev/null
 ```
 
 ## Configure OPA Mutations
 
-:::note
+::: {.callout-note}
 If you are deploying to an **EKS** environment that is airgapped and using a private registry, the following mutations would need to be configured for the environment. This is not applicable to an Openshift environment as that can use an `ImageContentSourcePolicy`
-
 :::
 
 These mutations essentially work like an Openshift `ImageContentSourcePolicy` and rewrite the domain paths in pods.
@@ -664,7 +423,7 @@ These mutations essentially work like an Openshift `ImageContentSourcePolicy` an
 Export the registry domain. This should be the url of your private registry. `my.registry.io` is an example.
 
 
-```tsx
+```bash
 export myprivatereg=my.registry.io
 ```
 
