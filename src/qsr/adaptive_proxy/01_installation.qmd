@@ -9,8 +9,9 @@ format:
 
 # Useful Links
 
-https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-installing-adaptive
+[Installing Adaptive Proxy](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-installing-adaptive)
 
+[Docker Engine Install](https://docs.docker.com/engine/install/)
 :::
 
 # Deployment Pattern (VM-based standalone)
@@ -28,15 +29,6 @@ post-ingress controller (k8s). This section is focused on the VM-based standalon
 The adaptive proxy requires a docker or podman host to run the container. 
 
 For our example, we're going to set up the adaptive proxy to act as a loadbalancer for a kubernetes cluster.
-
-:::{.callout-note}
-
-# Useful Links
-
-https://docs.docker.com/engine/install/
-
-https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=proxy-installing-adaptive
-:::
 
 ## Pre-Reqs
 
