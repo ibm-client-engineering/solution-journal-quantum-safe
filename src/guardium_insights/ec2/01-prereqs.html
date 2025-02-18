@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Running Guardium Insights with QSPM on EC2">
+<meta name="dcterms.date" content="2025-02-18">
 
 <title>Prerequisites – IBM Quantum Safe Encryption</title>
 <style>
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -41,7 +75,10 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -349,16 +386,17 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="title">Prerequisites</h1>
 </div>
 
-<div>
-  <div class="description">
-    Running Guardium Insights with QSPM on EC2
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 18, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -373,7 +411,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="redhat-requirements">RedHat Requirements</h2>
 <section id="redhat-ocp-account-and-pull-secret" class="level3">
 <h3 class="anchored" data-anchor-id="redhat-ocp-account-and-pull-secret">RedHat OCP Account and Pull Secret</h3>
-<p>This is the required account used for the OCP licensing. Use this URL to download your RedHat Pull Secret: https://console.redhat.com/openshift/install/pull-secret</p>
+<p>This is the required account used for the OCP licensing. Use this <a href="https://console.redhat.com/openshift/install/pull-secret">LINK</a> to download your RedHat Pull Secret.</p>
 <p>If your organization does not own an OCP license, a trial license can be used for OCP and is valid for 60 days. Steps listed in the expandable section below.</p>
 <details>
 <summary>
@@ -382,14 +420,14 @@ ul.task-list li input[type="checkbox"] {
 <p>Go to www.redhat.com and click on “Log In”.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../assets/docimages/redhat_login.png" class="img-fluid figure-img"></p>
+<p><a href="../../../images/docimages/redhat_login.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="redhat_login"><img src="../../../images/docimages/redhat_login.png" class="img-fluid figure-img" alt="redhat_login"></a></p>
 <figcaption>redhat_login</figcaption>
 </figure>
 </div>
 <p>Then click on “Register for a Red Hat Account”.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../assets/docimages/redhat_register.png" class="img-fluid figure-img"></p>
+<p><a href="../../../images/docimages/redhat_register.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="redhat_register"><img src="../../../images/docimages/redhat_register.png" class="img-fluid figure-img" alt="redhat_register"></a></p>
 <figcaption>redhat_register</figcaption>
 </figure>
 </div>
@@ -398,14 +436,14 @@ ul.task-list li input[type="checkbox"] {
 <p>Now go to www.openshift.com and log in with your RedHat account. After logging in you will see this:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../assets/docimages/openshift_try_it.png" class="img-fluid figure-img"></p>
+<p><a href="../../../images/docimages/openshift_try_it.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="openshift_try_it"><img src="../../../images/docimages/openshift_try_it.png" class="img-fluid figure-img" alt="openshift_try_it"></a></p>
 <figcaption>openshift_try_it</figcaption>
 </figure>
 </div>
 <p>Click on “Try It” which will bring you to a page of different OpenShift versions to try, find the following version and click “Start your Trial”:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../assets/docimages/openshift_start_trial.png" class="img-fluid figure-img"></p>
+<p><a href="../../../images/docimages/openshift_start_trial.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="openshift_start_trial"><img src="../../../images/docimages/openshift_start_trial.png" class="img-fluid figure-img" alt="openshift_start_trial"></a></p>
 <figcaption>openshift_start_trial</figcaption>
 </figure>
 </div>
@@ -429,20 +467,50 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Specify the IAM user name and select Programmatic access.</p></li>
 <li><p>Attach the AdministratorAccess policy to ensure that the account has sufficient permission to create the cluster. This policy provides the cluster with the ability to grant credentials to each OpenShift Container Platform component. The cluster grants the components only the credentials that they require.</p></li>
 </ol>
-<div class="warning">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>While it is possible to create a policy that grants the all of the required AWS permissions and attach it to the user, this is not the preferred option. <strong>The cluster will not have the ability to grant additional credentials to individual components, so the same credentials are used by all components.</strong></p>
+</div>
 </div>
 <ol start="3" type="1">
 <li><p>Optional: Add metadata to the user by attaching tags.</p></li>
 <li><p>Confirm that the user name that you specified is granted the AdministratorAccess policy.</p></li>
 <li><p>Record the access key ID and secret access key values. You must use these values when you configure your local machine to run the installation program.</p></li>
 </ol>
-<div class="warning">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>You cannot use a temporary session token that you generated while using a multi-factor authentication device to authenticate to AWS when you deploy a cluster. The cluster continues to use your current AWS credentials to create AWS resources for the entire life of the cluster, so you must use key-based, long-term credentials.</p>
 </div>
+</div>
 <p>Your IAM user must have the permission tag:GetResources in the region us-east-1 to delete the base cluster resources. As part of the AWS API requirement, the OpenShift Container Platform installation program performs various actions in this region.</p>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>When you attach the AdministratorAccess policy to the IAM user that you create in Amazon Web Services (AWS), you grant that user all of the required permissions.</p>
+</div>
 </div>
 <p>To deploy all components of an OpenShift Container Platform cluster, the IAM user requires the following permissions:</p>
 <section id="required-permissions-if-not-using-administrator-access" class="level4">
@@ -574,8 +642,18 @@ ec2:CreateVpcEndpoint
 ec2:ModifySubnetAttribute
 
 ec2:ModifyVpcAttribute</code></pre>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you use an existing VPC, your account does not require these permissions for creating network resources.</p>
+</div>
 </div>
 </details>
 <details>
@@ -671,8 +749,18 @@ iam:RemoveRoleFromInstanceProfile
 iam:SimulatePrincipalPolicy
 
 iam:TagRole</code></pre>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you have not created a load balancer in your AWS account, the IAM user also requires the iam:CreateServiceLinkedRole permission.</p>
+</div>
 </div>
 </details>
 <details>
@@ -826,8 +914,18 @@ ec2:DisassociateRouteTable
 ec2:ReleaseAddress
 
 ec2:ReplaceRouteTableAssociation</code></pre>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you use an existing VPC, your account does not require these permissions to delete network resources. Instead, your account only requires the tag:UntagResources permission to delete network resources.</p>
+</div>
 </div>
 </details>
 <details>
@@ -865,8 +963,18 @@ s3:HeadBucket
 s3:ListBucketMultipartUploads
 
 s3:AbortMultipartUpload</code></pre>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you are managing your cloud provider credentials with mint mode, the IAM user also requires the iam:CreateAccessKey and iam:CreateUser permissions.</p>
+</div>
 </div>
 </details>
 <details>
@@ -883,20 +991,40 @@ servicequotas:ListAWSDefaultServiceQuotas</code></pre>
 </summary>
 <pre><code>sts:AssumeRole</code></pre>
 </details>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>For more details on the IAM user requirements, see https://docs.openshift.com/container-platform/4.16/installing/installing_aws/installing-aws-account.html#installing-aws-account</p>
+</div>
 </div>
 </section>
 <section id="aws-role-permissions-checker" class="level4">
 <h4 class="anchored" data-anchor-id="aws-role-permissions-checker">AWS Role Permissions Checker</h4>
 <p>Bash script that can be run on linux or OS X. Requires AWS CLI to be installed and configured.</p>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Script user will need the following permissions:</p>
 <ul>
 <li>iam:SimulatePrincipalPolicy</li>
 <li>iam:GetPolicy</li>
 <li>iam:GetPolicyVersion</li>
 </ul>
+</div>
 </div>
 <p><a href="https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/scripts/check-permissions.sh">Download the script</a></p>
 <p>Or run the following commands:</p>
@@ -905,7 +1033,7 @@ chmod +x check-permission.sh</code></pre>
 <p>To run the script you will need to download the “permissions.txt” file.<br>
 Download <a href="https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/scripts/permissions.txt">permissions.txt</a></p>
 <p>Script Syntax</p>
-<pre><code>./check-permissions.sh &lt;ROLE&gt; &lt;PERMISSIONS FILE&gt;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./check-permissions.sh</span> <span class="op">&lt;</span>ROLE<span class="op">&gt;</span> <span class="op">&lt;</span>PERMISSIONS FILE<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The permissions file is long and will take a few minutes for the script to work through. The output from the script is a file named “missing_permissions.txt”.</p>
 </section>
 </section>
@@ -1272,14 +1400,39 @@ Download <a href="https://ibm-client-engineering.github.io/engineering-journal-q
 <li>Three control plane machines. The control plane machines are not governed by a control plane machine set.</li>
 <li>Compute machines. You must create at least two compute machines, which are also known as worker machines, during installation. These machines are not governed by a compute machine set.</li>
 </ul>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>For more information on OCP on AWS, see https://docs.openshift.com/container-platform/4.16/installing/installing_aws/installing-aws-user-infra.html The “Minimum requirements” section does not consider the watsonx.ai and related services, and is accounted for in this documentation</p>
+</div>
 </div>
 </section>
 </section>
 <section id="parameters-for-cloudformation-template" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-for-cloudformation-template">Parameters for CloudFormation Template</h3>
 <p>The following parameters must be gathered from the AWS infrastructure in order to use the CloudFormation template:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For subnets, at least one set of 3 (Public or Private) subnets must be used.</p>
+<p>Key Pair generation instructions <a href="02-preparation.html#create-aws-keypair">here</a></p>
+<p>RedHat Pull Secret instructions <a href="02-preparation.html#obtain-redhat-pull-secret">here</a></p>
+</div>
+</div>
 <ul>
 <li>BootNodeAccessCIDR:</li>
 <li>vpc_id:</li>
@@ -1295,7 +1448,7 @@ Download <a href="https://ibm-client-engineering.github.io/engineering-journal-q
 <ul>
 <li>Example: <code>10.128.0.0/14</code></li>
 </ul></li>
-<li>subnet_ids: :::note For subnets, at least one set of 3 (Public or Private) subnets must be used. :::
+<li>subnet_ids:
 <ul>
 <li>Public
 <ul>
@@ -1335,8 +1488,8 @@ Download <a href="https://ibm-client-engineering.github.io/engineering-journal-q
 <li>http_proxy:</li>
 <li>https_proxy:</li>
 <li>no_proxy:</li>
-<li>KeyPairName: :::note Key Pair generation instructions <a href="../10-preparation/#create-aws-keypair">here</a> :::</li>
-<li>RedhatPullSecret: :::note RedHat Pull Secret instructions <a href="../10-preparation#obtain-redhat-pull-secret">here</a> :::</li>
+<li>KeyPairName:</li>
+<li>RedhatPullSecret:</li>
 <li>DomainName:</li>
 <li>ClusterName:</li>
 </ul>
@@ -1791,6 +1944,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

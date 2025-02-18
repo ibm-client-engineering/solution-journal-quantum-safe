@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Running Guardium Insights with QSPM on EC2">
+<meta name="dcterms.date" content="2025-02-18">
 
 <title>Preparation – IBM Quantum Safe Encryption</title>
 <style>
@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,35 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -419,16 +390,17 @@ window.Quarto = {
 <h1 class="title">Preparation</h1>
 </div>
 
-<div>
-  <div class="description">
-    Running Guardium Insights with QSPM on EC2
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 18, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -441,8 +413,18 @@ window.Quarto = {
 <section id="obtain-redhat-pull-secret" class="level3">
 <h3 class="anchored" data-anchor-id="obtain-redhat-pull-secret">Obtain RedHat Pull Secret</h3>
 <p>Use this URL to download your RedHat Pull Secret: https://console.redhat.com/openshift/install/pull-secret</p>
-<div class="tip">
-<p>If your organization does not have an existing RedHat account, you can create a RedHat trial account for a temporary OCP deployment (60 days). Instructions <a href="../05-prerequisites/#redhat-ocp-account-and-pull-secret">here</a> under the expandable section “Obtain a RedHat Trial Account”</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If your organization does not have an existing RedHat account, you can create a RedHat trial account for a temporary OCP deployment (60 days). Instructions <a href="01-prereqs.html#redhat-ocp-account-and-pull-secret">here</a> under the expandable section “Obtain a RedHat Trial Account”</p>
+</div>
 </div>
 </section>
 <section id="obtain-the-aws-iam-credentials" class="level3">
@@ -460,32 +442,32 @@ window.Quarto = {
 <section id="configure-aws" class="level3">
 <h3 class="anchored" data-anchor-id="configure-aws">Configure AWS</h3>
 <p>Run the following command and then enter your Access Key ID, Secret Access Key, Region, and Output.</p>
-<pre><code>aws configure</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> configure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="redhat-pull-secret" class="level3">
 <h3 class="anchored" data-anchor-id="redhat-pull-secret">Redhat pull secret</h3>
-<p>The Red Hat pull secret must be downloaded from https://console.redhat.com/openshift/downloads#tool-pull-secret. Rename the file from <code>pull-secret.txt</code> to <code>pull-secret.json</code></p>
+<p>The Red Hat pull secret must be downloaded from <a href="https://console.redhat.com/openshift/downloads#tool-pull-secret">here</a>. Rename the file from <code>pull-secret.txt</code> to <code>pull-secret.json</code></p>
 </section>
 <section id="create-s3-bucket" class="level3">
 <h3 class="anchored" data-anchor-id="create-s3-bucket">Create s3 bucket</h3>
-<pre><code># name must be unique in region
-BUCKET="bucket-customer-date"
-aws s3api create-bucket --bucket $BUCKET --region us-east-1</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># name must be unique in region</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">BUCKET</span><span class="op">=</span><span class="st">"bucket-customer-date"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> s3api create-bucket <span class="at">--bucket</span> <span class="va">$BUCKET</span> <span class="at">--region</span> us-east-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-pull-secrets-folder-in-s3-bucket" class="level3">
 <h3 class="anchored" data-anchor-id="create-pull-secrets-folder-in-s3-bucket">Create pull-secrets folder in s3 bucket</h3>
-<pre><code>aws s3api put-object --bucket $BUCKET --key "pull-secrets" --region us-east-1</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> s3api put-object <span class="at">--bucket</span> <span class="va">$BUCKET</span> <span class="at">--key</span> <span class="st">"pull-secrets"</span> <span class="at">--region</span> us-east-1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="upload-pull-secret.json-to-s3bucketpull-secrets" class="level3">
 <h3 class="anchored" data-anchor-id="upload-pull-secret.json-to-s3bucketpull-secrets">Upload pull-secret.json to s3bucket/pull-secrets</h3>
-<pre><code>aws s3 cp pull-secret.json s3://$BUCKET/pull-secrets/pull-secret.json</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> s3 cp pull-secret.json s3://<span class="va">$BUCKET</span>/pull-secrets/pull-secret.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-aws-keypair" class="level3">
 <h3 class="anchored" data-anchor-id="create-aws-keypair">Create AWS KeyPair</h3>
 <p>The following commands create the KeyPair, outputs the file to the default ssh folder. The second command modifies the permissions of the file.</p>
-<pre><code>KEYPAIR_NAME=ec2_ocp
-aws ec2 create-key-pair  --key-name $KEYPAIR_NAME --key-type rsa --key-format pem --query "KeyMaterial" --output text &gt; ~/.ssh/$KEYPAIR_NAME.pem
-chmod 400 ~/.ssh/$KEYPAIR_NAME.pem</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">KEYPAIR_NAME</span><span class="op">=</span>ec2_ocp</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> ec2 create-key-pair  <span class="at">--key-name</span> <span class="va">$KEYPAIR_NAME</span> <span class="at">--key-type</span> rsa <span class="at">--key-format</span> pem <span class="at">--query</span> <span class="st">"KeyMaterial"</span> <span class="at">--output</span> text <span class="op">&gt;</span> ~/.ssh/<span class="va">$KEYPAIR_NAME</span>.pem</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 400 ~/.ssh/<span class="va">$KEYPAIR_NAME</span>.pem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="preparing-the-installation-files" class="level3">
 <h3 class="anchored" data-anchor-id="preparing-the-installation-files">Preparing the Installation Files</h3>
@@ -507,14 +489,31 @@ Search <strong><em>cluster.yml</em></strong> for <code>REPLACE_ME_WITH_SUBNET_ID
 <section id="create-ocpinstall-role" class="level3">
 <h3 class="anchored" data-anchor-id="create-ocpinstall-role">Create OCPInstall Role</h3>
 <p><a href="https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/Cloudformation/OCPInstallRole.yaml">Download the OCPInstallRole.yaml</a></p>
-<p><strong><em>Note</em></strong>: This template assumes that roles <code>BootNodeRole</code> and <code>DevOps-Role</code> already exist. - Download DefaultRoles.yaml and apply if needed - Edit the OCPInstall role yaml and add account or add substitution and set role names appropriately - Set optional tags on the command</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This template assumes that roles <code>BootNodeRole</code> and <code>DevOps-Role</code> already exist.</p>
+<ul>
+<li>Download DefaultRoles.yaml and apply if needed</li>
+<li>Edit the OCPInstall role yaml and add account or add substitution and set role names appropriately</li>
+<li>Set optional tags on the command</li>
+</ul>
+</div>
+</div>
 <p>Create the role by running the following command:</p>
-<pre><code>aws cloudformation deploy --stack-name OCPInstall-role-1 --template-file OCPInstallRole.yaml --capabilities CAPABILITY_NAMED_IAM --tags *add Key=Value tag here*</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudformation deploy <span class="at">--stack-name</span> OCPInstall-role-1 <span class="at">--template-file</span> OCPInstallRole.yaml <span class="at">--capabilities</span> CAPABILITY_NAMED_IAM <span class="at">--tags</span> <span class="pp">*</span>add Key=Value tag here<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-lambdaexecution-role" class="level3">
 <h3 class="anchored" data-anchor-id="create-lambdaexecution-role">Create LambdaExecution Role</h3>
 <p><a href="https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/Cloudformation/LambdaExecutionRole.yaml">Download the LambdaExecutionRole.yaml</a> Create the role by running the following command:</p>
-<pre><code>aws cloudformation deploy --stack-name LambdaExecutionRole --template-file LambdaExecutionRole.yaml --capabilities CAPABILITY_NAMED_IAM --tags *add Key=Value tag here*</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudformation deploy <span class="at">--stack-name</span> LambdaExecutionRole <span class="at">--template-file</span> LambdaExecutionRole.yaml <span class="at">--capabilities</span> CAPABILITY_NAMED_IAM <span class="at">--tags</span> <span class="pp">*</span>add Key=Value tag here<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="deploy-cloudformation-templates-using-aws-cli" class="level3">
 <h3 class="anchored" data-anchor-id="deploy-cloudformation-templates-using-aws-cli">Deploy CloudFormation templates using AWS CLI</h3>
@@ -524,113 +523,132 @@ Search <strong><em>cluster.yml</em></strong> for <code>REPLACE_ME_WITH_SUBNET_ID
 <p>Download the following file:</p>
 <p><a href="https://ibm-client-engineering.github.io/engineering-journal-quantum-safe/scripts/Install-OCP-UPI/cloudformation/vpc-template.yaml">vpc-template.yaml</a></p>
 <p>Create a file called <code>vpc-params.json</code></p>
-<pre class="tsx"><code>cat &lt;&lt; EOF &gt; vpc-params.json
-[
-  {
-    "ParameterKey": "ClusterName", 
-    "ParameterValue": "${CLUSTERNAME}" 
-  },
-  {
-    "ParameterKey": "AvailabilityZones", 
-    "ParameterValue": "${region}a,${region}b,${region}c"
-  },
-  {
-    "ParameterKey": "CreateNATGateways", 
-    "ParameterValue": "true" 
-  },
-  {
-    "ParameterKey": "CreatePublicSubnets", 
-    "ParameterValue": "true" 
-  },
-  {
-    "ParameterKey": "CreatePrivateSubnets", 
-    "ParameterValue": "true" 
-  },
-  {
-    "ParameterKey": "NumberOfAZs",
-    "ParameterValue": "3"
-  },
-  {
-    "ParameterKey": "PrivateSubnet1CIDR",
-    "ParameterValue": "192.168.0.0/19"
-  },
-  {
-    "ParameterKey": "PrivateSubnet2CIDR",
-    "ParameterValue": "192.168.32.0/19"
-  },
-  {
-    "ParameterKey": "PrivateSubnet3CIDR",
-    "ParameterValue": "192.168.64.0/19"
-  },
-  {
-    "ParameterKey": "PrivateSubnet1Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-private-subnet-1"
-  },
-  {
-    "ParameterKey": "PrivateSubnet2Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-private-subnet-2"
-  },
-  {
-    "ParameterKey": "PrivateSubnet3Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-private-subnet-3"
-  },
-  {
-    "ParameterKey": "PublicSubnet1CIDR",
-    "ParameterValue": "192.168.96.0/21"
-  },
-  {
-    "ParameterKey": "PublicSubnet1Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-public-subnet-1"
-  },
-  {
-    "ParameterKey": "PublicSubnet2CIDR",
-    "ParameterValue": "192.168.104.0/21"
-  },
-  {
-    "ParameterKey": "PublicSubnet2Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-public-subnet-2"
-  },
-  {
-    "ParameterKey": "PublicSubnet3CIDR",
-    "ParameterValue": "192.168.112.0/21"
-  },
-  {
-    "ParameterKey": "PublicSubnet3Tag1",
-    "ParameterValue": "Name=${CLUSTERNAME}-public-subnet-3"
-  },
-  {
-    "ParameterKey": "VPCCIDR",
-    "ParameterValue": "192.168.0.0/16"
-  },
-  {
-    "ParameterKey": "VPCDNSNameResolution",
-    "ParameterValue": "true"
-  },
-  {
-    "ParameterKey": "VPCDNSNameCreation",
-    "ParameterValue": "true"
-  }
-]
-EOF</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; EOF</span> <span class="op">&gt;</span> vpc-params.json</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">[</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "ClusterName", </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "</span><span class="va">${CLUSTERNAME}</span><span class="st">" </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "AvailabilityZones", </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "</span><span class="va">${region}</span><span class="st">a,</span><span class="va">${region}</span><span class="st">b,</span><span class="va">${region}</span><span class="st">c"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "CreateNATGateways", </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "true" </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "CreatePublicSubnets", </span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "true" </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "CreatePrivateSubnets", </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "true" </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "NumberOfAZs",</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "3"</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet1CIDR",</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.0.0/19"</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet2CIDR",</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.32.0/19"</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet3CIDR",</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.64.0/19"</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet1Tag1",</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-private-subnet-1"</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet2Tag1",</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-private-subnet-2"</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PrivateSubnet3Tag1",</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-private-subnet-3"</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet1CIDR",</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.96.0/21"</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet1Tag1",</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-public-subnet-1"</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet2CIDR",</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.104.0/21"</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet2Tag1",</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-public-subnet-2"</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet3CIDR",</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.112.0/21"</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "PublicSubnet3Tag1",</span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "Name=</span><span class="va">${CLUSTERNAME}</span><span class="st">-public-subnet-3"</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "VPCCIDR",</span></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "192.168.0.0/16"</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "VPCDNSNameResolution",</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "true"</span></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterKey": "VPCDNSNameCreation",</span></span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="st">    "ParameterValue": "true"</span></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="st">]</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Using the OCPInstall role arn, run the following command to create the VPC:</p>
-<pre class="tsx"><code>aws cloudformation create-stack \
---stack-name ${CLUSTERNAME} \
---template-body file://vpc-template.yaml \
---parameters file://vpc-params.json</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudformation create-stack <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>--stack-name <span class="va">${CLUSTERNAME}</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>--template-body file://vpc-template.yaml <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>--parameters file://vpc-params.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Using the OCPInstall role arn, run the following command to start the main cloudformation deployment:</p>
-<div class="tip">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you are developing, add <code>--disable-rollback</code> flag to the following command to disable the automatic rollback and deletion of the bastion node on failures. This will allow you to troubleshoot in the event that the stack does not complete successfully.</p>
 </div>
-<pre><code>aws cloudformation deploy \
---stack-name stack-deployment-1 \
---template-file cluster.yaml \
---parameter-overrides file://parameters-override.yaml \
---capabilities CAPABILITY_NAMED_IAM \
---tags *add Key=Value tag here* \
---role-arn arn:aws:iam::&lt;ACCOUNT&gt;:role/OCPInstall</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudformation deploy <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>--stack-name stack-deployment-1 <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>--template-file cluster.yaml <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>--parameter-overrides file://parameters-override.yaml <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>--capabilities CAPABILITY_NAMED_IAM <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>--tags <span class="pp">*</span>add Key=Value tag here<span class="pp">*</span> <span class="dt">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>--role-arn arn:aws:iam::<span class="op">&lt;</span>ACCOUNT<span class="op">&gt;</span>:role/OCPInstall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Check the AWS Console to see when the cloudformation template has progressed far enough that the bootnode is online.</p>
 <p>Using the ssh key from the Key Pair name used in parameters-override.yaml, ssh to the bootnode. The status of the install will be found in the log files under <code>~ec2-user/cpd-status/logs</code>.</p>
-<div class="tip">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If the install fails but some resources were already created, some clean up might be required in addition to deleting the stack. Find and delete the following before running the installation again.</p>
 <ul>
 <li>DNS A records on the hosted Zones</li>
@@ -638,6 +656,7 @@ EOF</code></pre>
 <li>EC2 load balancers</li>
 <li>EFS file systems</li>
 </ul>
+</div>
 </div>
 </section>
 <section id="monitoring" class="level3">
@@ -647,12 +666,12 @@ EOF</code></pre>
 <p>Add <code>AmazonSSMManagedInstanceCore</code> policy to role used to execute the cloudform template and the user/role that will be connecting to the instance.</p>
 <p>The cloudform template creates a boot node that will begin executing commands. One set of commands installs, enables, and starts <code>amazon-ssm-agent</code>. It may take up to 20 minutes before this agent comes online in the boot node.</p>
 <p>Once the instance has started the ssm agent a connection can be initiated with following command:</p>
-<pre><code>aws ssm start-session --target $InstanceID</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> ssm start-session <span class="at">--target</span> <span class="va">$InstanceID</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Once a connection has been opened, you may need to change users to the ‘ec2-user’. This can be accomplished with the following commands:</p>
 <p>Become <code>root</code></p>
-<pre><code>sudo su</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> su</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Become <code>ec2-user</code></p>
-<pre><code>su ec2-user</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">su</span> ec2-user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You will now be able to review deployment logs.</p>
 <details>
 <summary>
@@ -660,69 +679,69 @@ EOF</code></pre>
 </summary>
 <p>SSM does not work exactly the same as SSH. If you intend to use any additional commands, such as <code>aws</code>, then you need to do the following:</p>
 <p>Check the output of running the <code>aws</code> command, If there is an error message like this:</p>
-<pre><code>[47863] Error loading Python lib '/usr/bin/libpython3.11.so.1.0': dlopen: /usr/bin/libpython3.11.so.1.0: cannot open shared object file: No such file or directory</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[47863]</span> Error loading Python lib <span class="st">'/usr/bin/libpython3.11.so.1.0'</span>: dlopen: /usr/bin/libpython3.11.so.1.0: cannot open shared object file: No such file or directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Another possible error message:</p>
-<pre><code>$ aws
-Python path configuration:
-  PYTHONHOME = '/usr/bin'
-  PYTHONPATH = (not set)
-  program name = '/usr/bin/aws'
-  isolated = 0
-  environment = 0
-  user site = 0
-  safe_path = 0
-  import site = 0
-  is in build tree = 0
-  stdlib dir = ''
-  sys._base_executable = '/usr/bin/aws'
-  sys.base_prefix = ''
-  sys.base_exec_prefix = ''
-  sys.platlibdir = 'lib'
-  sys.executable = '/usr/bin/aws'
-  sys.prefix = ''
-  sys.exec_prefix = ''
-  sys.path = [
-    '/usr/bin/base_library.zip',
-    '/usr/bin/lib-dynload',
-    '/usr/bin',
-  ]
-Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
-Python runtime state: core initialized
-ModuleNotFoundError: No module named 'encodings'
-
-Current thread 0x00007fed39a06c00 (most recent call first):
-  &lt;no Python frame&gt;</code></pre>
-<p>You may not have the correct $PATH.</p>
-<p>Incorrect <span class="math inline">\(PATH:
-```\)</span> echo $PATH /home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/bin:/usr/sbin</p>
-<pre><code>
-How to Correct $PATH:
-</code></pre>
-<p>export PATH=“/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin”</p>
-<pre><code>
-How to persist the change to $PATH:
-</code></pre>
-<p>echo ‘export PATH=“<span class="math inline">\(HOME/.local/bin:\)</span>HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin”’ &gt;&gt; .bashrc</p>
-<pre><code>
-Confirm this change works:
-</code></pre>
-<p>$ echo <span class="math inline">\(PATH
-/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin\)</span> aws</p>
-<p>usage: aws [options] <command> <subcommand> [<subcommand> …] [parameters] To see help text, you can run:</subcommand></subcommand></command></p>
-<p>aws help aws <command> help aws <command> <subcommand> help</subcommand></command></command></p>
-<p>aws: error: the following arguments are required: command</p>
-<pre><code>
-&lt;/details&gt;
-
-#### Monitor the deployment
-
-Check what folders exist in the ec2-home directory. if "cpd-status" has not been created yet, then wait a few minutes. Once "cpd-status" directory appears, run the following command:
-</code></pre>
-<p>tail -f ~/cpd-status/log/cloud-pak-deployer.log ```</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> aws</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Python</span> path configuration:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PYTHONHOME</span> = <span class="st">'/usr/bin'</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PYTHONPATH</span> = <span class="er">(</span><span class="ex">not</span> set<span class="kw">)</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">program</span> name = <span class="st">'/usr/bin/aws'</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">isolated</span> = 0</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">environment</span> = 0</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">user</span> site = 0</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">safe_path</span> = 0</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">import</span> site = 0</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">is</span> in build tree = 0</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">stdlib</span> dir = <span class="st">''</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys._base_executable</span> = <span class="st">'/usr/bin/aws'</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.base_prefix</span> = <span class="st">''</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.base_exec_prefix</span> = <span class="st">''</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.platlibdir</span> = <span class="st">'lib'</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.executable</span> = <span class="st">'/usr/bin/aws'</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.prefix</span> = <span class="st">''</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.exec_prefix</span> = <span class="st">''</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sys.path</span> = [</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'/usr/bin/base_library.zip'</span><span class="ex">,</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'/usr/bin/lib-dynload'</span><span class="ex">,</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'/usr/bin'</span><span class="ex">,</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">]</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="ex">Fatal</span> Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="ex">Python</span> runtime state: core initialized</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="ex">ModuleNotFoundError:</span> No module named <span class="st">'encodings'</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="ex">Current</span> thread 0x00007fed39a06c00 <span class="er">(</span><span class="ex">most</span> recent call first<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>no <span class="ex">Python</span> frame<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You may not have the correct <code>$PATH.</code></p>
+<p>Incorrect <code>$PATH:</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="va">$PATH</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/bin:/usr/sbin</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How to Correct <code>$PATH:</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How to persist the change to <code>$PATH:</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"'</span> <span class="op">&gt;&gt;</span> .bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Confirm this change works:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="va">$PATH</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> aws</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">usage:</span> aws <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="op">&lt;</span>command<span class="op">&gt;</span> <span class="op">&lt;</span>subcommand<span class="op">&gt;</span> [<span class="op">&lt;</span>subcommand<span class="op">&gt;</span> ...] <span class="pp">[</span><span class="ss">parameters</span><span class="pp">]</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> see help text, you can run:</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">aws</span> help</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">aws</span> <span class="op">&lt;</span>command<span class="op">&gt;</span> help</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">aws</span> <span class="op">&lt;</span>command<span class="op">&gt;</span> <span class="op">&lt;</span>subcommand<span class="op">&gt;</span> help</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ex">aws:</span> error: the following arguments are required: command</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</section>
+<section id="monitor-the-deployment" class="level4">
+<h4 class="anchored" data-anchor-id="monitor-the-deployment">Monitor the deployment</h4>
+<p>Check what folders exist in the ec2-home directory. if “cpd-status” has not been created yet, then wait a few minutes. Once “cpd-status” directory appears, run the following command:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> ~/cpd-status/log/cloud-pak-deployer.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This command will show the log file from the cp-deployer process.</p>
 
 
-</details></section>
+</section>
 </section>
 </section>
 

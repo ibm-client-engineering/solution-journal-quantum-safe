@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/index.html</loc>
-    <lastmod>2025-01-17T21:09:15.941Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qse/01_installation.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/implementation_methodology/stepone-imp.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/adaptive_proxy/02_configuration.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/adaptive_proxy/01_installation.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/performance_test_harness/01_installation.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/prepare.html</loc>
-    <lastmod>2025-01-17T21:09:15.944Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/troubleshooting.html</loc>
-    <lastmod>2025-01-17T21:09:15.944Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/04_optional_services.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/eks/02_cluster-build.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/03-upi_install.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/key-takeaway.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
     <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/overview.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/02-preparation.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/01-prereqs.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/eks/01_pre-reqs.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/03_gi-install.html</loc>
-    <lastmod>2025-01-17T21:09:15.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/environment.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
   </url>
   <url>
     <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/landing_page/landing_page.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/performance_test_harness/02_usage.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
   </url>
   <url>
     <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/adaptive_proxy/03_configuration-ssl.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/performance_test_harness/01_installation.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/key-takeaway.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
   </url>
   <url>
     <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/implementation_methodology/steptwo-imp.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
   </url>
   <url>
-    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/implementation_methodology/stepthree-imp.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/eks/01_pre-reqs.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/03_gi-install.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/03-upi_install.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/04_optional_services.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/prepare.html</loc>
+    <lastmod>2025-02-18T00:42:21.609Z</lastmod>
   </url>
   <url>
     <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qse/02_scanning.html</loc>
-    <lastmod>2025-01-17T21:09:15.943Z</lastmod>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qse/01_installation.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/environment.html</loc>
+    <lastmod>2025-02-18T00:42:21.609Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/solution_overview/troubleshooting.html</loc>
+    <lastmod>2025-02-18T00:42:21.609Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/01-prereqs.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/ec2/02-preparation.html</loc>
+    <lastmod>2025-02-18T00:42:21.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/guardium_insights/eks/02_cluster-build.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/implementation_methodology/stepone-imp.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/implementation_methodology/stepthree-imp.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/performance_test_harness/02_usage.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/adaptive_proxy/02_configuration.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/src/qsr/adaptive_proxy/01_installation.html</loc>
+    <lastmod>2025-02-18T00:42:21.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ibm-client-engineering.github.io/solution-journal-quantum-safe/index.html</loc>
+    <lastmod>2025-02-18T00:42:21.606Z</lastmod>
   </url>
 </urlset>

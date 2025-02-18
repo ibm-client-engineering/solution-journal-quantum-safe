@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="QSE installation">
 
 <title>Installation – IBM Quantum Safe Encryption</title>
 <style>
@@ -75,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -382,11 +381,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">Installation</h1>
 </div>
 
-<div>
-  <div class="description">
-    QSE installation
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -401,10 +395,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>import { Tabs, TabItem } from ‘<span class="citation" data-cites="astrojs/starlight/components">@astrojs/starlight/components</span>’;</p>
-<p>:::note[Useful links]</p>
-<p>https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=explorer-installing-quantum-safe-macos</p>
-<p>:::</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful links
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=explorer-installing-quantum-safe-macos">IBM Installing Quantum Safe Explorer</a></p>
+</div>
+</div>
 <section id="pre-reqs" class="level2">
 <h2 class="anchored" data-anchor-id="pre-reqs">Pre-Reqs</h2>
 <p>For any installation, in order to use the VSCode plugin, you need to install VSCode.</p>
@@ -416,59 +419,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="installing-vscode" class="level3">
 <h3 class="anchored" data-anchor-id="installing-vscode">Installing VSCode</h3>
-<p><tabs synckey="OS"> <tabitem label="Windows"> Grab VSCode for windows from <a href="https://code.visualstudio.com/download">here</a></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Grab VSCode for windows from <a href="https://code.visualstudio.com/download">here</a></p>
 <p>Make sure you download the system installer</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-installer01.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-installer01.png" class="img-fluid figure-img"></p>
 <figcaption>Windows1</figcaption>
 </figure>
 </div>
 <p>Double click it and install it to this following path</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-installer02.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-installer02.png" class="img-fluid figure-img"></p>
 <figcaption>Windows2</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-installer03.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-installer03.png" class="img-fluid figure-img"></p>
 <figcaption>Windows3</figcaption>
 </figure>
 </div>
-<p> <tabitem label="MacOS"></tabitem></p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Grab VSCode for MacOS from <a href="https://code.visualstudio.com/download">here</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/macos-installer01.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-installer01.png" class="img-fluid figure-img"></p>
 <figcaption>MacOS1</figcaption>
 </figure>
 </div>
 <p>File will be located in your Downloads folder.</p>
-<p> </p>
+</div>
+</div>
+</div>
 </section>
 <section id="installing-openjdk" class="level3">
 <h3 class="anchored" data-anchor-id="installing-openjdk">Installing OpenJDK</h3>
-<p><tabs synckey="OS"> <tabitem label="Windows"></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>Microsoft’s OpenJDK 17 can be found <a href="https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17">here</a></p>
 <p>Download it <a href="https://aka.ms/download-jdk/microsoft-jdk-17.0.11-windows-x64.msi">here</a></p>
 <p>Go to your <code>Downloads</code> folder and double click the <code>microsoft-jdk-17.0.11-windows-x64.msi</code> file there.</p>
 <p>Let it set the JAVA_HOME var and click <code>Next</code> then click <code>Install</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-jdk01.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-jdk01.png" class="img-fluid figure-img"></p>
 <figcaption>WindowsJDK</figcaption>
 </figure>
 </div>
-<p> <tabitem label="MacOS"></tabitem></p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>Make sure you have openjdk-17 installed.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install openjdk@17</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install openjdk@17</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you have other versions of Java installed, you might need to add this to your path:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p> </p>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="downloading-qse" class="level2">
@@ -476,22 +492,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can find the required installation files for your OS of choice on IBM’s Passport Advantage. Or if you’re an IBM Employee, you can find it <a href="https://w3south-limited-use.cpc.ibm.com/software/xl/download/ticket.wss">here</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/qse-download.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/qse-download.png" class="img-fluid figure-img"></p>
 <figcaption>QSE1</figcaption>
 </figure>
 </div>
 <p>It’s important to note that these files all use the same name</p>
-<p><tabs synckey="OS"> <tabitem label="Windows"></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-qse1.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-qse1.png" class="img-fluid figure-img"></p>
 <figcaption>QSE2</figcaption>
 </figure>
 </div>
 <p>Extract them all to the same folder</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-qse2.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-qse2.png" class="img-fluid figure-img"></p>
 <figcaption>QSE3</figcaption>
 </figure>
 </div>
@@ -564,17 +583,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>│</span>
 <span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>└───M0GT7EN</span>
 <span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        IBM Quantum Safe Explorer<span class="op">.</span><span class="fu">exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p></p>
-<p><tabitem label="MacOS"></tabitem></p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <pre class="tsx"><code>-rw-r--r--@    1 kramerro  staff    35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN(2).zip
 -rw-r--r--@    1 kramerro  staff    73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip
 -rw-r--r--@    1 kramerro  staff   446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN(1).zip</code></pre>
 <p>Unzip them all to the same folder</p>
 <p>File listing</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">➜</span>  QSE git:<span class="op">(ross-up</span>dates) ✗ tree</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>├── M0GT4EN</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>│&nbsp;&nbsp; └── IBM Quantum Safe Explorer-1.0.1.<span class="op">pkg</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">➜</span>  QSE git:<span class="er">(</span><span class="ex">ross-updates</span><span class="kw">)</span> <span class="ex">✗</span> tree</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0GT4EN</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> └── IBM Quantum Safe Explorer-1.0.1.pkg</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0GT5EN</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> └── ibm-quantum-safe-explorer-1.0.1.vsix</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> M0GT6EN</span>
@@ -634,11 +653,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> version</span>
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="ex">7</span> directories, 53 files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p> </p>
+</div>
+</div>
+</div>
 </section>
 <section id="installing-the-services" class="level2">
 <h2 class="anchored" data-anchor-id="installing-the-services">Installing the Services</h2>
-<p><tabs synckey="OS"> <tabitem label="Windows"></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT7EN\</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN\M0GT7EN<span class="op">&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -646,29 +670,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The following window will pop up. Go with all the defaults.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-qse-service1.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-qse-service1.png" class="img-fluid figure-img"></p>
 <figcaption>QSEwindows1</figcaption>
 </figure>
 </div>
 <p>When installation is complete, the following window will pop up. Click <code>Finish</code> and allow it to start up the service.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-qse-service2.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-qse-service2.png" class="img-fluid figure-img"></p>
 <figcaption>QSEwindows2</figcaption>
 </figure>
 </div>
-<p>Click <code>Accept</code> <img src="../../../assets/images/windows-qse-service3.png" class="img-fluid" alt="QSEwindows3"></p>
+<p>Click <code>Accept</code> <img src="../../images/windows-qse-service3.png" class="img-fluid" alt="QSEwindows3"></p>
 <p>Once it’s running, don’t close the window.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/windows-qse-service4.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/windows-qse-service4.png" class="img-fluid figure-img"></p>
 <figcaption>QSEwindows4</figcaption>
 </figure>
 </div>
-<p></p>
-<p><tabitem label="MacOS"></tabitem></p>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>In our extracted directory, run the following command with <code>sudo</code> and enter your admin password when prompted.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> installer <span class="at">-pkg</span> M0GT4EN/IBM<span class="dt">\ </span>Quantum<span class="dt">\ </span>Safe<span class="dt">\ </span>Explorer-1.0.1.pkg <span class="at">-target</span> /Applications</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> installer <span class="at">-pkg</span> M0GT4EN/IBM\ Quantum\ Safe\ Explorer-1.0.1.pkg <span class="at">-target</span> /Applications</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Password:</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">installer:</span> Package name is IBM Quantum Safe Explorer</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">installer:</span> Installing at base path /</span>
@@ -676,60 +700,94 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Locate the desktop shortcut for <code>IBM Quantum Safe Explorer</code> and kick it off.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/macos-qse-service1.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-service1.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos1</figcaption>
 </figure>
 </div>
-<p>You should see the following windows pop up: <img src="../../../assets/images/macos-qse-service2.png" class="img-fluid" alt="QSEmacos2"> Make sure to click <code>Accept</code></p>
+<p>You should see the following windows pop up: <img src="../../images/macos-qse-service2.png" class="img-fluid" alt="QSEmacos2"> Make sure to click <code>Accept</code></p>
 <p>The QSE service should now be running.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/macos-qse-service3.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-service3.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos3</figcaption>
 </figure>
 </div>
-<div class="caution">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Do not close this window as apparently it DOES NOT continue running in the background.</p>
 </div>
-<p> </p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="installing-the-ibm-quantum-safe-explorer-cli" class="level2">
 <h2 class="anchored" data-anchor-id="installing-the-ibm-quantum-safe-explorer-cli">Installing the IBM Quantum Safe Explorer CLI</h2>
-<p><tabs synckey="OS"> <tabitem label="Windows"></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>Simply change directory to where ever you extracted the extension. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT6EN\</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p> <tabitem label="MacOS"></tabitem></p>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Simply change directory to wherever you extracted the extension. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>~/Downloads</code> directory:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads/M0GT6EN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p> </p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads/M0GT6EN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="installing-vscode-plugin" class="level2">
 <h2 class="anchored" data-anchor-id="installing-vscode-plugin">Installing VSCode plugin</h2>
-<div class="note">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If using MacOS, make sure you have the <code>code</code> cli for MacOS enabled. This is how you do <a href="https://code.visualstudio.com/docs/setup/mac">that</a></p>
 </div>
+</div>
 <p>Change directory to where ever you extracted the extension</p>
-<p><tabs synckey="OS"> <tabitem label="Windows"></tabitem></tabs></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">MacOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="sourceCode" id="cb10"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT5EN\</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Install the extension</p>
 <pre><code>PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT5EN&gt; code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix
 Installing extensions...
 Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.</code></pre>
-<p> <tabitem label="MacOS"></tabitem></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> M0GT5EN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> M0GT5EN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Install the extension</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> ibm-quantum-safe-explorer-1.0.1.vsix </span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> ibm-quantum-safe-explorer-1.0.1.vsix </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Installing</span> extensions...</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Extension</span> <span class="st">'ibm-quantum-safe-explorer-1.0.1.vsix'</span> was successfully installed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p> </p>
+</div>
+</div>
+</div>
 <p>In your running VSCode instance, click the <code>Extensions</code> icon in the left-hand side bar and select <code>IBM Quantum Safe Explorer</code></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/extension1.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/extension1.png" class="img-fluid figure-img"></p>
 <figcaption>Extension1</figcaption>
 </figure>
 </div>
-<p>Click on the settings for the extension <img src="../../../assets/images/extension2.png" class="img-fluid" alt="Extension2"></p>
+<p>Click on the settings for the extension <img src="../../images/extension2.png" class="img-fluid" alt="Extension2"></p>
 <p>Per the current <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=vsce-configuring-quantum-safe-explorer-visual-studio-code-extension">guide</a>, the following settings must be configured:</p>
 <div class="note">
 <p>Currently as of 1.0.x only <code>localhost</code> is supported as <code>qs-explorer.hostname</code>.</p>
@@ -751,8 +809,18 @@ Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.</co
 </section>
 <section id="uninstalling-the-services" class="level2">
 <h2 class="anchored" data-anchor-id="uninstalling-the-services">Uninstalling the Services</h2>
-<div class="note[Important]">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>There is a bug in v1.0.1 uninstall on Windows that will later cause issues when v2.x is installed, please note the instructions below.</p>
+</div>
 </div>
 <p>For Windows, after running the normal “Remove Programs” to uninstall the QSE service, manually delete the <code>qs-explorer</code> folder from the user’s home directory. If this is not done and v2.x is later installed, it will cause the scanning to fail.</p>
 <p>This is only an issue with the v1.0.1 uninstallation on Windows. This issue has been resolved in the v2.x uninstallation.</p>

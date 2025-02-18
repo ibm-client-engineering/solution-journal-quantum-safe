@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Installing Guardium Insights">
+<meta name="dcterms.date" content="2025-02-18">
 
 <title>Guardium Insights Installation – IBM Quantum Safe Encryption</title>
 <style>
@@ -75,7 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -393,16 +396,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">Guardium Insights Installation</h1>
 </div>
 
-<div>
-  <div class="description">
-    Installing Guardium Insights
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 18, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -412,406 +416,475 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>:::note[Useful Links] A lot of content cribbed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-install-guardium-insights-operator-related-components">here</a></p>
-<p>You will need your IBM Entitlement Key for the next steps. You should already have it available at this point, but it can also be retrieved from <a href="https://myibm.ibm.com/products-services/containerlibrary">here</a> :::</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Links
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A lot of content cribbed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-install-guardium-insights-operator-related-components">here</a></p>
+<p>You will need your IBM Entitlement Key for the next steps. You should already have it available at this point, but it can also be retrieved from <a href="https://myibm.ibm.com/products-services/containerlibrary">here</a></p>
+</div>
+</div>
 <section id="obtaining-the-case-bundle-for-gi" class="level2">
 <h2 class="anchored" data-anchor-id="obtaining-the-case-bundle-for-gi">Obtaining the CASE bundle for GI</h2>
 <p>Export the following env vars. This assumes we have been installing in the <code>openshift-marketplace</code> namespace.</p>
 <p>As of this writing, we are using Guardium Insights version <code>3.5.0</code> which uses the <code>2.5.0</code> bundle file.</p>
-<pre class="tsx"><code>export CP_REPO_USER="cp"
-export CP_REPO_PASS=&lt;Your Password / Entitlement Key to cp.icr.io&gt;
-export NAMESPACE="openshift-marketplace"
-export CLUSTERNAME="&lt;your-cluster-name&gt;"
-export CASE_NAME=ibm-guardium-data-security-center
-export CASE_VERSION=2.6.0
-export LOCAL_CASE_DIR=$HOME/.ibm-pak/data/cases/$CASE_NAME/$CASE_VERSION
-export GI_INVENTORY_SETUP=install
-export IBMPAK_LAUNCH_SKIP_PREREQ_CHECK=true</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CP_REPO_USER</span><span class="op">=</span><span class="st">"cp"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CP_REPO_PASS</span><span class="op">=&lt;</span>Your Password / Entitlement Key to cp.icr.io<span class="op">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NAMESPACE</span><span class="op">=</span><span class="st">"openshift-marketplace"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLUSTERNAME</span><span class="op">=</span><span class="st">"&lt;your-cluster-name&gt;"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CASE_NAME</span><span class="op">=</span>ibm-guardium-data-security-center</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CASE_VERSION</span><span class="op">=</span>2.6.0</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LOCAL_CASE_DIR</span><span class="op">=</span><span class="va">$HOME</span>/.ibm-pak/data/cases/<span class="va">$CASE_NAME</span>/<span class="va">$CASE_VERSION</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GI_INVENTORY_SETUP</span><span class="op">=</span>install</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IBMPAK_LAUNCH_SKIP_PREREQ_CHECK</span><span class="op">=</span>true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Save the CASE bundle locally</p>
-<pre class="tsx"><code>oc ibm-pak get $CASE_NAME \
---version $CASE_VERSION \
---skip-verify</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">oc</span> ibm-pak get <span class="va">$CASE_NAME</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>--version <span class="va">$CASE_VERSION</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>--skip-verify</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will download the CASE bundle to <code>$HOME/.ibm-pak/data/cases/ibm-guardium-data-security-center/2.6.0</code></p>
 </section>
 <section id="install-the-gi-operator" class="level2">
 <h2 class="anchored" data-anchor-id="install-the-gi-operator">Install the GI Operator</h2>
 <p>Set the context to the correct namespace</p>
-<pre class="tsx"><code>kubectl config set-context --current --namespace=${NAMESPACE}</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> config set-context <span class="at">--current</span> <span class="at">--namespace</span><span class="op">=</span><span class="va">${NAMESPACE}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="collect-the-node-names" class="level3">
 <h3 class="anchored" data-anchor-id="collect-the-node-names">Collect the node names</h3>
 <p>In most installations you can label specific nodes to be used for DB2. In our case, we are just going to label all the compute nodes as part of the pre-install.</p>
-<pre class="tsx"><code>NODES=$(kubectl get nodes -o jsonpath='{.items[*].metadata.name}')
-NODES=$(echo $NODES | tr ' ' ',')
-echo $NODES</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NODES</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get nodes <span class="at">-o</span> jsonpath=<span class="st">'{.items[*].metadata.name}'</span><span class="va">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">NODES</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$NODES</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">' '</span> <span class="st">','</span><span class="va">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$NODES</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Should return output similar to this</p>
-<pre class="tsx"><code>ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="run-the-pre-install" class="level3">
 <h3 class="anchored" data-anchor-id="run-the-pre-install">Run the pre-install</h3>
-<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
-   --version $CASE_VERSION \
-   --inventory $GI_INVENTORY_SETUP \
-   --action pre-install \
-   --namespace $NAMESPACE \
-   --args "-n ${NAMESPACE} -h ${NODES} -t false -l true -e true"</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">oc</span> ibm-pak launch <span class="va">$CASE_NAME</span> <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">--version</span> <span class="va">$CASE_VERSION</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">--inventory</span> <span class="va">$GI_INVENTORY_SETUP</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">--action</span> pre-install <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">--namespace</span> <span class="va">$NAMESPACE</span> <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">--args</span> <span class="st">"-n </span><span class="va">${NAMESPACE}</span><span class="st"> -h </span><span class="va">${NODES}</span><span class="st"> -t false -l true -e true"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This should return the following</p>
-<pre class="tsx"><code>Welcome to the CASE launcher
-Attempting to retrieve and extract the CASE from the specified location
-[✓] CASE has been retrieved and extracted
-Attempting to validate the CASE
-[✓] CASE has been successfully validated
-Attempting to locate the launch inventory item, script, and action in the specified CASE
-[✓] Found the specified launch inventory item, action, and script for the CASE
-Skipping CASE defined prerequisite checks for the specified action
-Executing inventory item install, action preInstall : launch.sh
--------------Installing dependent GI preinstall: /var/folders/tp/zkf5_qld1wn_ms51xys8d0m00000gn/T/extractedCASELauncher1330610821/ibm-guardium-insights-------------
-PRE-INSTALL VALUES:
- -n openshift-marketplace -h ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal -t false -l true -e true
-Warning : One or more optional parameters not passed, default values will be used
-OpenSSL is working with parameters -pbkdf2
-#####IBM Guardium Insights Pre-installation: Starting Preparation#####
-The system properties of the nodes
-Skipping due to NON_OCP being true
-The system properties of the nodes
-Skipping the system properties due to NON_OCP being true
-node/ip-192-168-10-208.ec2.internal labeled
-node/ip-192-168-17-40.ec2.internal labeled
-node/ip-192-168-23-220.ec2.internal labeled
-Skipping data node(s) tainting.
-Node ip-192-168-10-208.ec2.internal already labelled.
-Node ip-192-168-17-40.ec2.internal already labelled.
-Node ip-192-168-23-220.ec2.internal already labelled.
-##### IBM Guardium Insights Pre-installation: Custom SCC creation#####
-Skipping custom scc creation
-#####IBM Guardium Insights Pre-installation: Ingress Certificate Recreation#####
-Overwrite existing secrets mode: no
---------------------------------------------------------------
-Starting: IBM Guardium Insights: Ingress creation script.
-Skipping certificate generation. Certificate creation is handled by the Guardium Insights Deployment.
-Completed: IBM Guardium Insights : Ingress creation script.
---------------------------------------------------------------
-[✓] CASE launch script completed successfully</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the CASE launcher</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Attempting</span> to retrieve and extract the CASE from the specified location</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[✓]</span> CASE has been retrieved and extracted</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Attempting</span> to validate the CASE</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[✓]</span> CASE has been successfully validated</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Attempting</span> to locate the launch inventory item, script, and action in the specified CASE</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">[✓]</span> Found the specified launch inventory item, action, and script for the CASE</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> CASE defined prerequisite checks for the specified action</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Executing</span> inventory item install, action preInstall : launch.sh</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------Installing</span> dependent GI preinstall: /var/folders/tp/zkf5_qld1wn_ms51xys8d0m00000gn/T/extractedCASELauncher1330610821/ibm-guardium-insights-------------</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">PRE-INSTALL</span> VALUES:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">-n</span> openshift-marketplace <span class="at">-h</span> ip-192-168-10-208.ec2.internal,ip-192-168-17-40.ec2.internal,ip-192-168-23-220.ec2.internal <span class="at">-t</span> false <span class="at">-l</span> true <span class="at">-e</span> true</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning</span> : One or more optional parameters not passed, default values will be used</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">OpenSSL</span> is working with parameters <span class="at">-pbkdf2</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#####IBM Guardium Insights Pre-installation: Starting Preparation#####</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> system properties of the nodes</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> due to NON_OCP being true</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> system properties of the nodes</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> the system properties due to NON_OCP being true</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ex">node/ip-192-168-10-208.ec2.internal</span> labeled</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="ex">node/ip-192-168-17-40.ec2.internal</span> labeled</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="ex">node/ip-192-168-23-220.ec2.internal</span> labeled</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> data node<span class="er">(</span><span class="ex">s</span><span class="kw">)</span> <span class="ex">tainting.</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> ip-192-168-10-208.ec2.internal already labelled.</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> ip-192-168-17-40.ec2.internal already labelled.</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> ip-192-168-23-220.ec2.internal already labelled.</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">##### IBM Guardium Insights Pre-installation: Custom SCC creation#####</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> custom scc creation</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#####IBM Guardium Insights Pre-installation: Ingress Certificate Recreation#####</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="ex">Overwrite</span> existing secrets mode: no</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="ex">--------------------------------------------------------------</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting:</span> IBM Guardium Insights: Ingress creation script.</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="ex">Skipping</span> certificate generation. Certificate creation is handled by the Guardium Insights Deployment.</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="ex">Completed:</span> IBM Guardium Insights : Ingress creation script.</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="ex">--------------------------------------------------------------</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="ex">[✓]</span> CASE launch script completed successfully</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="verify-the-node-labeling" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-node-labeling">Verify the node labeling</h3>
-<pre class="tsx"><code>kubectl get nodes --no-headers -o custom-columns=":metadata.name" | xargs -I {} sh -c 'oc describe node {} | grep db2 | grep -v $NAMESPACE'</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes <span class="at">--no-headers</span> <span class="at">-o</span> custom-columns=<span class="st">":metadata.name"</span> <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I</span> {} sh <span class="at">-c</span> <span class="st">'oc describe node {} | grep db2 | grep -v $NAMESPACE'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Should return</p>
-<pre class="tsx"><code>                    icp4data=database-db2wh
-                    icp4data=database-db2wh
-                    icp4data=database-db2wh</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>                    <span class="va">icp4data</span><span class="op">=</span>database-db2wh</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                    <span class="va">icp4data</span><span class="op">=</span>database-db2wh</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                    <span class="va">icp4data</span><span class="op">=</span>database-db2wh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="install-the-operator-catalogs" class="level3">
 <h3 class="anchored" data-anchor-id="install-the-operator-catalogs">Install the operator catalogs</h3>
-<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
-   --version $CASE_VERSION \
-   --inventory $GI_INVENTORY_SETUP \
-   --action install-catalog \
-   --namespace $NAMESPACE \
-   --args "--inputDir ${LOCAL_CASE_DIR}"</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">oc</span> ibm-pak launch <span class="va">$CASE_NAME</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">--version</span> <span class="va">$CASE_VERSION</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">--inventory</span> <span class="va">$GI_INVENTORY_SETUP</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">--action</span> install-catalog <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">--namespace</span> <span class="va">$NAMESPACE</span> <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">--args</span> <span class="st">"--inputDir </span><span class="va">${LOCAL_CASE_DIR}</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Verify the Catalog Sources were installed</p>
-<pre class="tsx"><code>kubectl get catsrc</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get catsrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<p><code>tsx {3-5} NAME                                     DISPLAY                                  TYPE   PUBLISHER   AGE cloud-native-postgresql-catalog          Cloud Native Postgresql Catalog          grpc   IBM         3d21h ibm-db2uoperator-catalog                 IBM Db2U Catalog                         grpc   IBM         3m18s ibm-guardium-insights-operator-catalog   IBM Security Guardium Insights Catalog   grpc   IBM         2m31s ibm-redis-cp-operator-catalog            IBM Redis CP Catalog                     grpc   IBM         2m37s opencloud-operators                      IBMCS Operators                          grpc   IBM         3d21h</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                     DISPLAY                                  TYPE   PUBLISHER   AGE</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cloud-native-postgresql-catalog</span>          Cloud Native Postgresql Catalog          grpc   IBM         3d21h</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-db2uoperator-catalog</span>                 IBM Db2U Catalog                         grpc   IBM         3m18s</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-guardium-insights-operator-catalog</span>   IBM Security Guardium Insights Catalog   grpc   IBM         2m31s</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-redis-cp-operator-catalog</span>            IBM Redis CP Catalog                     grpc   IBM         2m37s</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">opencloud-operators</span>                      IBMCS Operators                          grpc   IBM         3d21h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="install-the-operators" class="level3">
 <h3 class="anchored" data-anchor-id="install-the-operators">Install the Operators</h3>
-<pre class="tsx"><code>oc ibm-pak launch $CASE_NAME \
-   --version $CASE_VERSION \
-   --inventory $GI_INVENTORY_SETUP \
-   --action install-operator \
-   --namespace ${NAMESPACE} \
-   --args "--registry cp.icr.io --user ${CP_REPO_USER} --pass ${CP_REPO_PASS} --secret ibm-entitlement-key --inputDir ${LOCAL_CASE_DIR}"</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">oc</span> ibm-pak launch <span class="va">$CASE_NAME</span> <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">--version</span> <span class="va">$CASE_VERSION</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">--inventory</span> <span class="va">$GI_INVENTORY_SETUP</span> <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">--action</span> install-operator <span class="dt">\</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">--namespace</span> <span class="va">${NAMESPACE}</span> <span class="dt">\</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">--args</span> <span class="st">"--registry cp.icr.io --user </span><span class="va">${CP_REPO_USER}</span><span class="st"> --pass </span><span class="va">${CP_REPO_PASS}</span><span class="st"> --secret ibm-entitlement-key --inputDir </span><span class="va">${LOCAL_CASE_DIR}</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Verify the installation of the operators</p>
-<pre class="tsx"><code>kubectl get sub</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<p><code>tsx {4,6,10} NAME                                          PACKAGE                          SOURCE                                   CHANNEL cloud-native-postgresql                       cloud-native-postgresql          cloud-native-postgresql-catalog          stable ibm-common-service-operator                   ibm-common-service-operator      opencloud-operators                      v4.6 ibm-db2uoperator-catalog-subscription         db2u-operator                    ibm-db2uoperator-catalog                 v110509.0 ibm-events-operator                           ibm-events-operator              opencloud-operators                      v3 ibm-guardium-insights-operator-subscription   ibm-guardium-insights-operator   ibm-guardium-insights-operator-catalog   v3.6 ibm-idp-config-ui-operator                    ibm-commonui-operator-app        opencloud-operators                      v4.4 ibm-im-operator                               ibm-iam-operator                 opencloud-operators                      v4.5 ibm-platformui-operator                       ibm-zen-operator                 opencloud-operators                      v4.4 ibm-redis-cp-operator-catalog-subscription    ibm-redis-cp                     ibm-redis-cp-operator-catalog            v1.1 operand-deployment-lifecycle-manager-app      ibm-odlm                         opencloud-operators                      v4.3</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                          PACKAGE                          SOURCE                                   CHANNEL</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cloud-native-postgresql</span>                       cloud-native-postgresql          cloud-native-postgresql-catalog          stable</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-common-service-operator</span>                   ibm-common-service-operator      opencloud-operators                      v4.6</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-db2uoperator-catalog-subscription</span>         db2u-operator                    ibm-db2uoperator-catalog                 v110509.0</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-events-operator</span>                           ibm-events-operator              opencloud-operators                      v3</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-guardium-insights-operator-subscription</span>   ibm-guardium-insights-operator   ibm-guardium-insights-operator-catalog   v3.6</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-idp-config-ui-operator</span>                    ibm-commonui-operator-app        opencloud-operators                      v4.4</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-im-operator</span>                               ibm-iam-operator                 opencloud-operators                      v4.5</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-platformui-operator</span>                       ibm-zen-operator                 opencloud-operators                      v4.4</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="ex">ibm-redis-cp-operator-catalog-subscription</span>    ibm-redis-cp                     ibm-redis-cp-operator-catalog            v1.1</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="ex">operand-deployment-lifecycle-manager-app</span>      ibm-odlm                         opencloud-operators                      v4.3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="deploying-an-instance-of-guardium-insights" class="level2">
 <h2 class="anchored" data-anchor-id="deploying-an-instance-of-guardium-insights">Deploying an instance of Guardium Insights</h2>
-<p>:::note[Useful Links] Content heavily borrowed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-deploying-guardium-insights-instance">here</a></p>
-<p>:::</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Links
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Content heavily borrowed from <a href="https://www.ibm.com/docs/en/guardium-insights/3.x?topic=eks-deploying-guardium-insights-instance">here</a></p>
+</div>
+</div>
 <section id="configure-dns-resolution-optional" class="level3">
 <h3 class="anchored" data-anchor-id="configure-dns-resolution-optional">Configure DNS resolution (Optional)</h3>
 <p>If you previously used AWS Route 53 to configure DNS resoluion as part of an insecure hostname configuration, then follow these instructions to add additional routing that is needed for the Guardium Insights deployment.</p>
 <p>In AWS Route 53, open the previously created private hosted zone created during cluster build.</p>
 <p>As we did previously, first find the private cluster IP address of the load balancer under <code>CLUSTER-IP</code>.</p>
-<pre class="tsx"><code>kubectl get service --namespace ingress-nginx ingress-nginx-controller</code></pre>
-<pre class="tsx"><code>NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)                      AGE
-ingress-nginx-controller   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get service <span class="at">--namespace</span> ingress-nginx ingress-nginx-controller</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT<span class="er">(</span><span class="ex">S</span><span class="kw">)</span>                      <span class="ex">AGE</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ingress-nginx-controller</span>   LoadBalancer   10.100.24.243   a091398910dbf4ad8aeb2f3f0e864311-916cbf853e32c1d5.elb.us-east-2.amazonaws.com   80:31369/TCP,443:30370/TCP   20h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Capture that <code>CLUSTER-IP</code> value for the next steps.</p>
 <p>Back on the hosted zone details page, click the <code>Create record</code> button.</p>
 <p>We want to create a record that routes <code>guardium.apps.gi.guardium-insights.com</code> to the private IP address captured above.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://media.github.ibm.com/user/207188/files/0b0c741e-3a87-425e-a416-d9cb1aac4e6d.png" class="img-fluid figure-img"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
 <p>Click <code>Create Records</code>.</p>
 </section>
 <section id="guardium-cr" class="level3">
 <h3 class="anchored" data-anchor-id="guardium-cr">Guardium CR</h3>
 <p>This is a usable example. Copy this to a new yaml file. The name should be the cluster-name and the namespace should be <code>openshift-marketplace</code>.</p>
 <p>We want to set the following values in this file</p>
-<pre class="tsx"><code>  name: gi-eks
-  namespace: openshift-marketplace
-</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name:</span> gi-eks</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">namespace:</span> openshift-marketplace</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And under <code>ingress</code> set the hostname (<code>guardium.apps.gi.thinkforward.work</code> in our example) and make sure the FQDN is the one we set.</p>
-<pre class="tsx"><code>      ingress:
-        hostName: guardium.apps.gi.thinkforward.work
-        domainName: apps.gi.thinkforward.work</code></pre>
-<p>:::note[Using an insecure hostname] If using the insecure hostname, use the following values instead.</p>
-<pre class="tsx"><code>      ingress:
-        hostName: guardium.apps.gi.guardium-insights.com
-        domainName: apps.gi.guardium-insights.com</code></pre>
-<p>:::</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>      <span class="ex">ingress:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">hostName:</span> guardium.apps.gi.thinkforward.work</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">domainName:</span> apps.gi.thinkforward.work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Using an insecure hostname
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If using the insecure hostname, use the following values instead.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>      <span class="ex">ingress:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">hostName:</span> guardium.apps.gi.guardium-insights.com</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">domainName:</span> apps.gi.guardium-insights.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <p>Also we will be setting the RWO storage classes to use the gp3 block storage class we created <code>ebs-gp3-sc</code></p>
 <p>This will install an instance with the sizing set to <code>values-small</code></p>
 <p><code>gdsc-custom-eks.yaml</code></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;EOF</span> <span class="op">&gt;</span> gi-custom-eks.yaml</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">apiVersion: gi.ds.isc.ibm.com/v1</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">kind: GuardiumDataSecurityCenter</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">metadata:</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">  name: </span><span class="va">${CLUSTERNAME}</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">  namespace: </span><span class="va">${NAMESPACE}</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">spec:</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">  version: 3.6.0</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">  license:</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">    accept: true</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="st">    licenseType: "L-QABB-9QRLFB"</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="st">  guardiumGlobal:</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="st">    deploymentOptions:</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="st">      prometheusType: disabled</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="st">    fsGroupGid: 0</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="st">    networkPolicyPodToPod:</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: false</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="st">    backupsupport:</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: "false"</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="st">      name: backup-pvc-support</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="st">    image:</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="st">      insightsPullSecret: ibm-entitlement-key</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="st">      repository: cp.icr.io/cp/ibm-guardium-data-security-center</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="st">    size: values-small</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="st">    instance:</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="st">      ingress:</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="st">        hostName: guardium.</span><span class="va">${HOSTNAME}</span></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="st">        domainName: </span><span class="va">${HOSTNAME}</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="st">      ics:</span></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="st">        namespace: </span><span class="va">${NAMESPACE}</span></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="st">        registry: common-service</span></span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassName: efs-sc</span></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassNameRWO: ebs-gp3-sc</span></span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="st">    deploySettings:</span></span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="st">      nonOCP: true</span></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="st">      ensureDb2InstallPlacement: true</span></span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="st">  capabilities:</span></span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: quantum-safe</span></span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations: {}</span></span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: platform</span></span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations:</span></span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="st">      ssh-service:</span></span>
-<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="st">        serviceAnnotations:</span></span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a><span class="st">          service.beta.kubernetes.io/aws-load-balancer-internal: "false"</span></span>
-<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-security:</span></span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="st">        networkPolicy:</span></span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="st">          egresses:</span></span>
-<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: false</span></span>
-<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="st">            egress-required-allow:</span></span>
-<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a><span class="st">              egress:</span></span>
-<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="st">                - ports:</span></span>
-<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
-<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
-<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
-<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
-<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
-<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
-<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
-<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
-<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
-<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: UDP</span></span>
-<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
-<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: TCP</span></span>
-<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-postgres:</span></span>
-<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
-<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
-<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
-<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: true</span></span>
-<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-kafka:</span></span>
-<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a><span class="st">        kafka:</span></span>
-<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
-<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
-<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 250Gi</span></span>
-<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
-<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="st">        zookeeper:</span></span>
-<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
-<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
-<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 20Gi</span></span>
-<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
-<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
-<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
-<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
-<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
-<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-redis:</span></span>
-<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
-<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
-<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
-<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
-<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="st">      guardium-agent-cert-generator:</span></span>
-<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
-<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
-<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
-<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="st">      mini-snif:</span></span>
-<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
-<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a><span class="st">          allowPrivilegeEscalation: false</span></span>
-<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a><span class="st">          capabilities:</span></span>
-<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a><span class="st">            drop:</span></span>
-<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a><span class="st">            - ALL</span></span>
-<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a><span class="st">          privileged: false</span></span>
-<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="st">          readOnlyRootFilesystem: false</span></span>
-<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: false</span></span>
-<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="st">        replicaCount: 1</span></span>
-<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-db2:</span></span>
-<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a><span class="st">        db2instance:</span></span>
-<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a><span class="st">          nodes: 2</span></span>
-<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a><span class="st">          storage:</span></span>
-<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: meta</span></span>
-<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
-<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
-<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
-<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
-<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
-<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
-<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
-<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
-<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: data</span></span>
-<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
-<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
-<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
-<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
-<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
-<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 100Gi</span></span>
-<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
-<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
-<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: backup</span></span>
-<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
-<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
-<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
-<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
-<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
-<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 2000Gi</span></span>
-<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
-<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
-<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: tempts</span></span>
-<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
-<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
-<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
-<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
-<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
-<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
-<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
-<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
-<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: archivelogs</span></span>
-<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
-<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
-<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
-<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
-<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
-<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 500Gi</span></span>
-<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
-<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
-<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt;EOF</span> <span class="op">&gt;</span> gi-custom-eks.yaml</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">apiVersion: gi.ds.isc.ibm.com/v1</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">kind: GuardiumDataSecurityCenter</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">metadata:</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">  name: </span><span class="va">${CLUSTERNAME}</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">  namespace: </span><span class="va">${NAMESPACE}</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">spec:</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">  version: 3.6.0</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">  license:</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">    accept: true</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="st">    licenseType: "L-QABB-9QRLFB"</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="st">  guardiumGlobal:</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="st">    deploymentOptions:</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="st">      prometheusType: disabled</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="st">    fsGroupGid: 0</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="st">    networkPolicyPodToPod:</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: false</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="st">    backupsupport:</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="st">      enabled: "false"</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="st">      name: backup-pvc-support</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="st">    image:</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="st">      insightsPullSecret: ibm-entitlement-key</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="st">      repository: cp.icr.io/cp/ibm-guardium-data-security-center</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="st">    size: values-small</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="st">    instance:</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="st">      ingress:</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="st">        hostName: guardium.</span><span class="va">${HOSTNAME}</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="st">        domainName: </span><span class="va">${HOSTNAME}</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="st">      ics:</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="st">        namespace: </span><span class="va">${NAMESPACE}</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="st">        registry: common-service</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassName: efs-sc</span></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="st">    storageClassNameRWO: ebs-gp3-sc</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="st">    deploySettings:</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="st">      nonOCP: true</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="st">      ensureDb2InstallPlacement: true</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="st">  capabilities:</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: quantum-safe</span></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations: {}</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="st">  - name: platform</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a><span class="st">    enabled: true</span></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="st">    configurations:</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="st">      ssh-service:</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="st">        serviceAnnotations:</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="st">          service.beta.kubernetes.io/aws-load-balancer-internal: "false"</span></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-security:</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="st">        networkPolicy:</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="st">          egresses:</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: false</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="st">            egress-required-allow:</span></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="st">              egress:</span></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="st">                - ports:</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 443</span></span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: UDP</span></span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a><span class="st">                    - protocol: TCP</span></span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a><span class="st">                      port: 53</span></span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: UDP</span></span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a><span class="st">                    - port: 5353</span></span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a><span class="st">                      protocol: TCP</span></span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-postgres:</span></span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: true</span></span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-kafka:</span></span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a><span class="st">        kafka:</span></span>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
+<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
+<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 250Gi</span></span>
+<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
+<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a><span class="st">        zookeeper:</span></span>
+<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a><span class="st">            storage:</span></span>
+<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a><span class="st">              type: persistent-claim</span></span>
+<span id="cb21-80"><a href="#cb21-80" aria-hidden="true" tabindex="-1"></a><span class="st">              size: 20Gi</span></span>
+<span id="cb21-81"><a href="#cb21-81" aria-hidden="true" tabindex="-1"></a><span class="st">              class: gp2</span></span>
+<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
+<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
+<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
+<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-redis:</span></span>
+<span id="cb21-87"><a href="#cb21-87" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb21-88"><a href="#cb21-88" aria-hidden="true" tabindex="-1"></a><span class="st">            fsGroup: 0</span></span>
+<span id="cb21-89"><a href="#cb21-89" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsUser: 1000</span></span>
+<span id="cb21-90"><a href="#cb21-90" aria-hidden="true" tabindex="-1"></a><span class="st">            runAsNonRoot: true</span></span>
+<span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a><span class="st">      guardium-agent-cert-generator:</span></span>
+<span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb21-93"><a href="#cb21-93" aria-hidden="true" tabindex="-1"></a><span class="st">          fsGroup: 0</span></span>
+<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsUser: 1000</span></span>
+<span id="cb21-95"><a href="#cb21-95" aria-hidden="true" tabindex="-1"></a><span class="st">      mini-snif:</span></span>
+<span id="cb21-96"><a href="#cb21-96" aria-hidden="true" tabindex="-1"></a><span class="st">        podContainerSecurityContextParams:</span></span>
+<span id="cb21-97"><a href="#cb21-97" aria-hidden="true" tabindex="-1"></a><span class="st">          allowPrivilegeEscalation: false</span></span>
+<span id="cb21-98"><a href="#cb21-98" aria-hidden="true" tabindex="-1"></a><span class="st">          capabilities:</span></span>
+<span id="cb21-99"><a href="#cb21-99" aria-hidden="true" tabindex="-1"></a><span class="st">            drop:</span></span>
+<span id="cb21-100"><a href="#cb21-100" aria-hidden="true" tabindex="-1"></a><span class="st">            - ALL</span></span>
+<span id="cb21-101"><a href="#cb21-101" aria-hidden="true" tabindex="-1"></a><span class="st">          privileged: false</span></span>
+<span id="cb21-102"><a href="#cb21-102" aria-hidden="true" tabindex="-1"></a><span class="st">          readOnlyRootFilesystem: false</span></span>
+<span id="cb21-103"><a href="#cb21-103" aria-hidden="true" tabindex="-1"></a><span class="st">          runAsNonRoot: false</span></span>
+<span id="cb21-104"><a href="#cb21-104" aria-hidden="true" tabindex="-1"></a><span class="st">        replicaCount: 1</span></span>
+<span id="cb21-105"><a href="#cb21-105" aria-hidden="true" tabindex="-1"></a><span class="st">      dependency-db2:</span></span>
+<span id="cb21-106"><a href="#cb21-106" aria-hidden="true" tabindex="-1"></a><span class="st">        db2instance:</span></span>
+<span id="cb21-107"><a href="#cb21-107" aria-hidden="true" tabindex="-1"></a><span class="st">          nodes: 2</span></span>
+<span id="cb21-108"><a href="#cb21-108" aria-hidden="true" tabindex="-1"></a><span class="st">          storage:</span></span>
+<span id="cb21-109"><a href="#cb21-109" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: meta</span></span>
+<span id="cb21-110"><a href="#cb21-110" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb21-111"><a href="#cb21-111" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb21-112"><a href="#cb21-112" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb21-113"><a href="#cb21-113" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb21-114"><a href="#cb21-114" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb21-115"><a href="#cb21-115" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
+<span id="cb21-116"><a href="#cb21-116" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb21-117"><a href="#cb21-117" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb21-118"><a href="#cb21-118" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: data</span></span>
+<span id="cb21-119"><a href="#cb21-119" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb21-120"><a href="#cb21-120" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb21-121"><a href="#cb21-121" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
+<span id="cb21-122"><a href="#cb21-122" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb21-123"><a href="#cb21-123" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb21-124"><a href="#cb21-124" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 100Gi</span></span>
+<span id="cb21-125"><a href="#cb21-125" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
+<span id="cb21-126"><a href="#cb21-126" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
+<span id="cb21-127"><a href="#cb21-127" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: backup</span></span>
+<span id="cb21-128"><a href="#cb21-128" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb21-129"><a href="#cb21-129" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb21-130"><a href="#cb21-130" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb21-131"><a href="#cb21-131" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb21-132"><a href="#cb21-132" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb21-133"><a href="#cb21-133" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 2000Gi</span></span>
+<span id="cb21-134"><a href="#cb21-134" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb21-135"><a href="#cb21-135" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb21-136"><a href="#cb21-136" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: tempts</span></span>
+<span id="cb21-137"><a href="#cb21-137" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb21-138"><a href="#cb21-138" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb21-139"><a href="#cb21-139" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteOnce</span></span>
+<span id="cb21-140"><a href="#cb21-140" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb21-141"><a href="#cb21-141" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb21-142"><a href="#cb21-142" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 1000Gi</span></span>
+<span id="cb21-143"><a href="#cb21-143" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: gp2</span></span>
+<span id="cb21-144"><a href="#cb21-144" aria-hidden="true" tabindex="-1"></a><span class="st">                type: template</span></span>
+<span id="cb21-145"><a href="#cb21-145" aria-hidden="true" tabindex="-1"></a><span class="st">              - name: archivelogs</span></span>
+<span id="cb21-146"><a href="#cb21-146" aria-hidden="true" tabindex="-1"></a><span class="st">                spec:</span></span>
+<span id="cb21-147"><a href="#cb21-147" aria-hidden="true" tabindex="-1"></a><span class="st">                  accessModes:</span></span>
+<span id="cb21-148"><a href="#cb21-148" aria-hidden="true" tabindex="-1"></a><span class="st">                  - ReadWriteMany</span></span>
+<span id="cb21-149"><a href="#cb21-149" aria-hidden="true" tabindex="-1"></a><span class="st">                  resources:</span></span>
+<span id="cb21-150"><a href="#cb21-150" aria-hidden="true" tabindex="-1"></a><span class="st">                    requests:</span></span>
+<span id="cb21-151"><a href="#cb21-151" aria-hidden="true" tabindex="-1"></a><span class="st">                      storage: 500Gi</span></span>
+<span id="cb21-152"><a href="#cb21-152" aria-hidden="true" tabindex="-1"></a><span class="st">                  storageClassName: efs-sc</span></span>
+<span id="cb21-153"><a href="#cb21-153" aria-hidden="true" tabindex="-1"></a><span class="st">                type: create</span></span>
+<span id="cb21-154"><a href="#cb21-154" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Apply the above CR</p>
-<pre class="tsx"><code>kubectl apply -f gdsc-custom-eks.yaml</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> gdsc-custom-eks.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The deployment may take a little while.</p>
 </section>
 <section id="verifying-instance-is-up" class="level3">
 <h3 class="anchored" data-anchor-id="verifying-instance-is-up">Verifying instance is up</h3>
 <p>Check to make sure the Guardium Insights custom resource (CR) has been completely reconciled.</p>
-<pre class="tsx"><code>kubectl get gdsc</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get gdsc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<p><code>tsx {2} NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
+<p><code>bash {2} NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
 <p>Check that the tenant has been created</p>
-<pre class="tsx"><code>kubectl get tenantminisnif</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get tenantminisnif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<p><code>tsx {2} NAME                           TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
+<p><code>bash {2} NAME                           TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION gi-eksctqdrippjy9p2gqvvzwhyc   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></p>
 <p>Verify all ingress paths have been created</p>
-<pre class="tsx"><code>kubectl get ingress -n openshift-marketplace</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get ingress <span class="at">-n</span> openshift-marketplace</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<p><code>tsx {11-17} NAME                                            CLASS    HOSTS                                                          ADDRESS                                                                         PORTS     AGE cncf-common-web-ui                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-id-mgmt                                    nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-auth                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-id-auth                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-id-provider                       nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-login                             nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-platform-oidc                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-saml-ui-callback                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h cncf-social-login-callback                      nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h gi-eks-apigateway-api                           nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-apigateway-docs-dev                      nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-insights                                 nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h gi-eks-s3                                       nginx    s3.guardium.apps.gi.thinkforward.work                          a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   21h gi-eks-ssh-service                              &lt;none&gt;   guardium.apps.gi.thinkforward.work                                                                                                             80, 443   23h gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-feed   nginx    feed-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-unix   nginx    unix-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h</code></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                            CLASS    HOSTS                                                          ADDRESS                                                                         PORTS     AGE</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-common-web-ui</span>                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-id-mgmt</span>                                    nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-platform-auth</span>                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-platform-id-auth</span>                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-platform-id-provider</span>                       nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-platform-login</span>                             nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-platform-oidc</span>                              nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-saml-ui-callback</span>                           nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="ex">cncf-social-login-callback</span>                      nginx    cp-console-openshift-marketplace.apps.gi.thinkforward.work     a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        5d22h</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks-apigateway-api</span>                           nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks-apigateway-docs-dev</span>                      nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks-insights</span>                                 nginx    guardium.apps.gi.thinkforward.work                             a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   23h</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks-s3</span>                                       nginx    s3.guardium.apps.gi.thinkforward.work                          a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80, 443   21h</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks-ssh-service</span>                              <span class="op">&lt;</span>none<span class="op">&gt;</span>   guardium.apps.gi.thinkforward.work                                                                                                             80, 443   23h</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-feed</span>   nginx    feed-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eksctqdrippjy9p2gqvvzwhyc-snif-picker-unix</span>   nginx    unix-ctqdrippjy9p2gqvvzwhyc-gi-eks.apps.gi.thinkforward.work   a904f47d90a8c4961ae389b155359368-aa0f265b8588c710.elb.us-east-1.amazonaws.com   80        20h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Since we installed everything into the <code>openshift-marketplace</code> namespace, we should see everything there.</p>
 </section>
 </section>
 <section id="creating-the-qs-tenant" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-qs-tenant">Creating the QS tenant</h2>
-<div class="note[Important!]">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In the current release of GI, in order to create the Quantum Security tenant, you need to scale down all the unnecessary services that are spun up by default in Guardium Insights. Future GI revisions will allow for disabling these services in the CR.</p>
+</div>
 </div>
 <section id="scale-down-services" class="level3">
 <h3 class="anchored" data-anchor-id="scale-down-services">Scale down services</h3>
 <p>Our example GI instance cluster is called <code>gi-eks</code>. Let’s export that as an env var.</p>
 <p>If you’re unsure as to what your instance cluster is called, it can be found with the following command:</p>
-<pre class="tsx"><code>kubectl get gi</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get gi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output should look like this:</p>
-<pre class="tsx"><code>NAME     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION
-gi-eks   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</code></pre>
-<pre class="tsx"><code>export cluster_name="gi-eks"</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>     TYPE    STATUS   REASON     MESSAGE                    DESIRED_VERSION   INSTALLED_VERSION</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gi-eks</span>   Ready   True     Complete   Completed Reconciliation   3.6.0             3.6.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">cluster_name</span><span class="op">=</span><span class="st">"gi-eks"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now scale down the following deployments</p>
-<p>{/* ${cluster_name}-rm-risk-controller &nbsp;<em>/} {/</em> ${cluster_name}-risk-analytics-controller &nbsp;<em>/} {/</em> ${cluster_name}-ssh-service &nbsp;*/}</p>
-<pre class="tsx"><code>kubectl scale deploy \
-${cluster_name}-risk-analytics-engine \
-${cluster_name}-risk-analytics-ml-classification \
-${cluster_name}-rm-risk-engine \
-${cluster_name}-outliers-engine \
-${cluster_name}-analytics-events \
-${cluster_name}-assets \
-${cluster_name}-compliance-accelerator \
-${cluster_name}-pam-connector-thycotic \
-${cluster_name}-policy-builder \
-${cluster_name}-postgres-proxy \
-${cluster_name}-postgres-sentinel \
-${cluster_name}-rm-data-collector \
-${cluster_name}-snif-assist \
-${cluster_name}-streams \
---replicas=0</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> scale deploy <span class="dt">\</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-risk-analytics-engine <span class="dt">\</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-risk-analytics-ml-classification <span class="dt">\</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-rm-risk-engine <span class="dt">\</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-outliers-engine <span class="dt">\</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-analytics-events <span class="dt">\</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-assets <span class="dt">\</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-compliance-accelerator <span class="dt">\</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-pam-connector-thycotic <span class="dt">\</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-policy-builder <span class="dt">\</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-postgres-proxy <span class="dt">\</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-postgres-sentinel <span class="dt">\</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-rm-data-collector <span class="dt">\</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-snif-assist <span class="dt">\</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="va">${cluster_name}</span>-streams <span class="dt">\</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>--replicas=0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-the-tenant" class="level3">
 <h3 class="anchored" data-anchor-id="create-the-tenant">Create the tenant</h3>
 <p>Retrieve the <code>cpadmin</code> password and set it as an env var</p>
-<pre class="tsx"><code>export CPPASS=$(kubectl get secret platform-auth-idp-credentials -o jsonpath='{.data.admin_password}' | base64 -d)</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CPPASS</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get secret platform-auth-idp-credentials <span class="at">-o</span> jsonpath=<span class="st">'{.data.admin_password}'</span> <span class="kw">|</span> <span class="fu">base64</span> <span class="at">-d</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Create an auth header</p>
-<pre class="tsx"><code>export AUTH=$(echo -ne "cpadmin:$CPPASS" | base64)</code></pre>
-<p>{/* Create a JSON <code>payload.json</code></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"async"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"external_id"</span><span class="fu">:</span> <span class="st">"adv_gi41_qspm_allcom"</span><span class="fu">,</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"adv_gi41_qspm_allcom"</span><span class="fu">,</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"part_number"</span><span class="fu">:</span> <span class="st">"gi_dedicated_qspm"</span><span class="fu">,</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"uid"</span><span class="fu">:</span> <span class="st">"cpadmin"</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>*/}</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">AUTH</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="at">-ne</span> <span class="st">"cpadmin:</span><span class="va">$CPPASS</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">base64</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And now let’s submit the request. Our API url is <code>https://guardium.apps.gi.thinkforward.work/api/v3/tenants</code>. This is the URL we set in the CR.</p>
-<p>:::note[Using an insecure hostname] If you are using an insecure hostname, make sure to use that value for the API URL. The local resolution to the external IP of the load balancer should have already been configured in your local <code>hosts</code> file.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Using an insecure hostname
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are using an insecure hostname, make sure to use that value for the API URL. The local resolution to the external IP of the load balancer should have already been configured in your local <code>hosts</code> file.</p>
 <p>For example</p>
-<pre><code>https://guardium.apps.gi.guardium-insights.com/api/v3/tenants</code></pre>
-<p>:::</p>
-<pre class="tsx"><code>curl -k -X 'POST' \
-  'https://guardium.apps.gi.thinkforward.work/api/v3/tenants' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -H "Authorization: Basic $AUTH" \
-  -d '{
-  "async": false,
-  "external_id": "adv_gi41_qspm_allcom",
-  "name": "adv_gi41_qspm_allcom",
-  "part_number": "gi_dedicated_qspm",
-  "uid": "cpadmin"
-}'</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">https://guardium.apps.gi.guardium-insights.com/api/v3/tenants</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-k</span> <span class="at">-X</span> <span class="st">'POST'</span> <span class="dt">\</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'https://guardium.apps.gi.thinkforward.work/api/v3/tenants'</span> <span class="dt">\</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">'accept: application/json'</span> <span class="dt">\</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">'Content-Type: application/json'</span> <span class="dt">\</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Authorization: Basic </span><span class="va">$AUTH</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="st">  "async": false,</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="st">  "external_id": "adv_gi41_qspm_allcom",</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="st">  "name": "adv_gi41_qspm_allcom",</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="st">  "part_number": "gi_dedicated_qspm",</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="st">  "uid": "cpadmin"</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Sometimes the command runs and nothing happens for awhile. To fix this problem change <code>"async": false</code> to <code>"async": true</code>.</p>
 <p>When the tenant is created, the tenant id should be returned</p>
-<pre class="tsx"><code>{"tenant_id":"TNT_ACCKEBT4ZIRQW9YRRKCRJH"}</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">{</span><span class="st">"tenant_id"</span><span class="ex">:</span><span class="st">"TNT_ACCKEBT4ZIRQW9YRRKCRJH"</span><span class="ex">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="verify-the-tenant-creation" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-tenant-creation">Verify the tenant creation</h3>
@@ -819,67 +892,24 @@ ${cluster_name}-streams \
 <p>The console url should open. Login with <code>cpadmin</code> and the password you retrieved and set to <code>$CPPASS</code></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/guardium_login01.png" class="img-fluid figure-img"></p>
+<p><a href="../../images/guardium_login01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="GuardiumLogin01"><img src="../../images/guardium_login01.png" class="img-fluid figure-img" alt="GuardiumLogin01"></a></p>
 <figcaption>GuardiumLogin01</figcaption>
 </figure>
 </div>
 <p>Select the upper rightmost icon and select the QS tenant under <code>Account</code> dropdown. Then click the <code>IBM Guardium</code> logo in the upper left to open the console for the QS tenant.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/guardium_login03.png" class="img-fluid figure-img"></p>
+<p><a href="../../images/guardium_login03.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="GuardiumLogin02"><img src="../../images/guardium_login03.png" class="img-fluid figure-img" alt="GuardiumLogin02"></a></p>
 <figcaption>GuardiumLogin02</figcaption>
 </figure>
 </div>
 <p>The console should open.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/guardium_login04.png" class="img-fluid figure-img"></p>
+<p><a href="../../images/guardium_login04.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="GuardiumLogin03"><img src="../../images/guardium_login04.png" class="img-fluid figure-img" alt="GuardiumLogin03"></a></p>
 <figcaption>GuardiumLogin03</figcaption>
 </figure>
 </div>
-<p>{/* ### Stupid error tricks</p>
-<p>ldap pods are stuck. One is in an error state due to insufficient ephemeral storage (wtf)</p>
-<pre class="tsx"><code>kubectl get pods | grep ldap
-c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b                                0/1     Error                   0                 18h
-c-gi-eks-db2-ldap-6bdbdf8fc7-kmqdx                                0/1     Running                 0                 7h1m
-</code></pre>
-<p>We describe the errored pod</p>
-<p>```tsx {21-23} kubectl describe pod c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b</p>
-<p>Name: c-gi-eks-db2-ldap-6bdbdf8fc7-flh8b Namespace: openshift-marketplace Priority: 0 Service Account: account-openshift-marketplace-gi-eks-db2 Node: ip-192-168-17-40.ec2.internal/192.168.17.40 Start Time: Tue, 03 Sep 2024 15:50:04 -0400 Labels: app=gi-eks-db2 formation_id=gi-eks-db2 pod-template-hash=6bdbdf8fc7 role=ldap Annotations: cloudpakId: 5ed3ce3e032545a0a2a17bf2b6c23dcd cloudpakMetric: RESOURCE_UNIT cloudpakName: IBM Security Guardium Package SW productChargedContainers: All productCloudpakRatio: 1:100 productID: 4c49ee7d8da44cf9bf2da48fc8fabb11 productMetric: MANAGED_VIRTUAL_SERVER productName: IBM Security Guardium Insights Status: Failed Reason: Evicted Message: Pod ephemeral local storage usage exceeds the total limit of containers 5Mi.</p>
-<pre><code>
-The other pod is hung because this pod hasn't come up. They both have the same resource restrictions. Just WTF.
-
-Other errors
-
-```tsx
-kubectl get pods | grep db2u
-c-gi-eks-db2-db2u-0                                               0/1     Init:CrashLoopBackOff   211 (2m41s ago)   18h</code></pre>
-<p>db2 pod is stuck in a crash loop.</p>
-<pre class="tsx"><code>Status:           Pending
-IP:               192.168.31.213
-IPs:
-  IP:  192.168.31.213
-Init Containers:
-  instdb:
-    Container ID:  containerd://28ce603c5c63398d080938e3d37dbfaa7fdea60f5b71ca5e53c0a51a5ecdc5f6
-    Image:         icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
-    Image ID:      icr.io/db2u/db2u.instdb@sha256:cf2f99358fb6beac6ca2f9553855b8f33d4cfcd7748bd191c66b725180722cab
-    Port:          &lt;none&gt;
-    Host Port:     &lt;none&gt;
-    Command:
-      /bin/sh
-      -c
-      /Db2wh_preinit/instdb_entrypoint.sh
-    State:          Waiting
-      Reason:       CrashLoopBackOff
-    Last State:     Terminated
-      Reason:       Error
-      Exit Code:    1
-      Started:      Wed, 04 Sep 2024 09:54:45 -0400
-      Finished:     Wed, 04 Sep 2024 09:54:54 -0400
-    Ready:          False
-    Restart Count:  211</code></pre>
-<p>the <code>initdb</code> init container in the pod is failing for… reasons. Just awesome. */}</p>
 
 
 </section>
@@ -1331,6 +1361,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="QSE Usage">
 
 <title>Scanning – IBM Quantum Safe Encryption</title>
 <style>
@@ -75,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -382,11 +381,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">Scanning</h1>
 </div>
 
-<div>
-  <div class="description">
-    QSE Usage
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -401,36 +395,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>import { Tabs, TabItem } from ‘<span class="citation" data-cites="astrojs/starlight/components">@astrojs/starlight/components</span>’;</p>
 <section id="scanning-in-vscode" class="level2">
 <h2 class="anchored" data-anchor-id="scanning-in-vscode">Scanning in VSCode</h2>
-<p>:::note[Useful Links]</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Links
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Initiating scans as described <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=extension-initiating-scan">here</a></p>
-<p>:::</p>
+</div>
+</div>
 <section id="kicking-off-the-scan-and-seeing-results" class="level3">
 <h3 class="anchored" data-anchor-id="kicking-off-the-scan-and-seeing-results">Kicking off the scan and seeing results</h3>
 <p>Let’s scan the code base for the <code>cli</code> for QSE</p>
 <p>In our example, we’ve created a directory called <code>QSE</code> and extracted all the installation elements of QSE.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning1.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning1.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning1</figcaption>
 </figure>
 </div>
 <p>Open that directory in VSCode.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> QSE</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> QSE</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning2.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning2.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning2</figcaption>
 </figure>
 </div>
 <p>On VSCode, open a new terminal in the code window. This can be done with the following key combo: Ctrl-Shift-Backtick(`)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning3.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning3.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning3</figcaption>
 </figure>
 </div>
@@ -438,14 +441,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Press Ctlr-Shift-P to open the Command Palette and search for <code>Quantum Safe Explorer</code>. Select Quantum Safe Explorer Scan.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning4.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning4.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning4</figcaption>
 </figure>
 </div>
 <p>The following notification should pop up</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning5.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning5.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning5</figcaption>
 </figure>
 </div>
@@ -453,14 +456,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When the scan completes, you should see the following directories show up in the Explorer window of VSCode</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning6.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning6.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning6</figcaption>
 </figure>
 </div>
 <p>We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs and charts.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scanning7.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning7.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning7</figcaption>
 </figure>
 </div>
@@ -468,39 +471,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="executing-the-ibm-quantum-safe-explorer-cli" class="level2">
 <h2 class="anchored" data-anchor-id="executing-the-ibm-quantum-safe-explorer-cli">Executing the IBM Quantum Safe Explorer CLI</h2>
-<div class="note[Windows]">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Windows
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Make sure that Git Bash is installed and use a Git Bash terminal window for the instructions below.</p>
 </div>
+</div>
 <p>Change directory to <code>M0GT6EN</code> where ever you had it extracted and run the following command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/sed</span> <span class="at">-i</span> <span class="st">'s/^RSP_LICENSE_ACCEPTED=.*/RSP_LICENSE_ACCEPTED=true/'</span> LicenseAcceptance.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/sed</span> <span class="at">-i</span> <span class="st">'s/^RSP_LICENSE_ACCEPTED=.*/RSP_LICENSE_ACCEPTED=true/'</span> LicenseAcceptance.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To make sure you have the correct permissions to run the shell script first run:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x cli.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x cli.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next, run the following <strong>help</strong> command</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./cli.sh</span> <span class="at">-h</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p><strong>Note:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./cli.sh</span> <span class="at">-h</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The run will also point out that you have already accepted the licensing agreement.</p>
-</blockquote>
+</div>
+</div>
 <p>Before you officially perform the script run, it is helpful to know the list of required parameters:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/macos-qse-cli-required-params.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-cli-required-params.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos1</figcaption>
 </figure>
 </div>
 <p>As well as the optional parameters:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/macos-qse-cli-optional-params.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-cli-optional-params.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos2</figcaption>
 </figure>
 </div>
 <p>You initiate a scan using the required <strong>program package path</strong>. The command can be run for single or multiple languages. Here is an example:</p>
 <p><code>/cli.sh -i &lt;package-path&gt; -clean -nmo -ccdir resource:class-catalog -l .java</code></p>
-<blockquote class="blockquote">
-<p><strong>Note:</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the <strong>Help</strong> command by running <code>./cli.sh -h</code> for more details on the various parameters.</p>
-</blockquote>
+</div>
+</div>
 <p>Here is an example of a completed scan with a specified program <em>package path</em>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./cli.sh <span class="at">-i</span> ~/Virtualenvs/java-projects <span class="at">-clean</span> <span class="at">-nmo</span> <span class="at">-ccdir</span> resource:class-catalog <span class="at">-l</span> .java</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">License</span> Agreement have been already completed.</span>
@@ -572,9 +603,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.739] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.BuildDashboardFromFindings</span>
 <span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.745] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.SendScanResultsImpl</span>
 <span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.756] Running Task                  : com.ibm.quantumsafe.sca.framework.common.impl.ProfileProcessImpl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p><strong>Note:</strong> When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application.</p>
-</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When scanning large applications (e.g., more than 500,000 lines of code) on macOS systems, IBM Quantum Safe Explorer consumes a large amount of disk space. It is advised to archive and clear the results folder and to reboot the machine before initiating a scan on another application.</p>
+</div>
+</div>
 </section>
 <section id="accessing-the-ibm-quantum-safe-explorer-cli-scan-results" class="level2">
 <h2 class="anchored" data-anchor-id="accessing-the-ibm-quantum-safe-explorer-cli-scan-results">Accessing the IBM Quantum Safe Explorer CLI scan results</h2>
@@ -583,7 +624,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The file is quite verbose. Here’s a snippet of the result:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scan-results-json.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scan-results-json.png" class="img-fluid figure-img"></p>
 <figcaption>Accessing1</figcaption>
 </figure>
 </div>
@@ -596,45 +637,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When you execute a scan, a <strong>qs_explorer_result</strong> folder is generated along with the <strong>qs_scan_result</strong> folder.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/scan-results-directory.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scan-results-directory.png" class="img-fluid figure-img"></p>
 <figcaption>Opening1</figcaption>
 </figure>
 </div>
-<blockquote class="blockquote">
-<p><strong>Note:</strong> To view the results, you need to have the Visual Studio Code extension installed on your system.</p>
-</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To view the results, you need to have the Visual Studio Code extension installed on your system.</p>
+</div>
+</div>
 <p>Navigate to the <strong>File</strong> menu drop down, select the <strong>Open Folder</strong> to locate your <code>/&lt;package-path&gt;</code> folder:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/vs-code-find-project.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/vs-code-find-project.png" class="img-fluid figure-img"></p>
 <figcaption>Opening2</figcaption>
 </figure>
 </div>
 <p>Once you have found your <code>/&lt;package-path&gt;</code> simply open it to populate the project in the Visual Studio Code Explorer view:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/vs-code-open-project.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/vs-code-open-project.png" class="img-fluid figure-img"></p>
 <figcaption>Opening3</figcaption>
 </figure>
 </div>
 <p>To populate the <strong>SCAN RESULTS</strong>, we must first navigate to the <strong>QUANTUM SAFE EXPLORER</strong> tab. This then populates the <strong>SCAN RESULTS</strong> menu. That menu drop down then brings you to the <code>Crypto Artifacts</code>. For example:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/vs-code-quantum-safe-explorer.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/vs-code-quantum-safe-explorer.png" class="img-fluid figure-img"></p>
 <figcaption>Opening4</figcaption>
 </figure>
 </div>
 <p>To view the results dashboard, you simply toggle to the <strong>QUANTUM SAFE EXPLORER DASHBOARD</strong> tab and click the <strong>+</strong> symbol on the right hand side to expand the view:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/vs-code-quantum-safe-dashboard-tab.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/vs-code-quantum-safe-dashboard-tab.png" class="img-fluid figure-img"></p>
 <figcaption>Opening5</figcaption>
 </figure>
 </div>
 <p>This should then expose the dashboard as shown below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../assets/images/vs-code-quantum-safe-dashboard-view.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/vs-code-quantum-safe-dashboard-view.png" class="img-fluid figure-img"></p>
 <figcaption>Opening6</figcaption>
 </figure>
 </div>

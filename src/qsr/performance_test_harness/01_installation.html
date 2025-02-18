@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="QSR Performance Test Harness Installation">
 
 <title>Installation – IBM Quantum Safe Encryption</title>
 <style>
@@ -75,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-24af2020e4147f07069e9e2e115d4586.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0e5edbee8f245697e4c7aae403c32e64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -370,6 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#install-the-performance-test-harness" id="toc-install-the-performance-test-harness" class="nav-link" data-scroll-target="#install-the-performance-test-harness">Install the Performance Test Harness</a>
   <ul class="collapse">
   <li><a href="#building-the-images" id="toc-building-the-images" class="nav-link" data-scroll-target="#building-the-images">Building the images</a></li>
+  <li><a href="#configuring-the-build-images" id="toc-configuring-the-build-images" class="nav-link" data-scroll-target="#configuring-the-build-images">Configuring the build images</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -383,11 +383,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">Installation</h1>
 </div>
 
-<div>
-  <div class="description">
-    QSR Performance Test Harness Installation
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -402,12 +397,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>import { Tabs, TabItem } from ‘<span class="citation" data-cites="astrojs/starlight/components">@astrojs/starlight/components</span>’;</p>
 <section id="performance-test-harness" class="level1">
 <h1>Performance Test Harness</h1>
-<p>:::note[Useful Links]</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Links
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>A lot of info cribbed from <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=harness-installing-performance-test">here</a></p>
-<p>:::</p>
+</div>
+</div>
 <section id="pre-reqs" class="level2">
 <h2 class="anchored" data-anchor-id="pre-reqs">Pre-Reqs</h2>
 <ul>
@@ -417,16 +421,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="installing-pre-requisite-packages" class="level3">
 <h3 class="anchored" data-anchor-id="installing-pre-requisite-packages">Installing pre-requisite packages</h3>
-<p><tabs synckey="OS"> <tabitem label="Red Hat/CentOS"></tabitem></tabs></p>
-<pre class="tsx"><code>sudo dnf -y install jq bc</code></pre>
-<p> <tabitem label="Ubuntu/Debian"></tabitem></p>
-<pre class="tsx"><code>sudo apt-get -y update
-sudo apt-get -y install jq bc</code></pre>
-<p> </p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Red Hat/CentOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Ubuntu/Debian</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf <span class="at">-y</span> install jq bc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get <span class="at">-y</span> update</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get <span class="at">-y</span> install jq bc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>Download the Performance Test Pack from IBM Passport Advantage:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../assets/images/QSRPTH1.png" class="img-fluid figure-img"></p>
+<p><img src="../../../images/QSRPTH1.png" class="img-fluid figure-img"></p>
 <figcaption>QSRPTH1</figcaption>
 </figure>
 </div>
@@ -436,62 +446,82 @@ sudo apt-get -y install jq bc</code></pre>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">inflating:</span> M0J91EN/pqc-performance-test_1.0.0.tar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Upload the resultant <code>pqc-performance-test_1.0.0.tar</code> to your docker host.</p>
 <p>On your docker host</p>
-<pre class="tsx"><code>mkdir -p ~/perftest
-tar -xf pqc-performance-test_1.0.0.tar -C ~/perftest/
-</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/perftest</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> pqc-performance-test_1.0.0.tar <span class="at">-C</span> ~/perftest/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Change over to the newly extracted directory</p>
-<pre class="tsx"><code>cd ~/perftest/pqc-performance-test/test_utils/build_images/</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/perftest/pqc-performance-test/test_utils/build_images/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="install-the-performance-test-harness" class="level2">
 <h2 class="anchored" data-anchor-id="install-the-performance-test-harness">Install the Performance Test Harness</h2>
-<p>:::note[IBM Docs]</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+IBM Docs
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>A lot of this stuff is take verbatim from here:</p>
 <p>https://www.ibm.com/docs/en/quantum-safe/quantum-safe-remediator/1.0.x?topic=harness-installing-performance-test</p>
-<p>:::</p>
+</div>
+</div>
 <section id="building-the-images" class="level3">
 <h3 class="anchored" data-anchor-id="building-the-images">Building the images</h3>
 <p>Execute the <code>build_images.sh</code> script and select <code>1</code> when prompted for the License Agreement.</p>
-<p>Should show the images available now for Docker ```tsx {6-8} docker images</p>
-<p>REPOSITORY TAG IMAGE ID CREATED SIZE adaptive-proxy ubi-9.3 99c3cd5ad80f 2 months ago 277MB adaptive-proxy qscopenssl 6609ea524cdf 2 months ago 282MB localhost:5000/qsc-h2load-provider-22.04.2-1.1.1t 1.0 5a856162a800 8 months ago 427MB localhost:5000/qsc-curl-provider-9.2.0-1.1.1t 1.0 429552679bba 8 months ago 70.3MB localhost:5000/qsc-openssl-provider-9.2.0-1.1.1t 1.0 8b69ff2c49da 8 months ago 77MB</p>
-<pre><code>
-### Configuring the build images
-
-:::note
-This build config needs to happen for every host ip you want to check. So if you have multiple addresses, add them to the space delimited list below.
-:::
-
-Execute the `build_config.sh` script. We are going to use our test vm that is running our test site for the adaptive proxy.
-Since this is running on IBM Fyre, we have two IP addresses available. We're going to point to both.
-
-Breaking down the below requirements:
-
-- `TARGET_FQDN_LIST` - Should be a space delimited list of ip addresses of the target hosts
-- `TARGET_IP_LIST` - This should also be the same space delimited list of ips from above 
-- `TESTFQDN` - This should be the same ip as the target host
-
-For our test, we will use the ip of our docker host
-
-```tsx
-./build_config.sh
-
-Enter the target FQDN list seperated by space (TARGET_FQDN_LIST): 9.46.72.93
-Enter the target IP list seperated by space (TARGET_IP_LIST): 9.46.72.93
-Enter the test FQDN (TESTFQDN): 9.46.72.93</code></pre>
+<p>Should show the images available now for Docker</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> images</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">REPOSITORY</span>                                          TAG          IMAGE ID       CREATED         SIZE</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">adaptive-proxy</span>                                      ubi-9.3      99c3cd5ad80f   2 months ago    277MB</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">adaptive-proxy</span>                                      qscopenssl   6609ea524cdf   2 months ago    282MB</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">localhost:5000/qsc-h2load-provider-22.04.2-1.1.1t</span>   1.0          5a856162a800   8 months ago    427MB</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">localhost:5000/qsc-curl-provider-9.2.0-1.1.1t</span>       1.0          429552679bba   8 months ago    70.3MB</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">localhost:5000/qsc-openssl-provider-9.2.0-1.1.1t</span>    1.0          8b69ff2c49da   8 months ago    77MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="configuring-the-build-images" class="level3">
+<h3 class="anchored" data-anchor-id="configuring-the-build-images">Configuring the build images</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This build config needs to happen for every host ip you want to check. So if you have multiple addresses, add them to the space delimited list below.</p>
+</div>
+</div>
+<p>Execute the <code>build_config.sh</code> script. We are going to use our test vm that is running our test site for the adaptive proxy. Since this is running on IBM Fyre, we have two IP addresses available. We’re going to point to both.</p>
+<p>Breaking down the below requirements:</p>
+<ul>
+<li><code>TARGET_FQDN_LIST</code> - Should be a space delimited list of ip addresses of the target hosts</li>
+<li><code>TARGET_IP_LIST</code> - This should also be the same space delimited list of ips from above</li>
+<li><code>TESTFQDN</code> - This should be the same ip as the target host</li>
+</ul>
+<p>For our test, we will use the ip of our docker host</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build_config.sh</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> the target FQDN list seperated by space <span class="er">(</span><span class="ex">TARGET_FQDN_LIST</span><span class="kw">)</span><span class="bu">:</span> 9.46.72.93</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> the target IP list seperated by space <span class="er">(</span><span class="ex">TARGET_IP_LIST</span><span class="kw">)</span><span class="bu">:</span> 9.46.72.93</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> the test FQDN <span class="er">(</span><span class="ex">TESTFQDN</span><span class="kw">)</span><span class="bu">:</span> 9.46.72.93</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The build will take a while.</p>
 <p>After awhile you should see</p>
-<pre class="tsx"><code>Performance test server build completed successfully.
-Launching performance test server ...
-Launching localhost:5000/qsc-perf-server-ubuntu:provider.
-Performance test server container started RC=0, container id 318e77d157114d84915654f86cc8c3a225c689e9983bb9d38fbc6b5cbdefc22d.
-Building PQC client container ...
-Building PQC client container ...</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Performance</span> test server build completed successfully.</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Launching</span> performance test server ...</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Launching</span> localhost:5000/qsc-perf-server-ubuntu:provider.</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Performance</span> test server container started RC=0, container id 318e77d157114d84915654f86cc8c3a225c689e9983bb9d38fbc6b5cbdefc22d.</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Building</span> PQC client container ...</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Building</span> PQC client container ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When all is done, you should see the running test harness server container running:</p>
-<pre class="tsx"><code>docker ps -a
-
-CONTAINER ID   IMAGE                                            COMMAND                  CREATED          STATUS                    PORTS                                                                                                  NAMES
-cae3f96543e0   localhost:5000/qsc-perf-server-ubuntu:provider   "/bin/bash /opt/ngin…"   29 seconds ago   Up 5 seconds              0.0.0.0:9100-9563-&gt;9100-9563/tcp, 0.0.0.0:9080-&gt;80/tcp, 0.0.0.0:9043-&gt;443/tcp                          qsc-perf-server
-</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps <span class="at">-a</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID   IMAGE                                            COMMAND                  CREATED          STATUS                    PORTS                                                                                                  NAMES</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">cae3f96543e0</span>   localhost:5000/qsc-perf-server-ubuntu:provider   <span class="st">"/bin/bash /opt/ngin…"</span>   29 seconds ago   Up 5 seconds              0.0.0.0:9100-9563-<span class="op">&gt;</span>9100-9563/tcp, 0.0.0.0:9080-<span class="op">&gt;</span>80/tcp, 0.0.0.0:9043-<span class="op">&gt;</span>443/tcp                          qsc-perf-server</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
