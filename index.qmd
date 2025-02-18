@@ -53,13 +53,12 @@ IBM Portfolio Products
     - *Adaptive Proxy* - protects communications between apps and end-user devices from quantum attacks. Positions proxy between your server & client's
     - *Performance Test Harness* - test quantum safe algorithms performance in environment before deploying to production
 
-**IBM Team Engaged**
 
-| Team                  |
+| **IBM Team Engaged**  |
 |-----------------------|
 | Client Engineering    |
 | Quantum Research      |
-| Fidelity Account Team |
+| Customer Account Team |
 | IBM Consulting        |    
     
 <br><br>
