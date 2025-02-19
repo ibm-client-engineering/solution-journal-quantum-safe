@@ -28,7 +28,9 @@ post-ingress controller (k8s). This section is focused on the VM-based standalon
 
 The adaptive proxy requires a docker or podman host to run the container. 
 
-For our example, we're going to set up the adaptive proxy to act as a loadbalancer for a kubernetes cluster.
+For our example, we're going to set up the adaptive proxy to act as a loadbalancer for a kubernetes cluster.  
+
+![](/images/qsrAdaptiveProxy.png)
 
 ## Pre-Reqs
 
