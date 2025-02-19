@@ -3,6 +3,11 @@ title: "Key Takeaways"
 format: html
 ---
 
+**What about IBM's Quantum Safe solutions matter to our customers**  
 
-![](/images/POTfinalTakeaway.png)
+- Performance
+- Functionality
+- Scalability
+
+![](/images/QStakeaways2.png)
 
