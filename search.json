@@ -131,6 +131,16 @@
     ]
   },
   {
+    "objectID": "src/key-takeaway.html",
+    "href": "src/key-takeaway.html",
+    "title": "Key Takeaways",
+    "section": "",
+    "text": "What about IBM’s Quantum Safe solutions matter to our customers\n\nPerformance\nFunctionality\nScalability",
+    "crumbs": [
+      "Key Takeaways"
+    ]
+  },
+  {
     "objectID": "src/implementation_methodology/steptwo-imp.html",
     "href": "src/implementation_methodology/steptwo-imp.html",
     "title": "Step Two",
@@ -835,7 +845,7 @@
     "href": "index.html#business-statement",
     "title": "Quantum Safe",
     "section": "Business Statement",
-    "text": "Business Statement\nQuantum computing presents a growing threat to enterprise security, impacting everything from data encryption to core business operations across diverse industries. Customers are looking for guidance in starting their quantum safe journey.\n\nQuantum Computers can in principle, perform certain mathematical computations exponentially faster than a classical computer will.\nThere will be a time when the power of quantum computing may crack public key cryptographic security protection.\n\nYour data and security is already at risk for quantum attacks.\n\nCryptography impacts everything. Consider your cryptographic use in four broad areas.\n\nInfrastructure\n\nApplications\n\nData protection\n\nKey Management",
+    "text": "Business Statement\nQuantum computing presents a growing threat to enterprise security, impacting everything from data encryption to core business operations across diverse industries. Customers are looking for guidance in starting their quantum safe journey.\n\nQuantum Computers can in principle, perform certain mathematical computations exponentially faster than a classical computer will.\nThere will be a time when the power of quantum computing may crack public key cryptographic security protection.\n\nYour data and security is already at risk for quantum attacks.\n\nCryptography impacts everything",
     "crumbs": [
       "Problem Definition"
     ]
