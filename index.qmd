@@ -26,11 +26,7 @@ Quantum computing presents a growing threat to enterprise security, impacting ev
 - Quantum Computers can in principle, perform certain mathematical computations exponentially **faster than a classical computer will**. 
 - There will be a time when the power of quantum computing may **crack public key cryptographic security protection**.  
 - Your **data and security** is already at risk for quantum attacks.  
-- Cryptography impacts **everything**. Consider your cryptographic use in four broad areas.  
-    - Infrastructure  
-    - Applications  
-    - Data protection  
-    - Key Management  
+- Cryptography impacts **everything**
 
 ## Challenges
 
