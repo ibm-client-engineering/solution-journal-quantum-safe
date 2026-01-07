@@ -63,6 +63,8 @@ website:
                   href: src/qsr/performance_test_harness/02_usage.qmd
         - section: QSE 
           contents:
+            - text: Positioning
+              href: src/qse/03_tooling_landscape.qmd
             - text: Installation
               href: src/qse/01_installation.qmd
             - text: Scanning

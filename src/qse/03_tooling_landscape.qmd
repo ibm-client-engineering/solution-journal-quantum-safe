@@ -1,0 +1,63 @@
+---
+title: "The Security Ecosystem"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+lightbox: true
+date: last-modified
+---
+
+## Overview
+
+A robust security posture relies on multiple layers of analysis. When planning a Post-Quantum Cryptography (PQC) strategy, it is important to understand how IBM Quantum Safe Explorer (QSE) differentiates itself from—and complements—standard Application Security (AppSec) and Network Security tools.
+
+While existing tools focus on **hygiene** and **vulnerability detection** (finding mistakes), IBM Quantum Safe focuses on **cryptographic agility** and **inventory** (identifying standards that require modernization).
+
+## Functional Comparison
+
+The following table outlines the functional scope of common enterprise security tools compared to IBM Quantum Safe Explorer.
+
+| Tool Category | Examples | Primary Objective | Quantum Readiness Gap |
+|:---|:---|:---|:---|
+| **SAST (Static Analysis)** | SonarQube, Checkmarx | **Find Vulnerabilities.** Detects bugs, code smells, and implementation errors (e.g., SQL injection, hardcoded passwords). | **Hygiene focused.** Flags broken crypto (e.g., MD5) but marks standard crypto (e.g., RSA-2048) as "Pass/Safe," leaving migration targets unidentified. |
+| **SCA (Supply Chain)** | Black Duck, JFrog Xray | **Monitor Dependencies.** Scans open-source libraries for known CVEs and licensing issues. | **Library focused.** Identifies library versions but does not analyze how the application code *uses* cryptography within those libraries. |
+| **Network Security** | Palo Alto Prisma | **Protect Data-in-Transit.** Secures network boundaries and encrypts tunnels. | **Infrastructure focused.** Protects the transport layer (VPNs) but does not inspect application source code or internal logic. |
+| **Cryptographic Discovery** | **IBM Quantum Safe** | **Create Inventory.** Generates a Cryptographic Bill of Materials (CBOM) to map all crypto assets. | **Transformation focused.** Discovers *all* cryptography (secure or insecure) to facilitate the migration to NIST PQC standards. |
+
+## Integration with Network Security (Palo Alto Prisma)
+
+Organizations utilizing network security platforms, such as Palo Alto Networks Prisma, may utilize features like "Quantum-Safe Cipher Translation" or Post-Quantum VPN support (RFC 8784).
+
+It is critical to distinguish between **Network Layer** protection and **Application Layer** protection:
+
+::: {.callout-note}
+### The Network vs. Application Distinction
+Network tools act as a proxy, protecting the "pipe" (tunneling and traffic inspection). IBM Quantum Safe Explorer protects the "logic" by identifying cryptographic calls within the application source code itself.
+:::
+
+* **Network Layer (Prisma):** Protects data moving between defined boundaries. If an application is moved to a different environment (e.g., internal cloud, different availability zone) or if the perimeter is breached, the application relies on its own internal cryptography.
+* **Application Layer (IBM QSE):** Ensures the application's internal code is robust. By identifying and remediating hardcoded cryptographic calls, the asset remains secure regardless of the network infrastructure it traverses.
+
+## The CBOM Advantage
+
+The primary differentiator of IBM Quantum Safe is the generation of a **Cryptographic Bill of Materials (CBOM)**.
+
+Standard SAST tools (like SonarQube) operate on a "Pass/Fail" basis regarding current security standards. If a developer uses `AES-256`, a SAST tool reports no issues.
+
+However, for Quantum Safe migration, a "Pass" is insufficient. Organizations need an **inventory** of where `AES-256` is used to ensure it is wrapped in quantum-safe mechanisms or used in a context that does not require PQC.
+
+### Semantic Analysis vs. Pattern Matching
+
+IBM Quantum Safe Explorer utilizes deep semantic analysis rather than simple pattern matching:
+
+1.  **Data Flow Analysis:** Tracks variables through the code to determine if they are used as cryptographic keys, even if the variable name is generic (e.g., `var data = ...`).
+2.  **Context Awareness:** Distinguishes between a hash used for security (e.g., signing) versus a hash used for utility (e.g., a hash map index), reducing false alarms during migration planning.
+
+## Summary
+
+IBM Quantum Safe is not a replacement for tools like SonarQube or Prisma; it is an additive layer designed for the **Quantum Era**.
+
+* Use **SAST/SCA** to ensure your code is free of bugs and known CVEs.
+* Use **Network Security** to encrypt traffic boundaries.
+* Use **IBM Quantum Safe** to build your CBOM and manage the migration of your cryptographic standards.
