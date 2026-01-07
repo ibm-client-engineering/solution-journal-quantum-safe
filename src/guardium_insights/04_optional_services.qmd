@@ -1,5 +1,6 @@
 ---
 title: Optional Services
+description: Running Guardium Insights with QSPM on EKS
 format:
   html:
     toc: true
@@ -139,6 +140,248 @@ should return
 NAME    CONTROLLER             PARAMETERS   AGE
 alb     ingress.k8s.aws/alb    <none>       79s
 nginx   k8s.io/ingress-nginx   <none>       35d
+```
+
+## Use AWS CA (ACM) for certs (optional)
+
+::: {.callout-note}
+This section is not complete and under construction.
+:::
+
+
+If you plan to use a private CA via AWS ACM instead of something like LetsEncrypt by default, follow these steps
+
+The AWS PrivateCA Issuer plugin acts as an addon (see external cert configuration) to cert-manager that signs certificate requests using ACM Private CA.
+
+### Create the namespace
+
+```bash
+kubectl create namespace aws-pca-issuer
+```
+
+Add the helm repo
+
+```bash
+helm repo add awspca https://cert-manager.github.io/aws-privateca-issuer
+helm repo update
+helm install awspca/aws-privateca-issuer --generate-name --namespace aws-pca-issuer
+```
+
+### Create the private CA in ACM
+
+:::note[Links]
+This is using an example from this helpful AWS [link](https://docs.aws.amazon.com/privateca/latest/userguide/create-CA.html)
+
+Generating and installing the CA cert [here](https://docs.aws.amazon.com/privateca/latest/userguide/PCACertInstall.html)
+:::
+
+:::note
+In our example we are using the subdomain `apps.gi.thinkforward.work`. This will not be the domain you will likely use.
+:::
+
+Create the following file and populate it with appropriate values. This file is an EXAMPLE:
+
+```bash
+cat <<EOF > ca_config.txt
+{
+   "KeyAlgorithm":"RSA_2048",
+   "SigningAlgorithm":"SHA256WITHRSA",
+   "Subject":{
+      "Country":"US",
+      "Organization":"IBM",
+      "OrganizationalUnit":"Client Engineering",
+      "State":"MA",
+      "Locality":"Cambridge",
+      "CommonName":"$HOSTNAME"
+   }
+}
+EOF
+```
+
+We're going to use the default OCSP settings. Now create a revocation file
+```bash
+cat <<EOF > revoke_config.txt
+{
+   "OcspConfiguration":{
+      "Enabled":true
+   }
+}
+EOF
+```
+
+Finally, create the CA
+```bash
+aws acm-pca create-certificate-authority \
+     --certificate-authority-configuration file://ca_config.txt \
+     --revocation-configuration file://revoke_config.txt \
+     --certificate-authority-type "ROOT" \
+     --idempotency-token 01234567 \
+     --region $region \
+     --tags Key=Product,Value=Guardium
+```
+
+This should return the new CA's arn.
+
+```json
+{
+    "CertificateAuthorityArn": "arn:aws:acm-pca:us-east-1:748107796891:certificate-authority/00c9d3eb-c837-4cef-917a-fd87ec608a04"
+}
+```
+
+Let's collect that arn into an env var
+
+```bash
+export ca_arn="arn:aws:acm-pca:us-east-1:748107796891:certificate-authority/00c9d3eb-c837-4cef-917a-fd87ec608a04"
+```
+
+### Generate and install the CA cert
+
+Generate a certificate signing request (CSR).
+
+```bash
+aws acm-pca get-certificate-authority-csr \
+     --certificate-authority-arn $ca_arn \
+     --output text \
+     --region $region > ca.csr
+```
+
+Using the CSR from the previous step as the argument for the --csr parameter, issue the root certificate and export the arn as another env var.
+
+We're going to set the validity to 999 days.
+
+```bash
+export root_cert_arn=$(aws acm-pca issue-certificate \
+     --certificate-authority-arn $ca_arn \
+     --csr fileb://ca.csr \
+     --signing-algorithm SHA256WITHRSA \
+     --region $region \
+     --template-arn arn:aws:acm-pca:::template/RootCACertificate/V1 \
+     --validity Value=999,Type=DAYS \
+     --output text)
+```
+
+Retrieve the cert and let's stick it in `cert.pem`
+
+```bash
+aws acm-pca get-certificate \
+	--certificate-authority-arn $ca_arn \
+	--certificate-arn $root_cert_arn \
+  --region $region \
+	--output text > cert.pem
+```
+
+Finally import it into the CA
+
+```bash
+aws acm-pca import-certificate-authority-certificate \
+    --region $region \
+    --certificate-authority-arn $ca_arn \
+    --certificate fileb://cert.pem
+```
+
+Verify the status of the CA
+
+```bash
+aws acm-pca describe-certificate-authority \
+  --region $region \
+	--certificate-authority-arn $ca_arn \
+  --query "CertificateAuthority.Status" \
+	--output text
+```
+
+This should return `ACTIVE`.
+
+### Create an ACM Private CA
+
+Download the CA certificate using the following command.
+```bash
+aws acm-pca get-certificate-authority-certificate \
+--certificate-authority-arn $ca_arn \
+--region $region \
+--output text > cacert.pem
+```
+
+### Set EKS node permission for ACM Private CA
+
+Add the IAM policy to your EKS NodeInstanceRole
+
+Create the following file
+
+```bash
+cat <<EOF > EKS-CA-NodePerms-policy.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "awspcaissuer",
+            "Action": [
+                "acm-pca:DescribeCertificateAuthority",
+                "acm-pca:GetCertificate",
+                "acm-pca:IssueCertificate"
+            ],
+            "Effect": "Allow",
+            "Resource": "$ca_arn"
+        }
+    ]
+}
+EOF
+```
+
+Create the policy in IAM. This needs to be specific for your cluster using the CA we created.
+
+Export the following var:
+
+```bash
+export awscapolicy="AWSCAPolicy-${clustername}"
+```
+
+```bash
+aws iam create-policy \
+--policy-name ${awscapolicy} \
+--policy-document file://EKS-CA-NodePerms-policy.json
+```
+
+Let's retrieve the policy arn as an env var
+
+```bash
+export ca_policy_arn=$(aws iam list-policies --query 'Policies[?PolicyName==`'${awscapolicy}'`].Arn' --output text)
+```
+
+Let's gather our NodeInstance role name
+
+```bash
+export node_instance_role=$(aws iam list-roles --region $region --query 'Roles[?starts_with(RoleName, `eksctl-'${clustername}'`)]|[?contains(RoleName, `NodeInstanceRole`)].RoleName' --output text)
+```
+Now let's attach the policy to our EKS node role. In our case the role name is `gi-eks-nodes-role`. This may be different for you.
+```bash
+aws iam attach-role-policy \
+--role-name "${node_instance_role}" \
+--policy-arn "${ca_policy_arn}" \
+--region "${region}"
+```
+
+### Create an issuer
+
+We're going to create a namespace scoped issuer for now.
+
+Create a yaml file for the issuer
+```bash
+cat <<EOF > awpca-issuer.yaml
+apiVersion: awspca.cert-manager.io/v1beta1
+kind: AWSPCAIssuer
+metadata:
+  name: acm-issuer
+  namespace: $NAMESPACE
+spec:
+  arn: $ca_arn
+  region: $region
+EOF
+```
+
+Deploy the AWSPCAIssuer: 
+
+```bash
+kubectl apply -f awpca-issuer.yaml
 ```
 
 ## Community Cert Manager (optional)
