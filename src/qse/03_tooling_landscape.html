@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-01-08">
 
-<title>Step Two – IBM Quantum Safe Encryption</title>
+<title>The Security Ecosystem – IBM Quantum Safe Encryption</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../src/qse/01_installation.html" rel="next">
+<link href="../../src/qsr/performance_test_harness/02_usage.html" rel="prev">
 <link href="../../images/bee.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -72,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -133,26 +136,223 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">QSE</a></li><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">Positioning</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem Definition</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">QSR</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Adaptive Proxy</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/02_configuration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuration</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Performance Test Harness</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/02_usage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Usage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">QSE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/03_tooling_landscape.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Positioning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/02_scanning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scanning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Guardium Insights</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">EC2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/01-prereqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">EKS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/01_pre-reqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/02_cluster-build.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EKS Cluster Build</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/03_gi-install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guardium Insights Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/04_optional_services.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Services</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/key-takeaway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Key Takeaways</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#step-two-implementation" id="toc-step-two-implementation" class="nav-link active" data-scroll-target="#step-two-implementation">Step Two Implementation</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#functional-comparison" id="toc-functional-comparison" class="nav-link" data-scroll-target="#functional-comparison">Functional Comparison</a></li>
+  <li><a href="#integration-with-network-security-palo-alto-prisma" id="toc-integration-with-network-security-palo-alto-prisma" class="nav-link" data-scroll-target="#integration-with-network-security-palo-alto-prisma">Integration with Network Security (Palo Alto Prisma)</a></li>
+  <li><a href="#the-cbom-advantage" id="toc-the-cbom-advantage" class="nav-link" data-scroll-target="#the-cbom-advantage">The CBOM Advantage</a>
+  <ul class="collapse">
+  <li><a href="#semantic-analysis-vs.-pattern-matching" id="toc-semantic-analysis-vs.-pattern-matching" class="nav-link" data-scroll-target="#semantic-analysis-vs.-pattern-matching">Semantic Analysis vs.&nbsp;Pattern Matching</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">QSE</a></li><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">Positioning</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Step Two</h1>
+<h1 class="title">The Security Ecosystem</h1>
 </div>
 
 
@@ -160,6 +360,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 8, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -169,11 +375,101 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="step-two-implementation" class="level3">
-<h3 class="anchored" data-anchor-id="step-two-implementation">Step Two Implementation</h3>
-<p>Phasellus at risus egestas, ultricies tortor efficitur, auctor augue. Suspendisse finibus maximus dui nec condimentum. Proin fringilla efficitur vehicula. Suspendisse sem lacus, iaculis quis erat et, facilisis sagittis est. Sed sapien justo, condimentum vitae aliquet sed, faucibus at ex. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce placerat ante eget diam tincidunt, vitae tincidunt sapien malesuada. Nullam ullamcorper justo eros. Duis ultricies aliquam dui, id aliquam lorem congue vitae. Ut porttitor, tellus eu dignissim semper, turpis nunc cursus libero, sed placerat est dui non enim.</p>
-<p>Vestibulum libero dolor, vehicula vitae risus non, consequat gravida neque. Maecenas a posuere sem. Quisque dignissim porta pretium. Nam mattis lacus commodo lobortis consequat. Vestibulum at massa a quam egestas accumsan. Fusce ac neque eu libero maximus aliquet id quis metus. In sodales neque ut turpis iaculis vehicula. Sed volutpat, tellus non laoreet aliquet, risus felis ornare dolor, interdum venenatis turpis metus in lorem. Aliquam quam ligula, porttitor non ultrices ac, lacinia ullamcorper massa. Integer molestie eleifend urna, imperdiet dignissim tellus malesuada ac. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tristique sem ac purus interdum, vitae pharetra erat fringilla. Integer non nunc a eros porttitor rutrum. Suspendisse ut libero urna. Vestibulum vitae est at diam vestibulum aliquet. Donec porta nunc eget lobortis mollis.</p>
-<p>Vestibulum luctus sodales odio, at luctus lacus lobortis a. Aliquam vulputate id turpis sit amet bibendum. Donec a dignissim tellus, vel vehicula erat. Pellentesque hendrerit ex magna, at dictum est pretium a. Vivamus faucibus ipsum lectus, ut elementum diam interdum scelerisque. Cras magna sapien, tincidunt quis eleifend at, tincidunt non eros. Aliquam ac augue turpis.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>A robust security posture relies on multiple layers of analysis. When planning a Post-Quantum Cryptography (PQC) strategy, it is important to understand how IBM Quantum Safe Explorer (QSE) differentiates itself from—and complements—standard Application Security (AppSec) and Network Security tools.</p>
+<p>While existing tools focus on <strong>hygiene</strong> and <strong>vulnerability detection</strong> (finding mistakes), IBM Quantum Safe focuses on <strong>cryptographic agility</strong> and <strong>inventory</strong> (identifying standards that require modernization).</p>
+</section>
+<section id="functional-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="functional-comparison">Functional Comparison</h2>
+<p>The following table outlines the functional scope of common enterprise security tools compared to IBM Quantum Safe Explorer.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tool Category</th>
+<th style="text-align: left;">Examples</th>
+<th style="text-align: left;">Primary Objective</th>
+<th style="text-align: left;">Quantum Readiness Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>SAST (Static Analysis)</strong></td>
+<td style="text-align: left;">SonarQube, Checkmarx</td>
+<td style="text-align: left;"><strong>Find Vulnerabilities.</strong> Detects bugs, code smells, and implementation errors (e.g., SQL injection, hardcoded passwords).</td>
+<td style="text-align: left;"><strong>Hygiene focused.</strong> Flags broken crypto (e.g., MD5) but marks standard crypto (e.g., RSA-2048) as “Pass/Safe,” leaving migration targets unidentified.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>SCA (Supply Chain)</strong></td>
+<td style="text-align: left;">Black Duck, JFrog Xray</td>
+<td style="text-align: left;"><strong>Monitor Dependencies.</strong> Scans open-source libraries for known CVEs and licensing issues.</td>
+<td style="text-align: left;"><strong>Library focused.</strong> Identifies library versions but does not analyze how the application code <em>uses</em> cryptography within those libraries.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Network Security</strong></td>
+<td style="text-align: left;">Palo Alto Prisma</td>
+<td style="text-align: left;"><strong>Protect Data-in-Transit.</strong> Secures network boundaries and encrypts tunnels.</td>
+<td style="text-align: left;"><strong>Infrastructure focused.</strong> Protects the transport layer (VPNs) but does not inspect application source code or internal logic.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Cryptographic Discovery</strong></td>
+<td style="text-align: left;"><strong>IBM Quantum Safe</strong></td>
+<td style="text-align: left;"><strong>Create Inventory.</strong> Generates a Cryptographic Bill of Materials (CBOM) to map all crypto assets.</td>
+<td style="text-align: left;"><strong>Transformation focused.</strong> Discovers <em>all</em> cryptography (secure or insecure) to facilitate the migration to NIST PQC standards.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="integration-with-network-security-palo-alto-prisma" class="level2">
+<h2 class="anchored" data-anchor-id="integration-with-network-security-palo-alto-prisma">Integration with Network Security (Palo Alto Prisma)</h2>
+<p>Organizations utilizing network security platforms, such as Palo Alto Networks Prisma, may utilize features like “Quantum-Safe Cipher Translation” or Post-Quantum VPN support (RFC 8784).</p>
+<p>It is critical to distinguish between <strong>Network Layer</strong> protection and <strong>Application Layer</strong> protection:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Network vs.&nbsp;Application Distinction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Network tools act as a proxy, protecting the “pipe” (tunneling and traffic inspection). IBM Quantum Safe Explorer protects the “logic” by identifying cryptographic calls within the application source code itself.</p>
+</div>
+</div>
+<ul>
+<li><strong>Network Layer (Prisma):</strong> Protects data moving between defined boundaries. If an application is moved to a different environment (e.g., internal cloud, different availability zone) or if the perimeter is breached, the application relies on its own internal cryptography.</li>
+<li><strong>Application Layer (IBM QSE):</strong> Ensures the application’s internal code is robust. By identifying and remediating hardcoded cryptographic calls, the asset remains secure regardless of the network infrastructure it traverses.</li>
+</ul>
+</section>
+<section id="the-cbom-advantage" class="level2">
+<h2 class="anchored" data-anchor-id="the-cbom-advantage">The CBOM Advantage</h2>
+<p>The primary differentiator of IBM Quantum Safe is the generation of a <strong>Cryptographic Bill of Materials (CBOM)</strong>.</p>
+<p>Standard SAST tools (like SonarQube) operate on a “Pass/Fail” basis regarding current security standards. If a developer uses <code>AES-256</code>, a SAST tool reports no issues.</p>
+<p>However, for Quantum Safe migration, a “Pass” is insufficient. Organizations need an <strong>inventory</strong> of where <code>AES-256</code> is used to ensure it is wrapped in quantum-safe mechanisms or used in a context that does not require PQC.</p>
+<section id="semantic-analysis-vs.-pattern-matching" class="level3">
+<h3 class="anchored" data-anchor-id="semantic-analysis-vs.-pattern-matching">Semantic Analysis vs.&nbsp;Pattern Matching</h3>
+<p>IBM Quantum Safe Explorer utilizes deep semantic analysis rather than simple pattern matching:</p>
+<ol type="1">
+<li><strong>Data Flow Analysis:</strong> Tracks variables through the code to determine if they are used as cryptographic keys, even if the variable name is generic (e.g., <code>var data = ...</code>).</li>
+<li><strong>Context Awareness:</strong> Distinguishes between a hash used for security (e.g., signing) versus a hash used for utility (e.g., a hash map index), reducing false alarms during migration planning.</li>
+</ol>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>IBM Quantum Safe is not a replacement for tools like SonarQube or Prisma; it is an additive layer designed for the <strong>Quantum Era</strong>.</p>
+<ul>
+<li>Use <strong>SAST/SCA</strong> to ensure your code is free of bugs and known CVEs.</li>
+<li>Use <strong>Network Security</strong> to encrypt traffic boundaries.</li>
+<li>Use <strong>IBM Quantum Safe</strong> to build your CBOM and manage the migration of your cryptographic standards.</li>
+</ul>
 
 
 </section>
@@ -579,6 +875,18 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../src/qsr/performance_test_harness/02_usage.html" class="pagination-link" aria-label="Usage">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Usage</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../src/qse/01_installation.html" class="pagination-link" aria-label="Installation">
+        <span class="nav-page-text">Installation</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
