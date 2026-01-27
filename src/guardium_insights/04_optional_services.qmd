@@ -484,13 +484,13 @@ constraints.
 If you haven't yet, clone this github repository.
 
 ```bash
-git clone https://github.com/ibm-client-engineering/engineering-journal-quantum-safe.git
+git clone https://github.com/ibm-client-engineering/solution-journal-quantum-safe.git
 ```
 
 Go to the opa library templates directory.
 
 ```bash
-cd engineering-journal-quantum-safe/opa/library/templates
+cd solution-journal-quantum-safe/opa/library/templates
 ```
 
 Apply the templates using `kustomize`
@@ -537,7 +537,7 @@ allows us to see what resources are violating the constraints without the resour
 Go to the opa library constraints directory.
 
 ```bash
-cd engineering-journal-quantum-safe/opa/library/constraints
+cd solution-journal-quantum-safe/opa/library/constraints
 ```
 
 Apply the templates using `kustomize`

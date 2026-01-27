@@ -1,0 +1,18 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPFSGroup
+metadata:
+  name: psp-fsgroup
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"
+  parameters:
+    rule: "MustRunAs" #"MustRunAs" #"MayRunAs", "RunAsAny"
+    ranges:
+    - min: 1000
+      max: 65535

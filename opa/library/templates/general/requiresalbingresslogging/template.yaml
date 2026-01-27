@@ -1,0 +1,50 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiresalbingresslogging
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiresAlbIngressLogging
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      code:
+      - engine: Rego
+        source:
+          rego: |
+            package k8srequiresalbingresslogging
+
+            # Logic to determine if this is an ALB ingress
+            is_alb_ingress(obj) {
+                obj.metadata.annotations["kubernetes.io/ingress.class"] == "alb"
+            }
+            is_alb_ingress(obj) {
+                obj.spec.ingressClassName == "alb"
+            }
+
+            # Violation: Annotation missing entirely
+            violation[{"msg": msg}] {
+                is_alb_ingress(input.review.object)
+                not input.review.object.metadata.annotations["alb.ingress.kubernetes.io/load-balancer-attributes"]
+                msg := "ALB Ingress must have 'alb.ingress.kubernetes.io/load-balancer-attributes' annotation configured for S3 logging."
+            }
+
+            # Violation: Attributes defined, but logging not enabled or bucket missing
+            violation[{"msg": msg}] {
+                is_alb_ingress(input.review.object)
+                attrs := input.review.object.metadata.annotations["alb.ingress.kubernetes.io/load-balancer-attributes"]
+                
+                # Check for specific required substrings
+                # Note: Parsing kv-pairs in Rego is complex, checking substrings is usually sufficient for validation
+                not contains(attrs, "access_logs.s3.enabled=true")
+                
+                msg := sprintf("ALB Ingress logging must be enabled. Found attributes: '%v'. Required: 'access_logs.s3.enabled=true'", [attrs])
+            }
+
+            violation[{"msg": msg}] {
+                is_alb_ingress(input.review.object)
+                attrs := input.review.object.metadata.annotations["alb.ingress.kubernetes.io/load-balancer-attributes"]
+                not contains(attrs, "access_logs.s3.bucket")
+                msg := "ALB Ingress logging must specify an S3 bucket (access_logs.s3.bucket)."
+            }

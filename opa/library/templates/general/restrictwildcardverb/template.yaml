@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srestrictwildcardverb
+  annotations:
+    description: >-
+      Disallows the use of wildcards (*) in the 'verbs' field of Roles and ClusterRoles.
+      Strict RBAC policies require explicit permissions (e.g., get, list, watch) 
+      rather than blanket access.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRestrictWildcardVerb
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      code:
+      - engine: Rego
+        source:
+          rego: |
+            package k8srestrictwildcardverb
+
+            violation[{"msg": msg}] {
+                # Iterate over every rule in the Role/ClusterRole
+                rule := input.review.object.rules[_]
+                
+                # Iterate over every verb in the rule
+                verb := rule.verbs[_]
+                
+                # Check for wildcard
+                verb == "*"
+                
+                msg := sprintf("Wildcard '*' is not allowed in RBAC verbs. Found in rule affecting resources: %v", [rule.resources])
+            }
