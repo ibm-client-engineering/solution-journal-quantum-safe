@@ -1,0 +1,50 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srestrictselbsslpolicy
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRestrictsElbSslPolicy
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            allowedPolicies:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      code:
+      - engine: Rego
+        source:
+          rego: |
+            package k8srestrictselbsslpolicy
+
+            is_alb_ingress(obj) {
+                obj.metadata.annotations["kubernetes.io/ingress.class"] == "alb"
+            }
+            is_alb_ingress(obj) {
+                obj.spec.ingressClassName == "alb"
+            }
+
+            # Violation: Missing the annotation entirely
+            violation[{"msg": msg}] {
+                is_alb_ingress(input.review.object)
+                not input.review.object.metadata.annotations["alb.ingress.kubernetes.io/ssl-policy"]
+                msg := "ALB Ingress must specify a strict SSL Policy via annotation 'alb.ingress.kubernetes.io/ssl-policy'."
+            }
+
+            # Violation: Wrong policy
+            violation[{"msg": msg}] {
+                is_alb_ingress(input.review.object)
+                policy := input.review.object.metadata.annotations["alb.ingress.kubernetes.io/ssl-policy"]
+                not policy_is_allowed(policy)
+                msg := sprintf("ALB SSL Policy '%v' is not allowed. Allowed policies: %v", [policy, input.parameters.allowedPolicies])
+            }
+
+            policy_is_allowed(policy) {
+                policy == input.parameters.allowedPolicies[_]
+            }

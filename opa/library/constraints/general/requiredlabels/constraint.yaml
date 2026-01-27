@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: must-have-appid
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"        
+  parameters:
+    message: "All pods must have label of key `applicationid` regardless of the label's value"
+    labels:
+      - key: applicationid
