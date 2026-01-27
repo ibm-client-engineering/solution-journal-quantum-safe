@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-01-08">
+<meta name="dcterms.date" content="2026-01-27">
 <meta name="description" content="Running Guardium Insights with QSPM on EKS">
 
 <title>Optional Services – IBM Quantum Safe Encryption</title>
@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-7739a7c88020ee5985c041f1390fa554.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -421,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 8, 2026</p>
+      <p class="date">January 27, 2026</p>
     </div>
   </div>
   
@@ -766,9 +766,9 @@ Note
 <h3 class="anchored" data-anchor-id="apply-templates">Apply Templates</h3>
 <p>There are 2 parts to OPA gatekeeper policy enforcment, the first part is the <code>ConstraintTemplate</code>. This is where the logic of the policy exists. The templates must be deployed prior to deploying the constraints.</p>
 <p>If you haven’t yet, clone this github repository.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ibm-client-engineering/engineering-journal-quantum-safe.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ibm-client-engineering/solution-journal-quantum-safe.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Go to the opa library templates directory.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> engineering-journal-quantum-safe/opa/library/templates</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> solution-journal-quantum-safe/opa/library/templates</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Apply the templates using <code>kustomize</code></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kustomize</span> build . <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
@@ -796,7 +796,7 @@ Note
 <p>The 2nd part to OPA gatekeeper policy enforcment is the <code>Constraint</code>. The constraints are a specific application of a template. This instructs the OPA gatekeeper to constrain a resource according to specific parameters and applying one of the templates. For example, a constraint can specify that every namespace must have a specific label applied.</p>
 <p>Part of a constraint definition is the enforcement action. By default, OPA gatekeeper will enforce constraints by denying the action. For the constraints here, we are using <code>dryrun</code>, which does not deny the resources that violate constraints, but rather just logs the violation. This allows us to see what resources are violating the constraints without the resources being denied.</p>
 <p>Go to the opa library constraints directory.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> engineering-journal-quantum-safe/opa/library/constraints</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> solution-journal-quantum-safe/opa/library/constraints</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Apply the templates using <code>kustomize</code></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kustomize</span> build . <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
