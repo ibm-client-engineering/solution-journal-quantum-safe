@@ -18,4 +18,8 @@ resources:
 - poddisruptionbudget
 - requiredimagepullsecrets
 - requiredlabels
+- requiresalbingresslogging
+- restrictcontainerimagepullpolicy
+- restrictselbsslpolicy
+- restrictwildcardverb
 - uniqueingresshost
