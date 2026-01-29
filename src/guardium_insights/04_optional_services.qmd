@@ -496,7 +496,7 @@ cd solution-journal-quantum-safe/opa/library/templates
 Apply the templates using `kustomize`
 
 ```bash
-kustomize build . | kubectl apply -f -
+kubectl kustomize . | kubectl apply -f -
 ```
 
 Sample output
@@ -543,7 +543,7 @@ cd solution-journal-quantum-safe/opa/library/constraints
 Apply the templates using `kustomize`
 
 ```bash
-kustomize build . | kubectl apply -f -
+kubectl kustomize . | kubectl apply -f -
 ```
 
 Sample output

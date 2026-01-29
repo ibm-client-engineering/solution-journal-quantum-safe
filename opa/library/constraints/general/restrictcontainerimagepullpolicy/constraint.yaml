@@ -3,10 +3,14 @@ kind: K8sRestrictContainerImagePullPolicy
 metadata:
   name: restrict-image-pull-policy
 spec:
+  enforcementAction: dryrun
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"
   parameters:
     allowedPullPolicies:
       - "Always"
