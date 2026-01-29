@@ -3,10 +3,14 @@ kind: K8sRestrictsElbSslPolicy
 metadata:
   name: restrict-alb-ssl-policy
 spec:
+  enforcementAction: dryrun
   match:
     kinds:
       - apiGroups: ["networking.k8s.io"]
         kinds: ["Ingress"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"
   parameters:
     allowedPolicies:
       - "ELBSecurityPolicy-TLS13-1-2-2021-06"
