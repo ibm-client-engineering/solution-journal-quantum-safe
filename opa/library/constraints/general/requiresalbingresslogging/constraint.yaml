@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiresAlbIngressLogging
+metadata:
+  name: require-alb-logging
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: ["networking.k8s.io"]
+        kinds: ["Ingress"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"

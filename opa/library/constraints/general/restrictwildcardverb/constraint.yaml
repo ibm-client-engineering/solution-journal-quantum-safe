@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRestrictWildcardVerb
+metadata:
+  name: restrict-wildcard-verbs
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: ["rbac.authorization.k8s.io"]
+        kinds: ["Role", "ClusterRole"]
+    excludedNamespaces:
+      - "kube-*"
+      - "gatekeeper-system"
+  # No parameters needed for this specific rule logic

@@ -1,0 +1,58 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srestrictcontainerimagepullpolicy
+  annotations:
+    description: >-
+      Restricts the imagePullPolicy for containers.
+      For strict security, this is usually set to 'Always' to ensure
+      the container runtime always checks the registry for a newer image digest,
+      even if a tag exists locally.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRestrictContainerImagePullPolicy
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            allowedPullPolicies:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      code:
+      - engine: Rego
+        source:
+          rego: |
+            package k8srestrictcontainerimagepullpolicy
+
+            # Gather all containers (Main, Init, Ephemeral)
+            input_containers[c] {
+                c := input.review.object.spec.containers[_]
+            }
+            input_containers[c] {
+                c := input.review.object.spec.initContainers[_]
+            }
+            input_containers[c] {
+                c := input.review.object.spec.ephemeralContainers[_]
+            }
+
+            # Violation Logic
+            violation[{"msg": msg}] {
+                container := input_containers[_]
+                
+                # Get the policy. If missing, default to "Undefined" to force a failure
+                # (since "Undefined" won't match "Always")
+                policy := object.get(container, "imagePullPolicy", "Undefined")
+                
+                not policy_is_allowed(policy)
+                
+                msg := sprintf("Container '%v' has invalid imagePullPolicy '%v'. Allowed values: %v", [container.name, policy, input.parameters.allowedPullPolicies])
+            }
+
+            policy_is_allowed(policy) {
+                policy == input.parameters.allowedPullPolicies[_]
+            }
