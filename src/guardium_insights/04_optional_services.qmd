@@ -466,15 +466,6 @@ gatekeeper-controller-manager-744cdc8556-jn42m   1/1     Running   0          25
 gatekeeper-controller-manager-744cdc8556-wwrb6   1/1     Running   0          25s
 ```
 
-### Install kustomize
-To ease in the deployment of the templates and constraints, install [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/).
-
-The following script detects your OS and downloads the appropriate kustomize binary to your current working directory.
-
-```bash
-curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-```
-
 ### Apply Templates
 
 There are 2 parts to OPA gatekeeper policy enforcment, the first part is the `ConstraintTemplate`.
@@ -493,10 +484,10 @@ Go to the opa library templates directory.
 cd engineering-journal-quantum-safe/opa/library/templates
 ```
 
-Apply the templates using `kustomize`
+Apply the templates using `-k` option (kustomize).
 
 ```bash
-kustomize build . | kubectl apply -f -
+kubectl apply -k .
 ```
 
 Sample output
@@ -540,10 +531,10 @@ Go to the opa library constraints directory.
 cd engineering-journal-quantum-safe/opa/library/constraints
 ```
 
-Apply the templates using `kustomize`
+Apply the templates using `-k` option (kustomize).
 
 ```bash
-kustomize build . | kubectl apply -f -
+kubectl apply -k .
 ```
 
 Sample output
