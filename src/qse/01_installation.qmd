@@ -1,80 +1,120 @@
 ---
 title: Installation
-format: 
+format:
   html:
     toc: true
+    toc-depth: 3
+    number-sections: true
 ---
 
 ::: {.callout-note}
+## Useful links (IBM Docs)
 
-## Useful links
+- [Installing Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-windows)
+- [Installing Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-macos)
+- [Uninstalling Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-windows)
+- [Uninstalling Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-macos)
+- [Installing/Uninstalling QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension)
+- [Configuring QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension)
 
-[IBM Installing Quantum Safe Explorer](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=explorer-installing-quantum-safe-macos)
-
+> Tip: Use the top-left **Change version** dropdown to select the version you’re running.
 :::
 
-## Pre-Reqs
+# Overview
 
-For any installation, in order to use the VSCode plugin, you need to install VSCode.
+This guide provides step-by-step instructions for downloading, installing, configuring, and running **IBM Quantum Safe Explorer (QSE)**.
 
-- OS: Windows 10 or 11 or MacOS
-- RAM: 16 Gigs
-- OpenJDK 17
+It covers:
+
+- Prerequisites (VS Code + Java)
+- Where to download QSE packages
+- Installing the QSE service (Windows/macOS)
+- Installing the VS Code extension (`.vsix`)
+- Post-install configuration in VS Code
+- Running scans
+- Troubleshooting
+
+# Prerequisites
+
+For any installation, to use the VS Code plugin you must install **VS Code** and **OpenJDK 17+**.
+
+**Supported / recommended environment**
+
+- OS: Windows 11 or macOS (Ventura on Intel, M1 or higher)
+- RAM: 16 GB minimum, 32 GB recommended
+- OpenJDK 17.0.0 or higher
 - Git Bash (Windows)
 
-### Installing VSCode
+## Install Visual Studio Code
 
 ::: {.panel-tabset}
 
-## Windows
+### Windows
 
-Grab VSCode for windows from [here](https://code.visualstudio.com/download)
+Grab VS Code for Windows from [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 
-Make sure you download the system installer
-
+- Download the **System Installer**.
 
 ![Windows1](/images/windows-installer01.png)
 
-Double click it and install it to this following path
+Double-click and install to the following path (as shown below):
 
 ![Windows2](/images/windows-installer02.png)
 
 ![Windows3](/images/windows-installer03.png)
 
-## MacOS
+### macOS
 
-Grab VSCode for MacOS from [here](https://code.visualstudio.com/download)
+Grab VS Code for macOS from [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
+
+- Download the **.dmg file** for your architecture (for M1 and newer, choose *Apple silicon*)
 
 ![MacOS1](/images/macos-installer01.png)
 
-File will be located in your Downloads folder. 
+- Open the downloaded file (double-click)
+
+- Drag Visual Studio Code.app to the Applications folder
 
 :::
 
-### Installing OpenJDK
+## Install OpenJDK 17+
 
 ::: {.panel-tabset}
 
-## Windows
+### Windows
 
-Microsoft's OpenJDK 17 can be found [here](https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17)
+Microsoft's OpenJDK 17 (minimum version) can be found here:
 
-Download it [here](https://aka.ms/download-jdk/microsoft-jdk-17.0.11-windows-x64.msi)
+- [https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17](https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17)
 
-Go to your `Downloads` folder and double click the `microsoft-jdk-17.0.11-windows-x64.msi` file there.
+To see all versions:
 
-Let it set the JAVA_HOME var and click `Next` then click `Install`.
+- [https://learn.microsoft.com/en-us/java/openjdk/download](https://learn.microsoft.com/en-us/java/openjdk/download)
+
+Go to your `Downloads` folder and double-click the `microsoft-jdk-17.0.11-windows-x64.msi` file.
+
+- Let the installer set `JAVA_HOME`.
+- Click `Next`, then `Install`.
 
 ![WindowsJDK](/images/windows-jdk01.png)
 
-## MacOS
+### macOS
 
-Make sure you have openjdk-17 installed.
+Install OpenJDK 17 on Homebrew 
+
+> Refer to: [https://formulae.brew.sh/formula/openjdk](https://formulae.brew.sh/formula/openjdk)
 
 ```bash
 brew install openjdk@17
 ```
-If you have other versions of Java installed, you might need to add this to your path:
+
+For the latest version, simply
+
+```bash
+brew install openjdk
+```
+
+If you have other Java versions installed, you may need to add OpenJDK 17 (replace *17* with your version) to your PATH:
 
 ```bash
 echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.bashrc
@@ -84,13 +124,30 @@ echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.bashrc
 
 :::
 
-## Downloading QSE
+# Download required software
 
-You can find the required installation files for your OS of choice on IBM's Passport Advantage. Or if you're an IBM Employee, you can find it [here](https://w3south-limited-use.cpc.ibm.com/software/xl/download/ticket.wss).
+## Navigate to the software downloads page
 
-![QSE1](/images/qse-download.png)
+Choose the appropriate download site and **accept all license and usage agreements**:
 
-It's important to note that these files all use the same name 
+- **IBMers:** <https://webxlsdf.webui-dswdown.dal.app.cirrus.ibm.com/>
+- **Clients:** <https://www.ibm.com/software/passportadvantage/pao-customer>
+
+## Download platform-specific bundles
+
+Download the application bundles corresponding to your operating system.
+
+> Note: In many distributions, the QSE artifacts come as multiple zip packages that must be extracted into the **same folder**.
+
+## Download the installer (optional)
+
+Download the QSE installer package if you prefer installing via PKG (macOS) / EXE (Windows) rather than manual setup.
+
+# Extract the QSE packages
+
+After download, extract/unzip **all QSE artifacts into the same directory**.
+
+> Important: These files often use the same base name; keep them together.
 
 ::: {.panel-tabset}
 
@@ -98,11 +155,11 @@ It's important to note that these files all use the same name
 
 ![QSE2](/images/windows-qse1.png)
 
-Extract them all to the same folder
+Extract them all to the same folder:
 
 ![QSE3](/images/windows-qse2.png)
 
-File listing
+Example folder listing:
 
 ```powershell
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> tree /F
@@ -119,55 +176,9 @@ C:.
 │   │
 │   ├───la_home
 │   │       LA_cs
-│   │       LA_de
-│   │       LA_el
-│   │       LA_en
-│   │       LA_es
-│   │       LA_fr
-│   │       LA_in
-│   │       LA_it
-│   │       LA_ja
-│   │       LA_ko
-│   │       LA_lt
-│   │       LA_pl
-│   │       LA_pt
-│   │       LA_ru
-│   │       LA_sl
-│   │       LA_tr
-│   │       LA_zh
-│   │       LA_zh_TW
-│   │       notices
-│   │
+│   │       ...
 │   ├───lib
-│   │       apiguardian-api-1.1.2.jar
-│   │       commons-cli-1.5.0.jar
-│   │       commons-codec-1.15.jar
-│   │       commons-collections4-4.4.jar
-│   │       commons-compress-1.21.jar
-│   │       commons-io-2.11.0.jar
-│   │       commons-lang3-3.12.0.jar
-│   │       commons-math3-3.6.1.jar
-│   │       commons-text-1.10.0.jar
-│   │       curvesapi-1.07.jar
-│   │       gson-2.10.1.jar
-│   │       hamcrest-core-1.1.jar
-│   │       json-simple-1.1.1.jar
-│   │       jsoup-1.16.1.jar
-│   │       junit-4.10.jar
-│   │       junit-platform-commons-1.9.0.jar
-│   │       license_metric_logger-2.1.2.202009181115.jar
-│   │       log4j-api-2.18.0.jar
-│   │       log4j-core-2.20.0.jar
-│   │       poi-5.2.3.jar
-│   │       poi-ooxml-5.2.3.jar
-│   │       poi-ooxml-lite-5.2.3.jar
-│   │       quantum-safe-sca-tng-0.0.1-SNAPSHOT.jar
-│   │       slf4j-api-1.7.36.jar
-│   │       SparseBitSet-1.2.jar
-│   │       sqlite-jdbc-3.42.0.0.jar
-│   │       tika-core-2.4.1.jar
-│   │       xmlbeans-5.1.1.jar
-│   │
+│   │       ...
 │   └───swidtag
 │           ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag
 │
@@ -175,173 +186,132 @@ C:.
         IBM Quantum Safe Explorer.exe
 ```
 
-## MacOS
+## macOS
 
-```tsx
--rw-r--r--@    1 kramerro  staff    35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN(2).zip
--rw-r--r--@    1 kramerro  staff    73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip
--rw-r--r--@    1 kramerro  staff   446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN(1).zip
-```
-
-Unzip them all to the same folder
-
-File listing
+Example artifacts:
 
 ```bash
-➜  QSE git:(ross-updates) ✗ tree
-.
-├── M0GT4EN
-│   └── IBM Quantum Safe Explorer-1.0.1.pkg
-├── M0GT5EN
-│   └── ibm-quantum-safe-explorer-1.0.1.vsix
-└── M0GT6EN
-    ├── LicenseAcceptance.config
-    ├── cli.sh
-    ├── la_home
-    │   ├── LA_cs
-    │   ├── LA_de
-    │   ├── LA_el
-    │   ├── LA_en
-    │   ├── LA_es
-    │   ├── LA_fr
-    │   ├── LA_in
-    │   ├── LA_it
-    │   ├── LA_ja
-    │   ├── LA_ko
-    │   ├── LA_lt
-    │   ├── LA_pl
-    │   ├── LA_pt
-    │   ├── LA_ru
-    │   ├── LA_sl
-    │   ├── LA_tr
-    │   ├── LA_zh
-    │   ├── LA_zh_TW
-    │   └── notices
-    ├── lib
-    │   ├── SparseBitSet-1.2.jar
-    │   ├── apiguardian-api-1.1.2.jar
-    │   ├── commons-cli-1.5.0.jar
-    │   ├── commons-codec-1.15.jar
-    │   ├── commons-collections4-4.4.jar
-    │   ├── commons-compress-1.21.jar
-    │   ├── commons-io-2.11.0.jar
-    │   ├── commons-lang3-3.12.0.jar
-    │   ├── commons-math3-3.6.1.jar
-    │   ├── commons-text-1.10.0.jar
-    │   ├── curvesapi-1.07.jar
-    │   ├── gson-2.10.1.jar
-    │   ├── hamcrest-core-1.1.jar
-    │   ├── json-simple-1.1.1.jar
-    │   ├── jsoup-1.16.1.jar
-    │   ├── junit-4.10.jar
-    │   ├── junit-platform-commons-1.9.0.jar
-    │   ├── license_metric_logger-2.1.2.202009181115.jar
-    │   ├── log4j-api-2.18.0.jar
-    │   ├── log4j-core-2.20.0.jar
-    │   ├── poi-5.2.3.jar
-    │   ├── poi-ooxml-5.2.3.jar
-    │   ├── poi-ooxml-lite-5.2.3.jar
-    │   ├── quantum-safe-sca-tng-0.0.1-SNAPSHOT.jar
-    │   ├── slf4j-api-1.7.36.jar
-    │   ├── sqlite-jdbc-3.42.0.0.jar
-    │   ├── tika-core-2.4.1.jar
-    │   └── xmlbeans-5.1.1.jar
-    ├── swidtag
-    │   └── ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag
-    └── version
+-rw-r--r--@ 1 user staff  35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN(2).zip
+-rw-r--r--@ 1 user staff  73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip
+-rw-r--r--@ 1 user staff 446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN(1).zip
+```
 
-7 directories, 53 files
+Unzip them all into the same folder:
+
+![QSE2](/images/macos-qse1.png)
+
+Example directory structure:
+
+```bash
+tree
+.
+├── M0Z1CEN
+│   └── IBM Quantum Safe Explorer.pkg
+├── M0Z1FEN
+│   └── ibm-quantum-safe-explorer-2.2.5-0.vsix
+└── M0Z1BEN
+    └──CLI
+        ├── LicenseAcceptance.config
+        ├── cli.sh
+        ├── version
+        ├── la_home
+        ├── lib
+        ├── swidtag
+        └── insights
 ```
 
 :::
 
-## Installing the Services
+# Install QSE service (application)
+
+This installs and runs the local QSE service that the VS Code extension and CLI talk to.
 
 ::: {.panel-tabset}
 
 ## Windows
 
+Run the installer:
+
 ```powershell
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT7EN\
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT7EN>
-
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT7EN> & '.\IBM Quantum Safe Explorer.exe'
-
 ```
 
-The following window will pop up. Go with all the defaults.
+The following window will pop up. Use the defaults.
 
 ![QSEwindows1](/images/windows-qse-service1.png)
 
-When installation is complete, the following window will pop up. Click `Finish` and allow it to start up the service.
+When installation is complete, click **Finish** and allow it to start the service.
 
 ![QSEwindows2](/images/windows-qse-service2.png)
 
-Click `Accept`
+Click **Accept** when prompted.
+
 ![QSEwindows3](/images/windows-qse-service3.png)
 
-Once it's running, don't close the window.
+Once it’s running, **do not close the window**.
 
 ![QSEwindows4](/images/windows-qse-service4.png)
 
-## MacOS
+## macOS
 
-In our extracted directory, run the following command with `sudo` and enter your admin password when prompted.
+Install the PKG (requires admin):
 
+- Double-click the IBM Quantum Safe Explorer.pkg file
+
+- *Alternatively*, run:
 ```bash
-sudo installer -pkg M0GT4EN/IBM\ Quantum\ Safe\ Explorer-1.0.1.pkg -target /Applications
-Password:
-installer: Package name is IBM Quantum Safe Explorer
-installer: Installing at base path /
-installer: The install was successful.
+sudo installer -pkg M0Z1CEN/IBM\ Quantum\ Safe\ Explorer.pkg -target /Applications
 ```
-Locate the desktop shortcut for `IBM Quantum Safe Explorer` and kick it off.
+
+Locate the desktop shortcut for **IBM Quantum Safe Explorer** and start it.
 
 ![QSEmacos1](/images/macos-qse-service1.png)
 
-You should see the following windows pop up:
+You should see the following windows; click **Accept**.
+
+
 ![QSEmacos2](/images/macos-qse-service2.png)
-Make sure to click `Accept`
 
 The QSE service should now be running.
 
 ![QSEmacos3](/images/macos-qse-service3.png)
 
 ::: {.callout-warning}
-Do not close this window as apparently it DOES NOT continue running in the background.
+Do not close this window. In some versions it does **not** continue running in the background. Minimize if you wish to dismiss it.
 :::
 
 :::
 
-## Installing the IBM Quantum Safe Explorer CLI
+# Install the CLI (optional but useful)
+
+The `cli.sh` script can be used to run scans from a terminal and is also used by some workflows.
 
 ::: {.panel-tabset}
 
 ## Windows
 
-Simply change directory to where ever you extracted the extension. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `\Downloads` directory:
+Simply change directory to where you extracted the CLI bundle. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `\Downloads` directory (example):
 
 ```powershell
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT6EN\
 ```
 
-## MacOS
+## macOS
 
-Simply change directory to wherever you extracted the extension. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `~/Downloads` directory:
+Simply change directory to where you extracted the CLI bundle. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `\Downloads` directory (example):
 
 ```bash
-cd ~/Downloads/M0GT6EN
+cd ~/Downloads/M0Z1BEN/CLI
 ```
+
 :::
 
-## Installing VSCode plugin
+# Install the VS Code extension (.vsix)
 
-::: {.callout-note}
+The VS Code extension ships as a `.vsix` file (example: `quantum-safe-explorer-2.2.5-0.vsix`).
 
-If using MacOS, make sure you have the `code` cli for MacOS enabled. This is how you do [that](https://code.visualstudio.com/docs/setup/mac)
-:::
-
-Change directory to where ever you extracted the extension
+## Install using the VS Code CLI
 
 ::: {.panel-tabset}
 
@@ -349,70 +319,119 @@ Change directory to where ever you extracted the extension
 
 ```powershell
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT5EN\
-```
-Install the extension
-```
 PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT5EN> code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix
 Installing extensions...
 Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.
 ```
 
-## MacOS
+## macOS
 
 ```bash
-cd M0GT5EN
-```
+cd M0Z1FEN # or whatever this folder is called for you!
+code --install-extension quantum-safe-explorer-2.2.5-0.vsix
 
-Install the extension
-```bash
-code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix 
 Installing extensions...
-Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.
+Extension 'quantum-safe-explorer-2.2.5-0.vsix' was successfully installed.
 ```
 
 :::
 
-In your running VSCode instance, click the `Extensions` icon in the left-hand side bar and select `IBM Quantum Safe Explorer`
+## Enable the `code` command (if not installed)
+
+If `code` isn’t recognized:
+
+1. Open **Visual Studio Code**
+2. Open the **Command Palette**
+   - Windows/Linux: `Ctrl + Shift + P`
+   - macOS: `Cmd + Shift + P`
+3. Run: **Shell Command: Install 'code' command in PATH**
+4. Approve the installation (may require admin password)
+5. Restart your terminal and retry:
+
+```bash
+code --install-extension quantum-safe-explorer-2.2.5-0.vsix
+```
+
+# Configure the VS Code extension
+
+In VS Code:
+
+1. Click the **Extensions** icon (left sidebar)
+2. Select **IBM Quantum Safe Explorer**
 
 ![Extension1](/images/extension1.png)
 
-Click on the settings for the extension
+3. Click the extension **Settings**
+
 ![Extension2](/images/extension2.png)
 
-Per the current [guide](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=vsce-configuring-quantum-safe-explorer-visual-studio-code-extension), the following settings must be configured:
+## Required settings
 
-::: {.callout-note}
-Currently as of 1.0.x only `localhost` is supported as `qs-explorer.hostname`.
-:::
+- Click **Edit in settings.json**:
 
-The following configuration settings should be followed:
+![Extension3](/images/extension3.png)
 
-Required settings:
+- **qs-explorer.sourceFileExtensions** — Source file types to scan (e.g., `.java`, `.py`)
 
-- **qs-explorer.hostname** – Enter the hostname of the IBM Quantum Safe Explorer API server. Currently only localhost is supported.
-- **qs-explorer.sourceFileExtensions** – Enter the list of source file types to be scanned. For example, .java, .py, and so on.
-
-sourceFileExtensions would be edited in the setting json. They should currently default to the following supported extensions for code scanning:
 ```json
     "qs-explorer.sourceFileExtensions": [
         ".java",
         ".jar",
         ".dart",
-        ".py",
-        ".c"
-    ]
+        ".go",
+        ".cpp",
+        ".cs",
+        ".py"
+    ],
 ```
 
-## Uninstalling the Services
+## Additional configuration (paths/credentials/workspace)
+
+Some environments require further setup (paths, credentials, workspace settings, or additional tooling). See:
+
+- <https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension>
+
+# Run a Quantum Safe scan (VS Code)
+
+Once installed and configured:
+
+1. Open VS Code
+2. Open a project or files to scan
+3. Open the Command Palette:
+   - Windows/Linux: `Ctrl + Shift + P`
+   - macOS: `Cmd + Shift + P`
+4. Run one of:
+   - **Quantum Safe Explorer: Scan API Discovery**
+   - **Quantum Safe Explorer: Scan Cryptography Analysis**
+
+# Troubleshooting
+
+## “Scan Cryptography Analysis” shows no vulnerabilities / algorithms
+
+If scanning Java source, `.java` files often need to be compiled into `.class` files to appear in the analysis.
+
+```bash
+javac your-file.java
+```
+
+## Scan results are not updating
+
+QSE uses `qs_explorer_result` and `qs_scan_result` as a cache.
+
+- Delete those folders/files
+- Re-run the scan command to get a fresh scan
+
+# Uninstalling the QSE service
 
 ::: {.callout-warning}
-
-There is a bug in v1.0.1 uninstall on Windows that will later cause issues when v2.x is installed, please note the instructions below.
-
+There is a bug in **v1.0.1** uninstall on Windows that can cause issues when **v2.x** is installed later.
 :::
 
-For Windows, after running the normal "Remove Programs" to uninstall the QSE service, manually delete the `qs-explorer` folder from the user's home 
-directory. If this is not done and v2.x is later installed, it will cause the scanning to fail.
+## Windows notes (v1.0.1)
 
-This is only an issue with the v1.0.1 uninstallation on Windows. This issue has been resolved in the v2.x
-uninstallation.
+1. Uninstall via **Add or Remove Programs** (normal uninstall)
+2. Manually delete the `qs-explorer` folder from the user’s home directory
+
+If the folder is not removed and v2.x is later installed, scanning can fail.
+
+> This issue is resolved in v2.x uninstallers.

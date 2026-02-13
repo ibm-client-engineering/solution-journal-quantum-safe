@@ -342,3 +342,11 @@ a[role=listitem] {
     color: #f7f2f2; /* Light gray logo color */
     vertical-align: top; /* Aligns logo to the top */
 }
+
+details > summary {
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
