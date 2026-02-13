@@ -69,6 +69,8 @@ website:
               href: src/qse/01_installation.qmd
             - text: Scanning
               href: src/qse/02_scanning.qmd
+            - text: GitHub Integration
+              href: src/qse/04_github_actions_integration.qmd
         - section: Guardium Insights
           contents:
             - section: EC2
