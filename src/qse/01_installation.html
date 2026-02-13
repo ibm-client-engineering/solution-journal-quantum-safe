@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-7739a7c88020ee5985c041f1390fa554.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dd287b09ff057a2d9ebcf43c9beafc47.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -283,6 +283,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Scanning</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/04_github_actions_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Integration</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -370,16 +376,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pre-reqs" id="toc-pre-reqs" class="nav-link active" data-scroll-target="#pre-reqs">Pre-Reqs</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">2</span> Prerequisites</a>
   <ul class="collapse">
-  <li><a href="#installing-vscode" id="toc-installing-vscode" class="nav-link" data-scroll-target="#installing-vscode">Installing VSCode</a></li>
-  <li><a href="#installing-openjdk" id="toc-installing-openjdk" class="nav-link" data-scroll-target="#installing-openjdk">Installing OpenJDK</a></li>
+  <li><a href="#install-visual-studio-code" id="toc-install-visual-studio-code" class="nav-link" data-scroll-target="#install-visual-studio-code"><span class="header-section-number">2.1</span> Install Visual Studio Code</a></li>
+  <li><a href="#install-openjdk-17" id="toc-install-openjdk-17" class="nav-link" data-scroll-target="#install-openjdk-17"><span class="header-section-number">2.2</span> Install OpenJDK 17+</a></li>
   </ul></li>
-  <li><a href="#downloading-qse" id="toc-downloading-qse" class="nav-link" data-scroll-target="#downloading-qse">Downloading QSE</a></li>
-  <li><a href="#installing-the-services" id="toc-installing-the-services" class="nav-link" data-scroll-target="#installing-the-services">Installing the Services</a></li>
-  <li><a href="#installing-the-ibm-quantum-safe-explorer-cli" id="toc-installing-the-ibm-quantum-safe-explorer-cli" class="nav-link" data-scroll-target="#installing-the-ibm-quantum-safe-explorer-cli">Installing the IBM Quantum Safe Explorer CLI</a></li>
-  <li><a href="#installing-vscode-plugin" id="toc-installing-vscode-plugin" class="nav-link" data-scroll-target="#installing-vscode-plugin">Installing VSCode plugin</a></li>
-  <li><a href="#uninstalling-the-services" id="toc-uninstalling-the-services" class="nav-link" data-scroll-target="#uninstalling-the-services">Uninstalling the Services</a></li>
+  <li><a href="#download-required-software" id="toc-download-required-software" class="nav-link" data-scroll-target="#download-required-software"><span class="header-section-number">3</span> Download required software</a>
+  <ul class="collapse">
+  <li><a href="#navigate-to-the-software-downloads-page" id="toc-navigate-to-the-software-downloads-page" class="nav-link" data-scroll-target="#navigate-to-the-software-downloads-page"><span class="header-section-number">3.1</span> Navigate to the software downloads page</a></li>
+  <li><a href="#download-platform-specific-bundles" id="toc-download-platform-specific-bundles" class="nav-link" data-scroll-target="#download-platform-specific-bundles"><span class="header-section-number">3.2</span> Download platform-specific bundles</a></li>
+  <li><a href="#download-the-installer-optional" id="toc-download-the-installer-optional" class="nav-link" data-scroll-target="#download-the-installer-optional"><span class="header-section-number">3.3</span> Download the installer (optional)</a></li>
+  </ul></li>
+  <li><a href="#extract-the-qse-packages" id="toc-extract-the-qse-packages" class="nav-link" data-scroll-target="#extract-the-qse-packages"><span class="header-section-number">4</span> Extract the QSE packages</a></li>
+  <li><a href="#install-qse-service-application" id="toc-install-qse-service-application" class="nav-link" data-scroll-target="#install-qse-service-application"><span class="header-section-number">5</span> Install QSE service (application)</a></li>
+  <li><a href="#install-the-cli-optional-but-useful" id="toc-install-the-cli-optional-but-useful" class="nav-link" data-scroll-target="#install-the-cli-optional-but-useful"><span class="header-section-number">6</span> Install the CLI (optional but useful)</a></li>
+  <li><a href="#install-the-vs-code-extension-.vsix" id="toc-install-the-vs-code-extension-.vsix" class="nav-link" data-scroll-target="#install-the-vs-code-extension-.vsix"><span class="header-section-number">7</span> Install the VS Code extension (.vsix)</a>
+  <ul class="collapse">
+  <li><a href="#install-using-the-vs-code-cli" id="toc-install-using-the-vs-code-cli" class="nav-link" data-scroll-target="#install-using-the-vs-code-cli"><span class="header-section-number">7.1</span> Install using the VS Code CLI</a></li>
+  <li><a href="#enable-the-code-command-if-not-installed" id="toc-enable-the-code-command-if-not-installed" class="nav-link" data-scroll-target="#enable-the-code-command-if-not-installed"><span class="header-section-number">7.2</span> Enable the <code>code</code> command (if not installed)</a></li>
+  </ul></li>
+  <li><a href="#configure-the-vs-code-extension" id="toc-configure-the-vs-code-extension" class="nav-link" data-scroll-target="#configure-the-vs-code-extension"><span class="header-section-number">8</span> Configure the VS Code extension</a>
+  <ul class="collapse">
+  <li><a href="#required-settings" id="toc-required-settings" class="nav-link" data-scroll-target="#required-settings"><span class="header-section-number">8.1</span> Required settings</a></li>
+  <li><a href="#additional-configuration-pathscredentialsworkspace" id="toc-additional-configuration-pathscredentialsworkspace" class="nav-link" data-scroll-target="#additional-configuration-pathscredentialsworkspace"><span class="header-section-number">8.2</span> Additional configuration (paths/credentials/workspace)</a></li>
+  </ul></li>
+  <li><a href="#run-a-quantum-safe-scan-vs-code" id="toc-run-a-quantum-safe-scan-vs-code" class="nav-link" data-scroll-target="#run-a-quantum-safe-scan-vs-code"><span class="header-section-number">9</span> Run a Quantum Safe scan (VS Code)</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">10</span> Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#scan-cryptography-analysis-shows-no-vulnerabilities-algorithms" id="toc-scan-cryptography-analysis-shows-no-vulnerabilities-algorithms" class="nav-link" data-scroll-target="#scan-cryptography-analysis-shows-no-vulnerabilities-algorithms"><span class="header-section-number">10.1</span> “Scan Cryptography Analysis” shows no vulnerabilities / algorithms</a></li>
+  <li><a href="#scan-results-are-not-updating" id="toc-scan-results-are-not-updating" class="nav-link" data-scroll-target="#scan-results-are-not-updating"><span class="header-section-number">10.2</span> Scan results are not updating</a></li>
+  </ul></li>
+  <li><a href="#uninstalling-the-qse-service" id="toc-uninstalling-the-qse-service" class="nav-link" data-scroll-target="#uninstalling-the-qse-service"><span class="header-section-number">11</span> Uninstalling the QSE service</a>
+  <ul class="collapse">
+  <li><a href="#windows-notes-v1.0.1" id="toc-windows-notes-v1.0.1" class="nav-link" data-scroll-target="#windows-notes-v1.0.1"><span class="header-section-number">11.1</span> Windows notes (v1.0.1)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -411,37 +442,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Useful links
+<span class="screen-reader-only">Note</span>Useful links (IBM Docs)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=explorer-installing-quantum-safe-macos">IBM Installing Quantum Safe Explorer</a></p>
-</div>
-</div>
-<section id="pre-reqs" class="level2">
-<h2 class="anchored" data-anchor-id="pre-reqs">Pre-Reqs</h2>
-<p>For any installation, in order to use the VSCode plugin, you need to install VSCode.</p>
 <ul>
-<li>OS: Windows 10 or 11 or MacOS</li>
-<li>RAM: 16 Gigs</li>
-<li>OpenJDK 17</li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-windows">Installing Quantum Safe Explorer on Windows</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-macos">Installing Quantum Safe Explorer on macOS</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-windows">Uninstalling Quantum Safe Explorer on Windows</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-macos">Uninstalling Quantum Safe Explorer on macOS</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension">Installing/Uninstalling QSE VS Code extension</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension">Configuring QSE VS Code extension</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>Tip: Use the top-left <strong>Change version</strong> dropdown to select the version you’re running.</p>
+</blockquote>
+</div>
+</div>
+<section id="overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>This guide provides step-by-step instructions for downloading, installing, configuring, and running <strong>IBM Quantum Safe Explorer (QSE)</strong>.</p>
+<p>It covers:</p>
+<ul>
+<li>Prerequisites (VS Code + Java)</li>
+<li>Where to download QSE packages</li>
+<li>Installing the QSE service (Windows/macOS)</li>
+<li>Installing the VS Code extension (<code>.vsix</code>)</li>
+<li>Post-install configuration in VS Code</li>
+<li>Running scans</li>
+<li>Troubleshooting</li>
+</ul>
+</section>
+<section id="prerequisites" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Prerequisites</h1>
+<p>For any installation, to use the VS Code plugin you must install <strong>VS Code</strong> and <strong>OpenJDK 17+</strong>.</p>
+<p><strong>Supported / recommended environment</strong></p>
+<ul>
+<li>OS: Windows 11 or macOS (Ventura on Intel, M1 or higher)</li>
+<li>RAM: 16 GB minimum, 32 GB recommended</li>
+<li>OpenJDK 17.0.0 or higher</li>
 <li>Git Bash (Windows)</li>
 </ul>
-<section id="installing-vscode" class="level3">
-<h3 class="anchored" data-anchor-id="installing-vscode">Installing VSCode</h3>
+<section id="install-visual-studio-code" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="install-visual-studio-code"><span class="header-section-number">2.1</span> Install Visual Studio Code</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Grab VSCode for windows from <a href="https://code.visualstudio.com/download">here</a></p>
-<p>Make sure you download the system installer</p>
+<p>Grab VS Code for Windows from <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a></p>
+<ul>
+<li>Download the <strong>System Installer</strong>.</li>
+</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-installer01.png" class="img-fluid figure-img"></p>
 <figcaption>Windows1</figcaption>
 </figure>
 </div>
-<p>Double click it and install it to this following path</p>
+<p>Double-click and install to the following path (as shown below):</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-installer02.png" class="img-fluid figure-img"></p>
@@ -456,28 +514,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Grab VSCode for MacOS from <a href="https://code.visualstudio.com/download">here</a></p>
+<p>Grab VS Code for macOS from <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a></p>
+<ul>
+<li>Download the <strong>.dmg file</strong> for your architecture (for M1 and newer, choose <em>Apple silicon</em>)</li>
+</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/macos-installer01.png" class="img-fluid figure-img"></p>
 <figcaption>MacOS1</figcaption>
 </figure>
 </div>
-<p>File will be located in your Downloads folder.</p>
+<ul>
+<li><p>Open the downloaded file (double-click)</p></li>
+<li><p>Drag Visual Studio Code.app to the Applications folder</p></li>
+</ul>
 </div>
 </div>
 </div>
 </section>
-<section id="installing-openjdk" class="level3">
-<h3 class="anchored" data-anchor-id="installing-openjdk">Installing OpenJDK</h3>
+<section id="install-openjdk-17" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="install-openjdk-17"><span class="header-section-number">2.2</span> Install OpenJDK 17+</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p>Microsoft’s OpenJDK 17 can be found <a href="https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17">here</a></p>
-<p>Download it <a href="https://aka.ms/download-jdk/microsoft-jdk-17.0.11-windows-x64.msi">here</a></p>
-<p>Go to your <code>Downloads</code> folder and double click the <code>microsoft-jdk-17.0.11-windows-x64.msi</code> file there.</p>
-<p>Let it set the JAVA_HOME var and click <code>Next</code> then click <code>Install</code>.</p>
+<p>Microsoft’s OpenJDK 17 (minimum version) can be found here:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17">https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17</a></li>
+</ul>
+<p>To see all versions:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/java/openjdk/download">https://learn.microsoft.com/en-us/java/openjdk/download</a></li>
+</ul>
+<p>Go to your <code>Downloads</code> folder and double-click the <code>microsoft-jdk-17.0.11-windows-x64.msi</code> file.</p>
+<ul>
+<li>Let the installer set <code>JAVA_HOME</code>.</li>
+<li>Click <code>Next</code>, then <code>Install</code>.</li>
+</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-jdk01.png" class="img-fluid figure-img"></p>
@@ -486,29 +559,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<p>Make sure you have openjdk-17 installed.</p>
+<p>Install OpenJDK 17 on Homebrew</p>
+<blockquote class="blockquote">
+<p>Refer to: <a href="https://formulae.brew.sh/formula/openjdk">https://formulae.brew.sh/formula/openjdk</a></p>
+</blockquote>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install openjdk@17</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you have other versions of Java installed, you might need to add this to your path:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the latest version, simply</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install openjdk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you have other Java versions installed, you may need to add OpenJDK 17 (replace <em>17</em> with your version) to your PATH:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="downloading-qse" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-qse">Downloading QSE</h2>
-<p>You can find the required installation files for your OS of choice on IBM’s Passport Advantage. Or if you’re an IBM Employee, you can find it <a href="https://w3south-limited-use.cpc.ibm.com/software/xl/download/ticket.wss">here</a>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/qse-download.png" class="img-fluid figure-img"></p>
-<figcaption>QSE1</figcaption>
-</figure>
-</div>
-<p>It’s important to note that these files all use the same name</p>
+<section id="download-required-software" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Download required software</h1>
+<section id="navigate-to-the-software-downloads-page" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="navigate-to-the-software-downloads-page"><span class="header-section-number">3.1</span> Navigate to the software downloads page</h2>
+<p>Choose the appropriate download site and <strong>accept all license and usage agreements</strong>:</p>
+<ul>
+<li><strong>IBMers:</strong> <a href="https://webxlsdf.webui-dswdown.dal.app.cirrus.ibm.com/" class="uri">https://webxlsdf.webui-dswdown.dal.app.cirrus.ibm.com/</a></li>
+<li><strong>Clients:</strong> <a href="https://www.ibm.com/software/passportadvantage/pao-customer" class="uri">https://www.ibm.com/software/passportadvantage/pao-customer</a></li>
+</ul>
+</section>
+<section id="download-platform-specific-bundles" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="download-platform-specific-bundles"><span class="header-section-number">3.2</span> Download platform-specific bundles</h2>
+<p>Download the application bundles corresponding to your operating system.</p>
+<blockquote class="blockquote">
+<p>Note: In many distributions, the QSE artifacts come as multiple zip packages that must be extracted into the <strong>same folder</strong>.</p>
+</blockquote>
+</section>
+<section id="download-the-installer-optional" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="download-the-installer-optional"><span class="header-section-number">3.3</span> Download the installer (optional)</h2>
+<p>Download the QSE installer package if you prefer installing via PKG (macOS) / EXE (Windows) rather than manual setup.</p>
+</section>
+</section>
+<section id="extract-the-qse-packages" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Extract the QSE packages</h1>
+<p>After download, extract/unzip <strong>all QSE artifacts into the same directory</strong>.</p>
+<blockquote class="blockquote">
+<p>Important: These files often use the same base name; keep them together.</p>
+</blockquote>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="quarto-figure quarto-figure-center">
@@ -517,182 +613,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>QSE2</figcaption>
 </figure>
 </div>
-<p>Extract them all to the same folder</p>
+<p>Extract them all to the same folder:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-qse2.png" class="img-fluid figure-img"></p>
 <figcaption>QSE3</figcaption>
 </figure>
 </div>
-<p>File listing</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> tree <span class="op">/</span>F</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Folder PATH listing</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Volume serial number is 1EA9-8239</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>C<span class="op">:.</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>├───M0GT5EN</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>│       ibm-quantum-safe-explorer-1<span class="op">.</span><span class="dv">0.1</span><span class="op">.</span><span class="fu">vsix</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>│</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>├───M0GT6EN</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>│   │   <span class="fu">cli</span><span class="op">.</span><span class="fu">sh</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>│   │   LicenseAcceptance<span class="op">.</span><span class="fu">config</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>│   │   version</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>│   │</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>│   ├───la_home</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>│   │       LA_cs</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>│   │       LA_de</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>│   │       LA_el</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>│   │       LA_en</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>│   │       LA_es</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>│   │       LA_fr</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>│   │       LA_in</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>│   │       LA_it</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>│   │       LA_ja</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>│   │       LA_ko</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>│   │       LA_lt</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>│   │       LA_pl</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>│   │       LA_pt</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>│   │       LA_ru</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>│   │       LA_sl</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>│   │       LA_tr</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>│   │       LA_zh</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>│   │       LA_zh_TW</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>│   │       notices</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>│   │</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>│   ├───lib</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>│   │       apiguardian-api-1<span class="op">.</span><span class="dv">1.2</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>│   │       commons-cli-1<span class="op">.</span><span class="dv">5.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>│   │       commons-codec-1<span class="op">.</span><span class="dv">15.</span><span class="dt">jar</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>│   │       commons-collections4-4<span class="op">.</span><span class="dv">4.</span><span class="dt">jar</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>│   │       commons-compress-1<span class="op">.</span><span class="dv">21.</span><span class="dt">jar</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>│   │       commons-io-2<span class="op">.</span><span class="dv">11.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>│   │       commons-lang3-3<span class="op">.</span><span class="dv">12.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>│   │       commons-math3-3<span class="op">.</span><span class="dv">6.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>│   │       commons-text-1<span class="op">.</span><span class="dv">10.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>│   │       curvesapi-1<span class="op">.</span><span class="dv">07.</span><span class="dt">jar</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>│   │       gson-2<span class="op">.</span><span class="dv">10.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>│   │       hamcrest-core-1<span class="op">.</span><span class="dv">1.</span><span class="dt">jar</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>│   │       json-simple-1<span class="op">.</span><span class="dv">1.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>│   │       jsoup-1<span class="op">.</span><span class="dv">16.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>│   │       junit-4<span class="op">.</span><span class="dv">10.</span><span class="dt">jar</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>│   │       junit-platform-commons-1<span class="op">.</span><span class="dv">9.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>│   │       license_metric_logger-2<span class="op">.</span><span class="dv">1.2</span><span class="op">.</span><span class="dv">202009181115.</span><span class="dt">jar</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>│   │       log4j-api-2<span class="op">.</span><span class="dv">18.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>│   │       log4j-core-2<span class="op">.</span><span class="dv">20.0</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>│   │       poi-5<span class="op">.</span><span class="dv">2.3</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>│   │       poi-ooxml-5<span class="op">.</span><span class="dv">2.3</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>│   │       poi-ooxml-lite-5<span class="op">.</span><span class="dv">2.3</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>│   │       quantum-safe-sca-tng-0<span class="op">.</span><span class="dv">0.1</span><span class="op">-</span>SNAPSHOT<span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>│   │       slf4j-api-1<span class="op">.</span><span class="dv">7.36</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>│   │       SparseBitSet-1<span class="op">.</span><span class="dv">2.</span><span class="dt">jar</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>│   │       sqlite-jdbc-3<span class="op">.</span><span class="dv">42.0</span><span class="op">.</span><span class="dv">0.</span><span class="dt">jar</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>│   │       tika-core-2<span class="op">.</span><span class="dv">4.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>│   │       xmlbeans-5<span class="op">.</span><span class="dv">1.1</span><span class="op">.</span><span class="fu">jar</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>│   │</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>│   └───swidtag</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>│           ibm<span class="op">.</span><span class="fu">com_IBM_Quantum_Safe_Explorer</span><span class="op">-</span><span class="dv">1.0</span><span class="op">.</span><span class="dv">1.</span><span class="dt">swidtag</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>│</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>└───M0GT7EN</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        IBM Quantum Safe Explorer<span class="op">.</span><span class="fu">exe</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Example folder listing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> tree <span class="op">/</span>F</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Folder PATH listing</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Volume serial number is 1EA9-8239</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>C<span class="op">:.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>├───M0GT5EN</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>│       ibm-quantum-safe-explorer-1<span class="op">.</span><span class="dv">0.1</span><span class="op">.</span><span class="fu">vsix</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>│</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>├───M0GT6EN</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>│   │   <span class="fu">cli</span><span class="op">.</span><span class="fu">sh</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>│   │   LicenseAcceptance<span class="op">.</span><span class="fu">config</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>│   │   version</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>│   │</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>│   ├───la_home</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>│   │       LA_cs</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>│   │       <span class="op">...</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>│   ├───lib</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>│   │       <span class="op">...</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>│   └───swidtag</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>│           ibm<span class="op">.</span><span class="fu">com_IBM_Quantum_Safe_Explorer</span><span class="op">-</span><span class="dv">1.0</span><span class="op">.</span><span class="dv">1.</span><span class="dt">swidtag</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>│</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>└───M0GT7EN</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        IBM Quantum Safe Explorer<span class="op">.</span><span class="fu">exe</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<pre class="tsx"><code>-rw-r--r--@    1 kramerro  staff    35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN(2).zip
--rw-r--r--@    1 kramerro  staff    73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip
--rw-r--r--@    1 kramerro  staff   446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN(1).zip</code></pre>
-<p>Unzip them all to the same folder</p>
-<p>File listing</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">➜</span>  QSE git:<span class="er">(</span><span class="ex">ross-updates</span><span class="kw">)</span> <span class="ex">✗</span> tree</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0GT4EN</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> └── IBM Quantum Safe Explorer-1.0.1.pkg</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0GT5EN</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> └── ibm-quantum-safe-explorer-1.0.1.vsix</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> M0GT6EN</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> LicenseAcceptance.config</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> cli.sh</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> la_home</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_cs</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_de</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_el</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_en</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_es</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_fr</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_in</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_it</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_ja</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_ko</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_lt</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_pl</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_pt</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_ru</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_sl</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_tr</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_zh</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── LA_zh_TW</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> └── notices</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> lib</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── SparseBitSet-1.2.jar</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── apiguardian-api-1.1.2.jar</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-cli-1.5.0.jar</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-codec-1.15.jar</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-collections4-4.4.jar</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-compress-1.21.jar</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-io-2.11.0.jar</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-lang3-3.12.0.jar</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-math3-3.6.1.jar</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── commons-text-1.10.0.jar</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── curvesapi-1.07.jar</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── gson-2.10.1.jar</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── hamcrest-core-1.1.jar</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── json-simple-1.1.1.jar</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── jsoup-1.16.1.jar</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── junit-4.10.jar</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── junit-platform-commons-1.9.0.jar</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── license_metric_logger-2.1.2.202009181115.jar</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── log4j-api-2.18.0.jar</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── log4j-core-2.20.0.jar</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── poi-5.2.3.jar</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── poi-ooxml-5.2.3.jar</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── poi-ooxml-lite-5.2.3.jar</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── quantum-safe-sca-tng-0.0.1-SNAPSHOT.jar</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── slf4j-api-1.7.36.jar</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── sqlite-jdbc-3.42.0.0.jar</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> ├── tika-core-2.4.1.jar</span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> └── xmlbeans-5.1.1.jar</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> swidtag</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│&nbsp;&nbsp;</span> └── ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> version</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="ex">7</span> directories, 53 files</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Example artifacts:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 user staff  35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN<span class="er">(</span><span class="ex">2</span><span class="kw">)</span><span class="ex">.zip</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 user staff  73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 user staff 446K Jun 26 15:58 IIQSE0_1.0.1_MP_EN<span class="er">(</span><span class="ex">1</span><span class="kw">)</span><span class="ex">.zip</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unzip them all into the same folder:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/macos-qse1.png" class="img-fluid figure-img"></p>
+<figcaption>QSE2</figcaption>
+</figure>
+</div>
+<p>Example directory structure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0Z1CEN</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── IBM Quantum Safe Explorer.pkg</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> M0Z1FEN</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── ibm-quantum-safe-explorer-2.2.5-0.vsix</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> M0Z1BEN</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──CLI</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> LicenseAcceptance.config</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> cli.sh</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> version</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> la_home</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> lib</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">├──</span> swidtag</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">└──</span> insights</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </section>
-<section id="installing-the-services" class="level2">
-<h2 class="anchored" data-anchor-id="installing-the-services">Installing the Services</h2>
+<section id="install-qse-service-application" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Install QSE service (application)</h1>
+<p>This installs and runs the local QSE service that the VS Code extension and CLI talk to.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT7EN\</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN\M0GT7EN<span class="op">&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN\M0GT7EN<span class="op">&gt;</span> <span class="op">&amp;</span> <span class="st">'.\IBM Quantum Safe Explorer.exe'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The following window will pop up. Go with all the defaults.</p>
+<p>Run the installer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT7EN\</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN\M0GT7EN<span class="op">&gt;</span> <span class="op">&amp;</span> <span class="st">'.\IBM Quantum Safe Explorer.exe'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The following window will pop up. Use the defaults.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-qse-service1.png" class="img-fluid figure-img"></p>
 <figcaption>QSEwindows1</figcaption>
 </figure>
 </div>
-<p>When installation is complete, the following window will pop up. Click <code>Finish</code> and allow it to start up the service.</p>
+<p>When installation is complete, click <strong>Finish</strong> and allow it to start the service.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-qse-service2.png" class="img-fluid figure-img"></p>
 <figcaption>QSEwindows2</figcaption>
 </figure>
 </div>
-<p>Click <code>Accept</code> <img src="../../images/windows-qse-service3.png" class="img-fluid" alt="QSEwindows3"></p>
-<p>Once it’s running, don’t close the window.</p>
+<p>Click <strong>Accept</strong> when prompted.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/windows-qse-service3.png" class="img-fluid figure-img"></p>
+<figcaption>QSEwindows3</figcaption>
+</figure>
+</div>
+<p>Once it’s running, <strong>do not close the window</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/windows-qse-service4.png" class="img-fluid figure-img"></p>
@@ -701,20 +716,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<p>In our extracted directory, run the following command with <code>sudo</code> and enter your admin password when prompted.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> installer <span class="at">-pkg</span> M0GT4EN/IBM\ Quantum\ Safe\ Explorer-1.0.1.pkg <span class="at">-target</span> /Applications</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Password:</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">installer:</span> Package name is IBM Quantum Safe Explorer</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">installer:</span> Installing at base path /</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">installer:</span> The install was successful.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Locate the desktop shortcut for <code>IBM Quantum Safe Explorer</code> and kick it off.</p>
+<p>Install the PKG (requires admin):</p>
+<ul>
+<li><p>Double-click the IBM Quantum Safe Explorer.pkg file</p></li>
+<li><p><em>Alternatively</em>, run:</p></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> installer <span class="at">-pkg</span> M0Z1CEN/IBM\ Quantum\ Safe\ Explorer.pkg <span class="at">-target</span> /Applications</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Locate the desktop shortcut for <strong>IBM Quantum Safe Explorer</strong> and start it.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/macos-qse-service1.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos1</figcaption>
 </figure>
 </div>
-<p>You should see the following windows pop up: <img src="../../images/macos-qse-service2.png" class="img-fluid" alt="QSEmacos2"> Make sure to click <code>Accept</code></p>
+<p>You should see the following windows; click <strong>Accept</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/macos-qse-service2.png" class="img-fluid figure-img"></p>
+<figcaption>QSEmacos2</figcaption>
+</figure>
+</div>
 <p>The QSE service should now be running.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -732,103 +753,161 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Do not close this window as apparently it DOES NOT continue running in the background.</p>
+<p>Do not close this window. In some versions it does <strong>not</strong> continue running in the background. Minimize if you wish to dismiss it.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="installing-the-ibm-quantum-safe-explorer-cli" class="level2">
-<h2 class="anchored" data-anchor-id="installing-the-ibm-quantum-safe-explorer-cli">Installing the IBM Quantum Safe Explorer CLI</h2>
+<section id="install-the-cli-optional-but-useful" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Install the CLI (optional but useful)</h1>
+<p>The <code>cli.sh</code> script can be used to run scans from a terminal and is also used by some workflows.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<p>Simply change directory to where ever you extracted the extension. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT6EN\</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Simply change directory to where you extracted the CLI bundle. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory (example):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT6EN\</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<p>Simply change directory to wherever you extracted the extension. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>~/Downloads</code> directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads/M0GT6EN</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Simply change directory to where you extracted the CLI bundle. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory (example):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads/M0Z1BEN/CLI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </section>
-<section id="installing-vscode-plugin" class="level2">
-<h2 class="anchored" data-anchor-id="installing-vscode-plugin">Installing VSCode plugin</h2>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If using MacOS, make sure you have the <code>code</code> cli for MacOS enabled. This is how you do <a href="https://code.visualstudio.com/docs/setup/mac">that</a></p>
-</div>
-</div>
-<p>Change directory to where ever you extracted the extension</p>
+<section id="install-the-vs-code-extension-.vsix" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Install the VS Code extension (.vsix)</h1>
+<p>The VS Code extension ships as a <code>.vsix</code> file (example: <code>quantum-safe-explorer-2.2.5-0.vsix</code>).</p>
+<section id="install-using-the-vs-code-cli" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="install-using-the-vs-code-cli"><span class="header-section-number">7.1</span> Install using the VS Code CLI</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">MacOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT5EN\</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Install the extension</p>
-<pre><code>PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT5EN&gt; code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix
-Installing extensions...
-Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0GT5EN\</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\IIQSE0_1<span class="op">.</span><span class="dv">0.</span>1_MP_EN\M0GT5EN<span class="op">&gt;</span> code <span class="op">--</span>install-extension ibm-quantum-safe-explorer-1<span class="op">.</span><span class="dv">0.1</span><span class="op">.</span><span class="fu">vsix</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Installing extensions<span class="op">...</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>Extension <span class="st">'ibm-quantum-safe-explorer-1.0.1.vsix'</span> was successfully installed<span class="op">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> M0GT5EN</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Install the extension</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> ibm-quantum-safe-explorer-1.0.1.vsix </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Installing</span> extensions...</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Extension</span> <span class="st">'ibm-quantum-safe-explorer-1.0.1.vsix'</span> was successfully installed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> M0Z1FEN <span class="co"># or whatever this folder is called for you!</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> quantum-safe-explorer-2.2.5-0.vsix</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Installing</span> extensions...</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Extension</span> <span class="st">'quantum-safe-explorer-2.2.5-0.vsix'</span> was successfully installed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<p>In your running VSCode instance, click the <code>Extensions</code> icon in the left-hand side bar and select <code>IBM Quantum Safe Explorer</code></p>
+</section>
+<section id="enable-the-code-command-if-not-installed" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="enable-the-code-command-if-not-installed"><span class="header-section-number">7.2</span> Enable the <code>code</code> command (if not installed)</h2>
+<p>If <code>code</code> isn’t recognized:</p>
+<ol type="1">
+<li>Open <strong>Visual Studio Code</strong></li>
+<li>Open the <strong>Command Palette</strong>
+<ul>
+<li>Windows/Linux: <code>Ctrl + Shift + P</code></li>
+<li>macOS: <code>Cmd + Shift + P</code></li>
+</ul></li>
+<li>Run: <strong>Shell Command: Install ‘code’ command in PATH</strong></li>
+<li>Approve the installation (may require admin password)</li>
+<li>Restart your terminal and retry:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> quantum-safe-explorer-2.2.5-0.vsix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="configure-the-vs-code-extension" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Configure the VS Code extension</h1>
+<p>In VS Code:</p>
+<ol type="1">
+<li>Click the <strong>Extensions</strong> icon (left sidebar)</li>
+<li>Select <strong>IBM Quantum Safe Explorer</strong></li>
+</ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/extension1.png" class="img-fluid figure-img"></p>
 <figcaption>Extension1</figcaption>
 </figure>
 </div>
-<p>Click on the settings for the extension <img src="../../images/extension2.png" class="img-fluid" alt="Extension2"></p>
-<p>Per the current <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=vsce-configuring-quantum-safe-explorer-visual-studio-code-extension">guide</a>, the following settings must be configured:</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<ol start="3" type="1">
+<li>Click the extension <strong>Settings</strong></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/extension2.png" class="img-fluid figure-img"></p>
+<figcaption>Extension2</figcaption>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Currently as of 1.0.x only <code>localhost</code> is supported as <code>qs-explorer.hostname</code>.</p>
-</div>
-</div>
-<p>The following configuration settings should be followed:</p>
-<p>Required settings:</p>
+<section id="required-settings" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="required-settings"><span class="header-section-number">8.1</span> Required settings</h2>
 <ul>
-<li><strong>qs-explorer.hostname</strong> – Enter the hostname of the IBM Quantum Safe Explorer API server. Currently only localhost is supported.</li>
-<li><strong>qs-explorer.sourceFileExtensions</strong> – Enter the list of source file types to be scanned. For example, .java, .py, and so on.</li>
+<li>Click <strong>Edit in settings.json</strong>:</li>
 </ul>
-<p>sourceFileExtensions would be edited in the setting json. They should currently default to the following supported extensions for code scanning:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/extension3.png" class="img-fluid figure-img"></p>
+<figcaption>Extension3</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>qs-explorer.sourceFileExtensions</strong> — Source file types to scan (e.g., <code>.java</code>, <code>.py</code>)</li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">"qs-explorer.sourceFileExtensions":</span> <span class="ot">[</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">".java"</span><span class="ot">,</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">".jar"</span><span class="ot">,</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">".dart"</span><span class="ot">,</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">".py"</span><span class="ot">,</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">".c"</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">".go"</span><span class="ot">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">".cpp"</span><span class="ot">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">".cs"</span><span class="ot">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">".py"</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="er">,</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="uninstalling-the-services" class="level2">
-<h2 class="anchored" data-anchor-id="uninstalling-the-services">Uninstalling the Services</h2>
+<section id="additional-configuration-pathscredentialsworkspace" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="additional-configuration-pathscredentialsworkspace"><span class="header-section-number">8.2</span> Additional configuration (paths/credentials/workspace)</h2>
+<p>Some environments require further setup (paths, credentials, workspace settings, or additional tooling). See:</p>
+<ul>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension" class="uri">https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension</a></li>
+</ul>
+</section>
+</section>
+<section id="run-a-quantum-safe-scan-vs-code" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Run a Quantum Safe scan (VS Code)</h1>
+<p>Once installed and configured:</p>
+<ol type="1">
+<li>Open VS Code</li>
+<li>Open a project or files to scan</li>
+<li>Open the Command Palette:
+<ul>
+<li>Windows/Linux: <code>Ctrl + Shift + P</code></li>
+<li>macOS: <code>Cmd + Shift + P</code></li>
+</ul></li>
+<li>Run one of:
+<ul>
+<li><strong>Quantum Safe Explorer: Scan API Discovery</strong></li>
+<li><strong>Quantum Safe Explorer: Scan Cryptography Analysis</strong></li>
+</ul></li>
+</ol>
+</section>
+<section id="troubleshooting" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Troubleshooting</h1>
+<section id="scan-cryptography-analysis-shows-no-vulnerabilities-algorithms" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="scan-cryptography-analysis-shows-no-vulnerabilities-algorithms"><span class="header-section-number">10.1</span> “Scan Cryptography Analysis” shows no vulnerabilities / algorithms</h2>
+<p>If scanning Java source, <code>.java</code> files often need to be compiled into <code>.class</code> files to appear in the analysis.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">javac</span> your-file.java</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="scan-results-are-not-updating" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="scan-results-are-not-updating"><span class="header-section-number">10.2</span> Scan results are not updating</h2>
+<p>QSE uses <code>qs_explorer_result</code> and <code>qs_scan_result</code> as a cache.</p>
+<ul>
+<li>Delete those folders/files</li>
+<li>Re-run the scan command to get a fresh scan</li>
+</ul>
+</section>
+</section>
+<section id="uninstalling-the-qse-service" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Uninstalling the QSE service</h1>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -839,13 +918,22 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is a bug in v1.0.1 uninstall on Windows that will later cause issues when v2.x is installed, please note the instructions below.</p>
+<p>There is a bug in <strong>v1.0.1</strong> uninstall on Windows that can cause issues when <strong>v2.x</strong> is installed later.</p>
 </div>
 </div>
-<p>For Windows, after running the normal “Remove Programs” to uninstall the QSE service, manually delete the <code>qs-explorer</code> folder from the user’s home directory. If this is not done and v2.x is later installed, it will cause the scanning to fail.</p>
-<p>This is only an issue with the v1.0.1 uninstallation on Windows. This issue has been resolved in the v2.x uninstallation.</p>
+<section id="windows-notes-v1.0.1" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="windows-notes-v1.0.1"><span class="header-section-number">11.1</span> Windows notes (v1.0.1)</h2>
+<ol type="1">
+<li>Uninstall via <strong>Add or Remove Programs</strong> (normal uninstall)</li>
+<li>Manually delete the <code>qs-explorer</code> folder from the user’s home directory</li>
+</ol>
+<p>If the folder is not removed and v2.x is later installed, scanning can fail.</p>
+<blockquote class="blockquote">
+<p>This issue is resolved in v2.x uninstallers.</p>
+</blockquote>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
