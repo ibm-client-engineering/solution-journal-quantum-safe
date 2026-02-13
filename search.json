@@ -270,7 +270,7 @@
     "href": "src/qse/04_github_actions_integration.html",
     "title": "GitHub Actions Integration",
     "section": "",
-    "text": "This guide provides step-by-step instructions for downloading, installing, configuring, and running IBM Quantum Safe Explorer (QSE).\nIt covers:\n\nPrerequisites (VS Code + Java)\nWhere to download QSE packages\nInstalling the QSE service (Windows/macOS)\nInstalling the VS Code extension (.vsix)\nPost-install configuration in VS Code\nRunning scans\nTroubleshooting",
+    "text": "This guide provides step-by-step instructions for integrating GitHub Actions with Quantum Safe Explorer.\nIt discusses primarily how to run scans on Opened Pull Requests, but can be adapted to any use case.\nIt covers: - Creating the GitHub Action repository - Creating the repository to be scanned - Triggering the Scan - Accessing the results - Guidance on creating a template repository - Troubleshooting and workarounds",
     "crumbs": [
       "QSE",
       "GitHub Integration"
