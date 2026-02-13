@@ -9,17 +9,17 @@ format:
 
 # Overview
 
-This guide provides step-by-step instructions for downloading, installing, configuring, and running **IBM Quantum Safe Explorer (QSE)**.
+This guide provides step-by-step instructions for integrating GitHub Actions with Quantum Safe Explorer.
+
+It discusses primarily how to run scans on Opened Pull Requests, but can be adapted to any use case.
 
 It covers:
-
-- Prerequisites (VS Code + Java)
-- Where to download QSE packages
-- Installing the QSE service (Windows/macOS)
-- Installing the VS Code extension (`.vsix`)
-- Post-install configuration in VS Code
-- Running scans
-- Troubleshooting
+- Creating the GitHub Action repository
+- Creating the repository to be scanned
+- Triggering the Scan
+  - Accessing the results
+- Guidance on creating a template repository
+- Troubleshooting and workarounds
 
 # Create Private GitHub Action repository
 
