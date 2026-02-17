@@ -153,36 +153,42 @@ After download, extract/unzip **all QSE artifacts into the same directory**.
 
 ## Windows
 
+Example artifacts:
+
+```bash
+IBM_QSE_2.2.5_CLI_EN.zip
+IBM_QSE_2.2.5_service_WIN_EN.zip
+IBM_QSE_2.2.5_VSC_extn.zip
+```
+
 ![QSE2](/images/windows-qse1.png)
 
 Extract them all to the same folder:
 
 ![QSE3](/images/windows-qse2.png)
 
-Example folder listing:
+Example directory structure:
 
 ```powershell
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> tree /F
-Folder PATH listing
-Volume serial number is 1EA9-8239
-C:.
-├───M0GT5EN
-│       ibm-quantum-safe-explorer-1.0.1.vsix
+├───M0Z1FEN
+│       ibm-quantum-safe-explorer-2.2.5-0.vsix
 │
-├───M0GT6EN
+├───M0Z1BEN
 │   │   cli.sh
 │   │   LicenseAcceptance.config
 │   │   version
+│   │   vulnerability_severity.json
 │   │
 │   ├───la_home
 │   │       LA_cs
 │   │       ...
 │   ├───lib
+│   │       antlr4-runtime-4.7.1.jar
 │   │       ...
 │   └───swidtag
-│           ibm.com_IBM_Quantum_Safe_Explorer-1.0.1.swidtag
+│           ibm.com_IBM_Quantum_Safe_Explorer-2.2.5.swidtag
 │
-└───M0GT7EN
+└───M0Z1DEN
         IBM Quantum Safe Explorer.exe
 ```
 
@@ -230,11 +236,11 @@ This installs and runs the local QSE service that the VS Code extension and CLI 
 
 ## Windows
 
-Run the installer:
+Run the installer by either double clicking on the .exe file or running the following commands:
 
 ```powershell
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT7EN\
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT7EN> & '.\IBM Quantum Safe Explorer.exe'
+PS C:\Users\Administrator\Downloads\> cd .\M0Z1DEN\ #or whatever this folder is called for you!
+PS C:\Users\Administrator\Downloads\M0Z1DEN> & '.\IBM Quantum Safe Explorer.exe'
 ```
 
 The following window will pop up. Use the defaults.
@@ -294,7 +300,7 @@ The `cli.sh` script can be used to run scans from a terminal and is also used by
 Simply change directory to where you extracted the CLI bundle. The `cli.sh` file will be used to perform the actual scan. Assuming you unzipped from your `\Downloads` directory (example):
 
 ```powershell
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT6EN\
+PS C:\Users\Administrator\Downloads\M0Z1BEN> cd .\CLI\
 ```
 
 ## macOS
@@ -318,10 +324,10 @@ The VS Code extension ships as a `.vsix` file (example: `quantum-safe-explorer-2
 ## Windows
 
 ```powershell
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN> cd .\M0GT5EN\
-PS C:\Users\Administrator\Downloads\IIQSE0_1.0.1_MP_EN\M0GT5EN> code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix
+PS C:\Users\Administrator\Downloads> cd .\M0Z1FEN\ #or whatever this folder is called for you!
+PS C:\Users\Administrator\Downloads\M0Z1FEN> code --install-extension quantum-safe-explorer-2.2.5-0.vsix
 Installing extensions...
-Extension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.
+Extension 'quantum-safe-explorer-2.2.5-0.vsix' was successfully installed.
 ```
 
 ## macOS
