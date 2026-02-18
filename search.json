@@ -644,7 +644,7 @@
     "href": "src/qse/01_installation.html#install-using-the-vs-code-cli",
     "title": "Installation",
     "section": "7.1 Install using the VS Code CLI",
-    "text": "7.1 Install using the VS Code CLI\n\nWindowsmacOS\n\n\nPS C:\\Users\\Administrator\\Downloads\\IIQSE0_1.0.1_MP_EN&gt; cd .\\M0GT5EN\\\nPS C:\\Users\\Administrator\\Downloads\\IIQSE0_1.0.1_MP_EN\\M0GT5EN&gt; code --install-extension ibm-quantum-safe-explorer-1.0.1.vsix\nInstalling extensions...\nExtension 'ibm-quantum-safe-explorer-1.0.1.vsix' was successfully installed.\n\n\ncd M0Z1FEN # or whatever this folder is called for you!\ncode --install-extension quantum-safe-explorer-2.2.5-0.vsix\n\nInstalling extensions...\nExtension 'quantum-safe-explorer-2.2.5-0.vsix' was successfully installed.",
+    "text": "7.1 Install using the VS Code CLI\n\nWindowsmacOS\n\n\nPS C:\\Users\\Administrator\\Downloads&gt; cd .\\M0Z1FEN\\ #or whatever this folder is called for you!\nPS C:\\Users\\Administrator\\Downloads\\M0Z1FEN&gt; code --install-extension quantum-safe-explorer-2.2.5-0.vsix\nInstalling extensions...\nExtension 'quantum-safe-explorer-2.2.5-0.vsix' was successfully installed.\n\n\ncd M0Z1FEN # or whatever this folder is called for you!\ncode --install-extension quantum-safe-explorer-2.2.5-0.vsix\n\nInstalling extensions...\nExtension 'quantum-safe-explorer-2.2.5-0.vsix' was successfully installed.",
     "crumbs": [
       "QSE",
       "Installation"
