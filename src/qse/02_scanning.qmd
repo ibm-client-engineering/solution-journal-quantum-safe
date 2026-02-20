@@ -12,7 +12,7 @@ format:
 
 ## Useful Links
 
-Initiating scans as described [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=extension-initiating-scan)
+Initiating scans as described [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=psuqsevsce-initiating-scan-in-quantum-safe-explorer-visual-studio-code-extension)
 
 :::
 
@@ -37,11 +37,24 @@ On VSCode, open a new terminal in the code window. This can be done with the fol
 
 ![Scanning3](/images/scanning3.png)
 
-In windows this will open a powershell terminal
+In Windows this will open a Powershell terminal
 
-Press Ctlr-Shift-P to open the Command Palette and search for `Quantum Safe Explorer`. Select Quantum Safe Explorer Scan.
+Press Ctrl-Shift-P to open the Command Palette and search for `Quantum Safe Explorer`. 
+
+There are two scanning options available in IBM Quantum Safe Explorer 2.2.5. They are: 
+
+1. **Scan API discovery**: This option will scan all the API discovery supported languages
+2. **Scan Cryptography analysis**: This option will scan all the Cryptography analysis supported languages
+
+For a more detailed list on the features and differences of these scans, see [IBM Documentation here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#features)
+
+::: {.callout-note}
+Cryptography analysis is currently only available on Java. See [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#languages-and-cryptography-libraries-supported) for up-to-date list of languages and libraries supported
+::: 
 
 ![Scanning4](/images/scanning4.png)
+
+First, let's click on "Scan API discovery"
 
 The following notification should pop up
 
@@ -49,11 +62,13 @@ The following notification should pop up
 
 Let it scan until it completes.
 
-When the scan completes, you should see the following directories show up in the Explorer window of VSCode
+When the scan completes, you should see the following directories show up in the Explorer window of VSCode:
+
+**qs_explorer_result** and **qs_scan_result**
 
 ![Scanning6](/images/scanning6.png)
 
-We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs and charts.
+We should now see the EXPLORER SCAN RESULTS tab populated with some graphs and charts.
 
 ![Scanning7](/images/scanning7.png)
 
@@ -68,7 +83,7 @@ Make sure that Git Bash is installed and use a Git Bash terminal window for the 
 :::
 
 
-Change directory to `M0GT6EN` where ever you had it extracted and run the following command:
+Change directory to `M0Z1BEN\CLI` or where ever you extracted the CLI files and run the following command:
 
 
 ```bash
@@ -91,17 +106,21 @@ Next, run the following **help** command
 The run will also point out that you have already accepted the licensing agreement.
 :::
 
-Before you officially perform the script run, it is helpful to know the list of required parameters:
+Before you officially perform the script run, it is helpful to know the list of required/optional parameters:
 
-![QSEmacos1](/images/macos-qse-cli-required-params.png)
+![QSEmacos1](/images/macos-qse-cli-params1.png)
 
-As well as the optional parameters:
-
-![QSEmacos2](/images/macos-qse-cli-optional-params.png)
+![QSEmacos2](/images/macos-qse-cli-params2.png)
 
 You initiate a scan using the required **program package path**. The command can be run for single or multiple languages. Here is an example:
 
-`/cli.sh -i <package-path> -clean -nmo -ccdir resource:class-catalog -l .java`
+**API Discovery Scan:**
+
+`./cli.sh -i <package-path> -l .cs`
+
+**Cryptography Analysis Scan:**
+
+`./cli.sh -i <package-path> -l .java -cf <class-path> -da`
 
 ::: {.callout-note}
 
@@ -111,76 +130,68 @@ If you are scanning more than one language, then the command needs to be run in 
 Here is an example of a completed scan with a specified program *package path*:
 
 ```bash
-$ ./cli.sh -i ~/Virtualenvs/java-projects -clean -nmo -ccdir resource:class-catalog -l .java
+itzuser@itz-gahknc-help MINGW64 ~/desktop/QSE/M0Z1BEN/CLI
+$ ./cli.sh -i ~/desktop/QSE -l .java
+Swidtag file already present.
+before settings file
+
 License Agreement have been already completed.
-canonical pathname >> /Users/gerald.trotmanibm.com/Virtualenvs/java-projects
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-build_class_catalog  : 
-class-catalogs_directory : resource:class-catalog
-clear_results        : 
-dart_class_catalog   : ../quantum-safe-sca-tng/class-catalog/dart-class-catalog.json
-data_analytics       : false
-data_mine_class_catalog : 
-enable_detail_log    : 
-exact_match          : true
-input_folder         : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects
-internal_utility     : 
-java_class_catalog   : ../quantum-safe-sca-tng/class-catalog/java-class-catalog.json
-language_list        : .java
-library_usage        : 
-name_matching_only   : 
-output_folder        : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result
-path_exclusion_filter : 
-path_filter          : 
-python_class_catalog : ../quantum-safe-sca-tng/class-catalog/python-class-catalog.json
-regression_test      : 
-single_steps         : multi-language-selection
-source_filter        : 
-tab_size             : 4
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Version 1.23.0.1065 -- Generated On Tue Jul 23 13:22:12 PDT 2024
+Using Heap Size: 24561 MB
+[2026-02-20 10:24:09,393] [      main] [ INFO] [com.ibm.quantumsafe.lang.driver.CryptoCli] - Path to scan : C:/Users/itzuser/Desktop/QSE
+[2026-02-20 10:24:09,437] [      main] [ INFO] [com.ibm.quantumsafe.lang.driver.CryptoCli] - Application Version : App Version : 2.2.5.0 Build Version : 202512.00077 -- Generated On Fri Feb 20 10:24:09 PST 2026
+[2026-02-20 10:24:09,508] [      main] [ INFO] [com.ibm.quantumsafe.lang.driver.CryptoCli] - Processing Language - .java
+[2026-02-20 10:24:09,705] [2-thread-1] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - Running Task: Getting Application name
+[2026-02-20 10:24:09,707] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - Running Task: Execution Started
+[2026-02-20 10:24:09,709] [2-thread-2] [ INFO] [com.ibm.quantumsafe.analytics.utility.DeleteTask] - Cleaning up output directory
+[2026-02-20 10:24:09,711] [2-thread-1] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - Scanning initiated for the application :
+[2026-02-20 10:24:09,754] [2-thread-2] [ INFO] [com.ibm.quantumsafe.analytics.utility.DeleteTask] - Cleaning up output directory completed.
+[2026-02-20 10:24:09,761] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - **********************************
+[2026-02-20 10:24:09,766] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - '.java' Scan Initiated !!!
+[2026-02-20 10:24:09,774] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] -
+[2026-02-20 10:24:09,861] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - App Version : 2.2.5.0 Build Version : 202512.00077 -- Generated On Fri Feb 20 10:24:09 PST 2026
+[2026-02-20 10:24:09,865] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] -
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+                PARAMETERS SENT TO SCA AND ANALYTICS
++                         PARAMETERS SENT TO DISCOVERY
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ error-log-file                          : qs_scan_result/log/multi-language-err.log
-+ parameter-class-catalogs-directory      : resource:class-catalog
-+ parameter-demo-mode                     : true
-+ parameter-detail-results                : true
-+ parameter-language-processing-list      : .java
-+ parameter-library-selection             : pycrypto
-+ parameter-path-exclusion-filter         : 
-+ parameter-path-filter                   : 
-+ parameter-run-single-step               : delete-project-root,crypto-name-matching-only,multi-language-selection
-+ parameter-source-filter                 : 
-+ parameter-source-filter-exact-match     : true
-+ parameter-tab-size                      : 4
-+ parameter-use-absolute-source-paths     : true
-+ project-root                            : qs_scan_result
-+ root                                    : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects
-+ run-log-file                            : qs_scan_result/log/multi-language.log
-+ source-dart-class-catalog-json          : ../quantum-safe-sca-tng/class-catalog/dart-class-catalog.json
-+ source-java-class-catalog-json          : ../quantum-safe-sca-tng/class-catalog/java-class-catalog.json
-+ source-knowledge-base-db                : kb/cd_kb.db
-+ source-python-class-catalog-json        : ../quantum-safe-sca-tng/class-catalog/python-class-catalog.json
++ app-name                                :
++ app-version                             :
++ isDebugEnabled                          : false
++ parameter-execution-mode                : multi-language-selection
++ parameter-language-processing-list      : java
++ parameter-path-exclusion-filter         :
++ parameter-path-filter                   :
++ parameter-scan-type                     :
++ parameter-source-filter                 :
++ parameter-transaction-id                : f7ddb54c6e1f425c86996386c2b2d376
++ project-output-dir                      : C:/Users/itzuser/Desktop/QSE/qs_scan_result
++ repository_id                           :
++ repository_url                          :
++ root                                    : C:/Users/itzuser/Desktop/QSE
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-[23/07/2024 13:22:12.119] Setting Log File To           : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result/log/multi-language.log
-[23/07/2024 13:22:12.121] Setting Error File To         : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result/log/multi-language-err.log
-[23/07/2024 13:22:12.125] Running Task                  : com.ibm.quantumsafe.sca.lang.base.task.impl.LoadCryptoKBImpl
-[23/07/2024 13:22:12.544] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.DeleteProjectRootDirectoryImpl
-[23/07/2024 13:22:12.573] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.ClearScanResultsImpl
-[23/07/2024 13:22:12.611] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaPreprocessImpl
-[23/07/2024 13:22:12.639] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaTokenizeImpl
-[23/07/2024 13:22:12.671] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.AddLineNumbersImpl
-[23/07/2024 13:22:12.695] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaStructureImpl
-[23/07/2024 13:22:12.732] Running Task                  : com.ibm.quantumsafe.sca.framework.common.BuildLocalClassCatalogImpl
-[23/07/2024 13:22:13.191] Class Catalog Size            : 11010
-[23/07/2024 13:22:15.175] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.ExternalizeNestedCallsmpl
-[23/07/2024 13:22:15.198] Running Task                  : com.ibm.quantumsafe.sca.framework.common.JavaBuildGraphModelImpl
-[23/07/2024 13:22:15.234] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.BuildRcgSummaryAndCBOMFromModelImpl
-[23/07/2024 13:22:15.253] Running Task                  : com.ibm.quantumsafe.sca.framework.common.AnalyzeClasssCatalogImpl
-[23/07/2024 13:22:15.739] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.BuildDashboardFromFindings
-[23/07/2024 13:22:15.745] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.SendScanResultsImpl
-[23/07/2024 13:22:15.756] Running Task                  : com.ibm.quantumsafe.sca.framework.common.impl.ProfileProcessImpl
+[2026-02-20 10:24:09,866] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Getting file lists for java
+[2026-02-20 10:24:13,387] [2-thread-2] [ERROR] [com.ibm.quantumsafe.discovery.FileFilter] - The specified directory is not valid: C:\Users\itzuser\Desktop\QSE\qs_scan_result\byte-code-json\com\ibm\antlr
+[2026-02-20 10:24:15,737] [2-thread-2] [ERROR] [com.ibm.quantumsafe.discovery.FileFilter] - The specified directory is not valid: C:\Users\itzuser\Desktop\QSE\qs_scan_result\byte-code-text\org\antlr\v4\runtime
+[2026-02-20 10:24:18,724] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to list files: 8858 milliseconds
+[2026-02-20 10:24:18,725] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Parsing files and generating metrics
+[2026-02-20 10:24:18,735] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.reader.JavaFileProcessor] - Number of crypto relevant files is 0 out of total 0 files.
+[2026-02-20 10:24:18,833] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to parse files: 109 milliseconds
+[2026-02-20 10:24:18,833] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Transformation started...
+[2026-02-20 10:24:18,847] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to transform the parsed trees: 14 milliseconds
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.sqlite.SQLiteJDBCLoader in an unnamed module (file:/C:/Users/itzuser/Desktop/QSE/M0Z1BEN/CLI/lib/sqlite-jdbc-3.50.3.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[2026-02-20 10:24:19,291] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to generate crypto findings: 444 milliseconds
+[2026-02-20 10:24:19,293] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to generate CBOM: 1 milliseconds
+[2026-02-20 10:24:19,330] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Time taken to generate dashboard: 38 milliseconds
+[2026-02-20 10:24:19,332] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Clean up activity is done
+[2026-02-20 10:24:19,334] [2-thread-2] [ INFO] [com.ibm.quantumsafe.discovery.Orchestrator] - Total time to taken to scan: 9502 milliseconds
+[2026-02-20 10:24:19,335] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] -
+[2026-02-20 10:24:19,336] [2-thread-2] [ INFO] [com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl] - Scan Completed !!!
+[2026-02-20 10:24:19,393] [      main] [ INFO] [com.ibm.quantumsafe.lang.driver.ProductLicenseServiceUtils] - Number of lines scanned during current scan : 0
+[2026-02-20 10:24:19,402] [      main] [ INFO] [com.ibm.quantumsafe.lang.driver.ProductLicenseServiceUtils] - Cummulative number of lines scanned including the last scan : 8372054
+
 ```
 
 ::: {.callout-note}
@@ -191,12 +202,23 @@ When scanning large applications (e.g., more than 500,000 lines of code) on macO
 
 ## Accessing the IBM Quantum Safe Explorer CLI scan results
 
+The results of your scan are written to different folders depending on whether you ran an API Discovery Scan or a Cryptographic Analysis Scan
 
-The results of your scan are written to a `findings.json` file and can be found nested within your project path. It resemble the following:
+The scan results for API Discovery languages can be found in the following files:
 
-`/<package-path>/qs_scan_result/scan-results/`
+1. **quantum_safe_api_discovery_cbom.json** - A single CBOM file is generated after the API Discovery Scan for all supported languages, except for Java. For Java, a CBOM cannot be generated at this stage because the required variant details are only available after the Analysis Scan.
+2. **quantum_safe_api_discovery_crypto_inventory.json** - Inventory of all cryptographic APIs discovered during the API Discovery Scan, including file names and locations.
+3. **quantum_safe_api_discovery_findings.json** - Detailed findings from the API Discovery Scan are available for all supported languages, except for Java API Discovery Scan results.
+4. **quantum_safe_api_discovery_report.json** - Detailed metrics information, including the number of files, line counts, and related data.
 
-The file is quite verbose. Here's a snippet of the result:
+The scan results for Cryptographic analysis language can be found in the following files:
+
+1. **quantum_safe_cryptography_analysis_cbom.json** - The CBOM file is generated after the Cryptographic Analysis Scan for all supported languages (currently limited to Java).
+2. **quantum_safe_cryptography_analysis_findings_<language>.json** - Detailed findings from the Cryptographic Analysis Scan, including vulnerabilities, cryptographic properties, compliance status, and related metrics, are available for the supported languages (currently limited to Java).
+3. **quantum_safe_cryptography_analysis_issue_summary.json** - Provide details about any missing dependencies or class files specified in the class path during Cryptographic Analysis Scan. This information helps identify potential causes of scan failures or missing artifacts.
+
+
+These files are quite verbose. Here's a snippet of the result:
 
 ![Accessing1](/images/scan-results-json.png)
 
@@ -204,9 +226,12 @@ The file is quite verbose. Here's a snippet of the result:
 
 ## Viewing the CLI scan results in the IBM Quantum Safe Explorer Visual Studio Code Extension
 
-### Opening the scanned folder
+There are two ways to view the CLI output on Visual Studio Code with the IBM Quantum Safe™ Explorer Visual Studio Code extension:
+1. Opening the scanned root folder of the project.
+2. Opening the scan results subfolder (qs_explorer_result) directly.
 
-As of IBM Quantum Safe Explorer 1.0.1 release, you can now view the CLI scan results in Visual Studio Code.
+
+### Opening the scanned folder
 
 When you execute a scan, a **qs_explorer_result** folder is generated along with the **qs_scan_result** folder.
 
@@ -225,14 +250,8 @@ Once you have found your `/<package-path>` simply open it to populate the projec
 
 ![Opening3](/images/vs-code-open-project.png)
 
-To populate the **SCAN RESULTS**, we must first navigate to the **QUANTUM SAFE EXPLORER** tab. This then populates the **SCAN RESULTS** menu. That menu drop down then brings you to the `Crypto Artifacts`. For example:
+The EXPLORER SCAN RESULTS tab is open by default. The scan results are displayed:
 
-![Opening4](/images/vs-code-quantum-safe-explorer.png)
+![Opening4](/images/scanning7.png)
 
-To view the results dashboard, you simply toggle to the **QUANTUM SAFE EXPLORER DASHBOARD** tab and click the **+** symbol on the right hand side to expand the view:
-
-![Opening5](/images/vs-code-quantum-safe-dashboard-tab.png)
-
-This should then expose the dashboard as shown below:
-
-![Opening6](/images/vs-code-quantum-safe-dashboard-view.png)
+### Opening the scan results subfolder (qs_explorer_result) directly
