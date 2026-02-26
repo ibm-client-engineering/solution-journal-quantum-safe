@@ -14,7 +14,7 @@ format:
 
 Initiating scans as described [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=psuqsevsce-initiating-scan-in-quantum-safe-explorer-visual-studio-code-extension)
 
-GitHub repo with code samples found [here](https://github.com/kevinshah-ibm/mc-qse) (CHANGE SOON)
+GitHub repo with code samples found [here](https://github.com/kevinshah-ibm/qse-samples)
 
 :::
 
