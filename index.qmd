@@ -16,8 +16,6 @@ format: html
 ```
 <br>
 ---
-Description: "Project Name"
----
 
 ## Business Statement
 
