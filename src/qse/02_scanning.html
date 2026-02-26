@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Check us out on Github</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://github.ibm.com/ibm-client-engineering/solution-journal-quantum-safe">
+    <a class="dropdown-item" href="https://github.com/ibm-client-engineering/solution-journal-quantum-safe">
  <span class="dropdown-text">Look at this repo on Github</span></a>
   </li>  
     </ul>
@@ -385,6 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension" id="toc-viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension" class="nav-link" data-scroll-target="#viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension">Viewing the CLI scan results in the IBM Quantum Safe Explorer Visual Studio Code Extension</a>
   <ul class="collapse">
   <li><a href="#opening-the-scanned-folder" id="toc-opening-the-scanned-folder" class="nav-link" data-scroll-target="#opening-the-scanned-folder">Opening the scanned folder</a></li>
+  <li><a href="#opening-the-scan-results-subfolder-qs_explorer_result-directly" id="toc-opening-the-scan-results-subfolder-qs_explorer_result-directly" class="nav-link" data-scroll-target="#opening-the-scan-results-subfolder-qs_explorer_result-directly">Opening the scan results subfolder (qs_explorer_result) directly</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -423,13 +424,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Initiating scans as described <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/1.0.x?topic=extension-initiating-scan">here</a></p>
+<p>Initiating scans as described <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=psuqsevsce-initiating-scan-in-quantum-safe-explorer-visual-studio-code-extension">here</a></p>
+<p>GitHub repo with code samples found <a href="https://github.com/kevinshah-ibm/qse-samples">here</a></p>
 </div>
 </div>
 <section id="kicking-off-the-scan-and-seeing-results" class="level3">
 <h3 class="anchored" data-anchor-id="kicking-off-the-scan-and-seeing-results">Kicking off the scan and seeing results</h3>
-<p>Let’s scan the code base for the <code>cli</code> for QSE</p>
-<p>In our example, we’ve created a directory called <code>QSE</code> and extracted all the installation elements of QSE.</p>
+<p>Let’s scan our sample repo for vulnerabilities!</p>
+<p>In our sample repo, we have a folder called <code>sample_files</code> with example files written in Python, C#, C++, Go, and Java</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> qse-samples</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sample_files</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/scanning1.png" class="img-fluid figure-img"></p>
@@ -437,15 +443,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Open that directory in VSCode.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> QSE</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/scanning2.png" class="img-fluid figure-img"></p>
-<figcaption>Scanning2</figcaption>
-</figure>
-</div>
 <p>On VSCode, open a new terminal in the code window. This can be done with the following key combo: Ctrl-Shift-Backtick(`)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -453,14 +450,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Scanning3</figcaption>
 </figure>
 </div>
-<p>In windows this will open a powershell terminal</p>
-<p>Press Ctlr-Shift-P to open the Command Palette and search for <code>Quantum Safe Explorer</code>. Select Quantum Safe Explorer Scan.</p>
+<p>In Windows this will open a Powershell terminal</p>
+<p>Press Ctrl-Shift-P to open the Command Palette and search for <code>Quantum Safe Explorer</code>.</p>
+<p>There are two scanning options available in IBM Quantum Safe Explorer 2.2.5. They are:</p>
+<ol type="1">
+<li><strong>Scan API discovery</strong>: This option will scan all the API discovery supported languages</li>
+<li><strong>Scan Cryptography analysis</strong>: This option will scan all the Cryptography analysis supported languages</li>
+</ol>
+<p>For a more detailed list on the features and differences of these scans, see <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#features">IBM Documentation here</a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cryptography analysis is currently only available on Java. See <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#languages-and-cryptography-libraries-supported">here</a> for up-to-date list of languages and libraries supported</p>
+</div>
+</div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/scanning4.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning4</figcaption>
 </figure>
 </div>
+<p>First, let’s click on “Scan API discovery”</p>
 <p>The following notification should pop up</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -469,14 +486,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Let it scan until it completes.</p>
-<p>When the scan completes, you should see the following directories show up in the Explorer window of VSCode</p>
+<p>When the scan completes, you should see the following directories show up in the Explorer window of VSCode:</p>
+<p><strong>qs_explorer_result</strong> and <strong>qs_scan_result</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/scanning6.png" class="img-fluid figure-img"></p>
 <figcaption>Scanning6</figcaption>
 </figure>
 </div>
-<p>We should now see the QUANTUM SAFE EXPLORER DASHBOARD populated with some graphs and charts.</p>
+<p>We should now see the EXPLORER SCAN RESULTS tab populated with some graphs and charts.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/scanning7.png" class="img-fluid figure-img"></p>
@@ -500,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Make sure that Git Bash is installed and use a Git Bash terminal window for the instructions below.</p>
 </div>
 </div>
-<p>Change directory to <code>M0GT6EN</code> where ever you had it extracted and run the following command:</p>
+<p>Change directory to <code>M0Z1BEN\CLI</code> or where ever you extracted the CLI files and run the following command:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/sed</span> <span class="at">-i</span> <span class="st">'s/^RSP_LICENSE_ACCEPTED=.*/RSP_LICENSE_ACCEPTED=true/'</span> LicenseAcceptance.config</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To make sure you have the correct permissions to run the shell script first run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x cli.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -519,22 +537,25 @@ Note
 <p>The run will also point out that you have already accepted the licensing agreement.</p>
 </div>
 </div>
-<p>Before you officially perform the script run, it is helpful to know the list of required parameters:</p>
+<p>Before you officially perform the script run, it is helpful to know the list of required/optional parameters:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../images/macos-qse-cli-required-params.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-cli-params1.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos1</figcaption>
 </figure>
 </div>
-<p>As well as the optional parameters:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../images/macos-qse-cli-optional-params.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/macos-qse-cli-params2.png" class="img-fluid figure-img"></p>
 <figcaption>QSEmacos2</figcaption>
 </figure>
 </div>
+<p>You can also find a link to this parameter list in the documentation <a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=cli-using-quantum-safe-explorer">here</a></p>
 <p>You initiate a scan using the required <strong>program package path</strong>. The command can be run for single or multiple languages. Here is an example:</p>
-<p><code>/cli.sh -i &lt;package-path&gt; -clean -nmo -ccdir resource:class-catalog -l .java</code></p>
+<p><strong>API Discovery Scan:</strong></p>
+<p><code>./cli.sh -i &lt;package-path&gt; -l .cs</code></p>
+<p><strong>Cryptography Analysis Scan:</strong></p>
+<p><code>./cli.sh -i &lt;package-path&gt; -l .java -cf &lt;class-path&gt; -da</code></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -548,77 +569,66 @@ Note
 <p>If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the <strong>Help</strong> command by running <code>./cli.sh -h</code> for more details on the various parameters.</p>
 </div>
 </div>
-<p>Here is an example of a completed scan with a specified program <em>package path</em>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./cli.sh <span class="at">-i</span> ~/Virtualenvs/java-projects <span class="at">-clean</span> <span class="at">-nmo</span> <span class="at">-ccdir</span> resource:class-catalog <span class="at">-l</span> .java</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">License</span> Agreement have been already completed.</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">canonical</span> pathname <span class="op">&gt;&gt;</span> /Users/gerald.trotmanibm.com/Virtualenvs/java-projects</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">build_class_catalog</span>  : </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">class-catalogs_directory</span> : resource:class-catalog</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">clear_results</span>        : </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">dart_class_catalog</span>   : ../quantum-safe-sca-tng/class-catalog/dart-class-catalog.json</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">data_analytics</span>       : false</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">data_mine_class_catalog</span> : </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">enable_detail_log</span>    : </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ex">exact_match</span>          : true</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="ex">input_folder</span>         : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">internal_utility</span>     : </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">java_class_catalog</span>   : ../quantum-safe-sca-tng/class-catalog/java-class-catalog.json</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ex">language_list</span>        : .java</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">library_usage</span>        : </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">name_matching_only</span>   : </span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ex">output_folder</span>        : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ex">path_exclusion_filter</span> : </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ex">path_filter</span>          : </span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ex">python_class_catalog</span> : ../quantum-safe-sca-tng/class-catalog/python-class-catalog.json</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ex">regression_test</span>      : </span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="ex">single_steps</span>         : multi-language-selection</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ex">source_filter</span>        : </span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ex">tab_size</span>             : 4</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Version</span> 1.23.0.1065 <span class="at">--</span> Generated On Tue Jul 23 13:22:12 PDT 2024</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>                PARAMETERS SENT TO SCA AND ANALYTICS</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> error-log-file                          : qs_scan_result/log/multi-language-err.log</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-class-catalogs-directory      : resource:class-catalog</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-demo-mode                     : true</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-detail-results                : true</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-language-processing-list      : .java</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-library-selection             : pycrypto</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-path-exclusion-filter         : </span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-path-filter                   : </span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-run-single-step               : delete-project-root,crypto-name-matching-only,multi-language-selection</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-source-filter                 : </span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-source-filter-exact-match     : true</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-tab-size                      : 4</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-use-absolute-source-paths     : true</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> project-root                            : qs_scan_result</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> root                                    : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> run-log-file                            : qs_scan_result/log/multi-language.log</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> source-dart-class-catalog-json          : ../quantum-safe-sca-tng/class-catalog/dart-class-catalog.json</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> source-java-class-catalog-json          : ../quantum-safe-sca-tng/class-catalog/java-class-catalog.json</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> source-knowledge-base-db                : kb/cd_kb.db</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> source-python-class-catalog-json        : ../quantum-safe-sca-tng/class-catalog/python-class-catalog.json</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.119] Setting Log File To           : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result/log/multi-language.log</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.121] Setting Error File To         : /Users/gerald.trotmanibm.com/Virtualenvs/java-projects/qs_scan_result/log/multi-language-err.log</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.125] Running Task                  : com.ibm.quantumsafe.sca.lang.base.task.impl.LoadCryptoKBImpl</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.544] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.DeleteProjectRootDirectoryImpl</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.573] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.ClearScanResultsImpl</span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.611] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaPreprocessImpl</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.639] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaTokenizeImpl</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.671] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.AddLineNumbersImpl</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.695] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.JavaStructureImpl</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:12.732] Running Task                  : com.ibm.quantumsafe.sca.framework.common.BuildLocalClassCatalogImpl</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:13.191] Class Catalog Size            : 11010</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.175] Running Task                  : com.ibm.quantumsafe.sca.lang.java.task.impl.ExternalizeNestedCallsmpl</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.198] Running Task                  : com.ibm.quantumsafe.sca.framework.common.JavaBuildGraphModelImpl</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.234] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.BuildRcgSummaryAndCBOMFromModelImpl</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.253] Running Task                  : com.ibm.quantumsafe.sca.framework.common.AnalyzeClasssCatalogImpl</span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.739] Running Task                  : com.ibm.quantumsafe.sca.reporting.task.impl.BuildDashboardFromFindings</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.745] Running Task                  : com.ibm.quantumsafe.sca.lang.general.task.impl.SendScanResultsImpl</span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="ex">[23/07/2024</span> 13:22:15.756] Running Task                  : com.ibm.quantumsafe.sca.framework.common.impl.ProfileProcessImpl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Here is an example of a completed scan (API discovery) with a specified program <em>package path</em>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">itzuser@itz-gahknc-help</span> MINGW64 ~/Desktop/QSE/M0Z1BEN/CLI</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./cli.sh <span class="at">-i</span> <span class="st">"C:/Users/itzuser/desktop/qse_samples/sample_files"</span> <span class="at">-l</span> .py</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Swidtag</span> file already present.</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">before</span> settings file</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">License</span> Agreement have been already completed.</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> Heap Size: 24561 MB</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:50,757] [      main] [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.lang.driver.CryptoCli</span><span class="pp">]</span> <span class="at">-</span> Path to scan : C:/Users/itzuser/Desktop/qse_samples/sample_files</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:50,797] [      main] [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.lang.driver.CryptoCli</span><span class="pp">]</span> <span class="at">-</span> Application Version : App Version : 2.2.5.0 Build Version : 202512.00077 <span class="at">--</span> Generated On Wed Feb 25 09:35:50 PST 2026</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:50,869] [      main] [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.lang.driver.CryptoCli</span><span class="pp">]</span> <span class="at">-</span> Processing Language <span class="at">-</span> .py</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,045] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">1</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> Running Task: Getting Application name</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,047] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> Running Task: Execution Started</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,049] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.analytics.utility.DeleteTask</span><span class="pp">]</span> <span class="at">-</span> Cleaning up output directory</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,051] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">1</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> Scanning initiated for the application :</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,053] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.analytics.utility.DeleteTask</span><span class="pp">]</span> <span class="at">-</span> Cleaning up output directory completed.</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,060] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> <span class="pp">**********************************</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,060] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> <span class="st">'.py'</span> Scan Initiated !!!</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,061] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,095] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> App Version : 2.2.5.0 Build Version : 202512.00077 <span class="at">--</span> Generated On Wed Feb 25 09:35:51 PST 2026</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,097] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>                         PARAMETERS SENT TO DISCOVERY</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> app-name                                :</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> app-version                             :</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> isDebugEnabled                          : false</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-execution-mode                : multi-language-selection</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-language-processing-list      : py</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-path-exclusion-filter         :</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-path-filter                   :</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-scan-type                     :</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-source-filter                 :</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> parameter-transaction-id                : c8fe2b21fda5452ab865b997953be7ef</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> project-output-dir                      : C:/Users/itzuser/Desktop/qse_samples/sample_files/qs_scan_result</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> repository_id                           :</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> repository_url                          :</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> root                                    : C:/Users/itzuser/Desktop/qse_samples/sample_files</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="ex">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,099] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Getting file lists for py</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,105] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to list files: 7 milliseconds</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,105] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Parsing files and generating metrics</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,114] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.reader.PyFileProcessor</span><span class="pp">]</span> <span class="at">-</span> Number of crypto relevant files is 0 out of total 0 files.</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,212] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to parse files: 107 milliseconds</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,212] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Transformation started...</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,227] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to transform the parsed trees: 15 milliseconds</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> A restricted method in java.lang.System has been called</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> java.lang.System::load has been called by org.sqlite.SQLiteJDBCLoader in an unnamed module <span class="er">(</span><span class="ex">file:/C:/Users/itzuser/Desktop/QSE/M0Z1BEN/CLI/lib/sqlite-jdbc-3.50.3.0.jar</span><span class="kw">)</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> Use <span class="at">--enable-native-access</span><span class="op">=</span>ALL-UNNAMED to avoid a warning for callers in this module</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> Restricted methods will be blocked in a future release unless native access is enabled</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,659] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to generate crypto findings: 432 milliseconds</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,968] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to generate CBOM: 0 milliseconds</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,988] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Time taken to generate dashboard: 329 milliseconds</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,989] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Clean up activity is done</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,990] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.discovery.Orchestrator</span><span class="pp">]</span> <span class="at">-</span> Total time to taken to scan: 911 milliseconds</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,991] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:51,992] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.integrator.impl.IntegratorAPIImpl</span><span class="pp">]</span> <span class="at">-</span> Scan Completed !!!</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:52,544] [      main] [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.lang.driver.ProductLicenseServiceUtils</span><span class="pp">]</span> <span class="at">-</span> Number of lines scanned during current scan : 0</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="ex">[2026-02-25</span> 09:35:52,549] [      main] [ INFO] <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.lang.driver.ProductLicenseServiceUtils</span><span class="pp">]</span> <span class="at">-</span> Cummulative number of lines scanned including the last scan : 8375885</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -635,9 +645,21 @@ Note
 </section>
 <section id="accessing-the-ibm-quantum-safe-explorer-cli-scan-results" class="level2">
 <h2 class="anchored" data-anchor-id="accessing-the-ibm-quantum-safe-explorer-cli-scan-results">Accessing the IBM Quantum Safe Explorer CLI scan results</h2>
-<p>The results of your scan are written to a <code>findings.json</code> file and can be found nested within your project path. It resemble the following:</p>
-<p><code>/&lt;package-path&gt;/qs_scan_result/scan-results/</code></p>
-<p>The file is quite verbose. Here’s a snippet of the result:</p>
+<p>The results of your scan are written to different folders depending on whether you ran an API Discovery Scan or a Cryptographic Analysis Scan</p>
+<p>The scan results for API Discovery languages can be found in the following files:</p>
+<ol type="1">
+<li><strong>quantum_safe_api_discovery_cbom.json</strong> - A single CBOM file is generated after the API Discovery Scan for all supported languages, except for Java. For Java, a CBOM cannot be generated at this stage because the required variant details are only available after the Analysis Scan.</li>
+<li><strong>quantum_safe_api_discovery_crypto_inventory.json</strong> - Inventory of all cryptographic APIs discovered during the API Discovery Scan, including file names and locations.</li>
+<li><strong>quantum_safe_api_discovery_findings.json</strong> - Detailed findings from the API Discovery Scan are available for all supported languages, except for Java API Discovery Scan results.</li>
+<li><strong>quantum_safe_api_discovery_report.json</strong> - Detailed metrics information, including the number of files, line counts, and related data.</li>
+</ol>
+<p>The scan results for Cryptographic analysis language can be found in the following files:</p>
+<ol type="1">
+<li><strong>quantum_safe_cryptography_analysis_cbom.json</strong> - The CBOM file is generated after the Cryptographic Analysis Scan for all supported languages (currently limited to Java).</li>
+<li><strong>quantum_safe_cryptography_analysis_findings_<language>.json</language></strong> - Detailed findings from the Cryptographic Analysis Scan, including vulnerabilities, cryptographic properties, compliance status, and related metrics, are available for the supported languages (currently limited to Java).</li>
+<li><strong>quantum_safe_cryptography_analysis_issue_summary.json</strong> - Provide details about any missing dependencies or class files specified in the class path during Cryptographic Analysis Scan. This information helps identify potential causes of scan failures or missing artifacts.</li>
+</ol>
+<p>These files are quite verbose. Here’s a snippet of the result:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/scan-results-json.png" class="img-fluid figure-img"></p>
@@ -647,9 +669,13 @@ Note
 </section>
 <section id="viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension" class="level2">
 <h2 class="anchored" data-anchor-id="viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension">Viewing the CLI scan results in the IBM Quantum Safe Explorer Visual Studio Code Extension</h2>
+<p>There are two ways to view the CLI output on Visual Studio Code with the IBM Quantum Safe™ Explorer Visual Studio Code extension:</p>
+<ol type="1">
+<li>Opening the scanned root folder of the project.</li>
+<li>Opening the scan results subfolder (qs_explorer_result) directly.</li>
+</ol>
 <section id="opening-the-scanned-folder" class="level3">
 <h3 class="anchored" data-anchor-id="opening-the-scanned-folder">Opening the scanned folder</h3>
-<p>As of IBM Quantum Safe Explorer 1.0.1 release, you can now view the CLI scan results in Visual Studio Code.</p>
 <p>When you execute a scan, a <strong>qs_explorer_result</strong> folder is generated along with the <strong>qs_scan_result</strong> folder.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -684,26 +710,30 @@ Note
 <figcaption>Opening3</figcaption>
 </figure>
 </div>
-<p>To populate the <strong>SCAN RESULTS</strong>, we must first navigate to the <strong>QUANTUM SAFE EXPLORER</strong> tab. This then populates the <strong>SCAN RESULTS</strong> menu. That menu drop down then brings you to the <code>Crypto Artifacts</code>. For example:</p>
+<p>The EXPLORER SCAN RESULTS tab is open by default. The scan results are displayed:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../images/vs-code-quantum-safe-explorer.png" class="img-fluid figure-img"></p>
+<p><img src="../../images/scanning7.png" class="img-fluid figure-img"></p>
 <figcaption>Opening4</figcaption>
 </figure>
 </div>
-<p>To view the results dashboard, you simply toggle to the <strong>QUANTUM SAFE EXPLORER DASHBOARD</strong> tab and click the <strong>+</strong> symbol on the right hand side to expand the view:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/vs-code-quantum-safe-dashboard-tab.png" class="img-fluid figure-img"></p>
-<figcaption>Opening5</figcaption>
-</figure>
+</section>
+<section id="opening-the-scan-results-subfolder-qs_explorer_result-directly" class="level3">
+<h3 class="anchored" data-anchor-id="opening-the-scan-results-subfolder-qs_explorer_result-directly">Opening the scan results subfolder (qs_explorer_result) directly</h3>
+<p>In your local drive, locate the <strong>qs_explorer_result</strong> folder. Then right click the <strong>qs_explorer_result</strong> folder, hover over “Open with” and select Visual Studio Code.</p>
+<p>Click the <strong>EXPLORER SCAN RESULTS</strong> tab to view the scan results. Under the cryptographic results section, select the language to view the scan results.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>This should then expose the dashboard as shown below:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/vs-code-quantum-safe-dashboard-view.png" class="img-fluid figure-img"></p>
-<figcaption>Opening6</figcaption>
-</figure>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this option, only the scan results will appear. The code cannot be opened in the editor panel.</p>
+</div>
 </div>
 
 
