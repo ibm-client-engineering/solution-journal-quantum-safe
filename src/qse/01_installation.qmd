@@ -10,12 +10,12 @@ format:
 ::: {.callout-note}
 ## Useful links (IBM Docs)
 
-- [Installing Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-windows)
-- [Installing Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-macos)
-- [Uninstalling Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-windows)
-- [Uninstalling Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-macos)
-- [Installing/Uninstalling QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension)
-- [Configuring QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension)
+- [Installing Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-installing-quantum-safe-windows)
+- [Installing Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-installing-quantum-safe-macos)
+- [Uninstalling Quantum Safe Explorer on Windows](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-uninstalling-quantum-safe-from-windows)
+- [Uninstalling Quantum Safe Explorer on macOS](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-uninstalling-quantum-safe-from-macos)
+- [Installing/Uninstalling QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension)
+- [Configuring QSE VS Code extension](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=configuring-quantum-safe-explorer-visual-studio-code-extension)
 
 > Tip: Use the top-left **Change version** dropdown to select the version you’re running.
 :::
@@ -135,9 +135,21 @@ Choose the appropriate download site and **accept all license and usage agreemen
 
 ## Download platform-specific bundles
 
-Download the application bundles corresponding to your operating system.
-
 > Note: In many distributions, the QSE artifacts come as multiple zip packages that must be extracted into the **same folder**.
+
+You will have to download **three IBM Quantum Safe Explorer eAssemblies**. The VS Code Extension and CLI are multiplatform, while the Service is platform-specific. Depending on your O.S.:
+
+For **MacOS**:
+
+- IBM Quantum Safe Explorer 2.2.5.1 *Service - MacOS* - English
+- IBM Quantum Safe Explorer 2.2.5.1 *Visual Studio Code Extension* - Multiplatform English
+- IBM Quantum Safe Explorer 2.2.5.1 *Command Line Interface (CLI)* - English
+
+For **Windows**:
+
+- IBM Quantum Safe Explorer 2.2.5.1 *Service - Windows* - English
+- IBM Quantum Safe Explorer 2.2.5.1 *Visual Studio Code Extension* - Multiplatform English
+- IBM Quantum Safe Explorer 2.2.5.1 *Command Line Interface (CLI)* - English
 
 ## Download the installer (optional)
 
