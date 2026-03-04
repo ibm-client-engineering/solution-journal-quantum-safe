@@ -7,13 +7,20 @@ format:
     number-sections: false
 ---
 
+# Purpose
+
+Integration with GitHub Actions allows for flexible, automatic scanning of repository code. This allows for proactive 
+protection and remediation, before vulnerable code ever gets distributed and used. This is highly recommended for any 
+enterprise leveraging GitHub as a code repoository, especially if it houses production code.
+
 # Overview
 
 This guide provides step-by-step instructions for integrating GitHub Actions with Quantum Safe Explorer.
 
-It discusses primarily how to run scans on Opened Pull Requests, but can be adapted to any use case.
+It discusses primarily how to run scan Pull Requests (PRs) when opened, but can be adapted to any use case.
 
 It covers:
+
 - Creating the GitHub Action repository
 - Creating the repository to be scanned
 - Triggering the Scan
@@ -437,7 +444,18 @@ my-project/
 If the qse-scan-action is not allowed by your company or organization's policy, you can still test it out (see details below)
 
 ::: {.callout-warning}
-For widespread use, it's recommended to pursue getting permission to allow this action, as it is much more efficient and organized than the alternative laid out below, which should only be used for testing purposes
+For widespread use, it's recommended to pursue getting permission to allow this action, as it is:
+
+- Reusable and flexible
+  - Can be triggered in a variety of ways as appropriate for each situation
+- Ensures scan version consistency
+  - Only one version of QSE exists
+- Much more efficient and organized
+  - Small amount of static storage requried
+  - Easy to manage (update, delete, modify)
+- Scalable and adaptable
+  - If you do customize the CLI, then you only need to store one verison of each customization per use case
+therefore, the alternative should only be used for testing purposes
 :::
 
 Instead of creating two separate repositories, one to host the action and one with the source code to be scanned, this alternative places the contents of the action into the same repository beings scanned like so:
@@ -500,7 +518,5 @@ jobs:
 
 The whole .github/actions folder is moved into the same repository that you are scanning. 
 
-> Even though the other changes are minimal, this results in a storage overhead to every repo, which is why it's recommended to pursue the first method.
-
 ### Template modification
-For reuse with this method, create a template with the above structure, that includes the cli, instead
+For reuse with this method, create a template with the above structure, that includes the cli, instead.
