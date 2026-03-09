@@ -193,7 +193,9 @@ jobs:
         with:
         # If you want to scan a specific folder, set it here; otherwise scan repo root
           input_dir: ${{ github.workspace }}
-        # Optional: override default output folder
+        # Specify what scan(s) to run (api_discovery is the default):
+        # crypto_analysis | api_discovery | both
+        # Optional: override default output folder (relative output paths are relative to the input folder):
         # output_dir: "qse-scan-results"
 ```
 
@@ -212,8 +214,12 @@ jobs:
   uses: ./.github/actions/qse-scan
   with:
     input_dir: ${{ github.workspace }}/services/payments
-    # Optionally constrain languages scope-
-    # languages: "{.java,.py}" 
+    # Optionally constrain languages scope"
+    # languages: ".java,.py" 
+    # Specify what scan(s) to run (api_discovery is the default):
+    # crypto_analysis | api_discovery | both
+    # Optionally specify override default output directory (relative output paths are relative to the input folder):
+    # output_dir: "qse_${{ matrix.repo }}_out"
 ```
 
 ### Scan multiple repos (matrix)
@@ -258,8 +264,10 @@ jobs:
           # Optionally constrain scan to a subfolder
           # input_dir: ${{ github.workspace }}/target
           # Optionally constrain languages scope-
-          # languages: "{.java,.py}"
-          # Optionally specify override default output directory
+          # languages: ".java,.py"
+          # Specify what scan(s) to run (api_discovery is the default):
+          # crypto_analysis | api_discovery | both
+          # Optionally specify override default output directory (relative output paths are relative to the input folder):
           # output_dir: "qse_${{ matrix.repo }}_out"
 ```
 
@@ -415,8 +423,10 @@ jobs:
           # If you want to scan a specific folder, set it here; otherwise scan repo root
           input_dir: ${{ github.workspace }}
           # Match your local CLI usage
-          # Optional: override default output folder
-          # output_dir: "qse-scan-results"
+          # Specify what scan(s) to run (api_discovery is the default):
+          # crypto_analysis | api_discovery | both
+          # Optional: override default output folder (relative output paths are relative to the input folder):
+          # output_dir: "./qse-scan-results"
 ```
 </details>
 
@@ -543,8 +553,10 @@ jobs:
         with:
         # If you want to scan a specific folder, set it here; otherwise scan repo root
           input_dir: ${{ github.workspace }}
-        # Optional: override default output folder
-        # output_dir: "qse-scan-results"
+        # Specify what scan(s) to run (api_discovery is the default):
+        # crypto_analysis | api_discovery | both
+        # Optional: override default output folder (relative paths are relative to the input folder):
+        # output_dir: "./qse-scan-results"
 ```
 </details>
 
