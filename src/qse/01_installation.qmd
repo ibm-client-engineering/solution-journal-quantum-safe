@@ -139,17 +139,21 @@ Choose the appropriate download site and **accept all license and usage agreemen
 
 You will have to download **three IBM Quantum Safe Explorer eAssemblies**. The VS Code Extension and CLI are multiplatform, while the Service is platform-specific. Depending on your O.S.:
 
-For **MacOS**:
+::: {.panel-tabset}
+
+### MacOS
 
 - IBM Quantum Safe Explorer 2.2.5.1 *Service - MacOS* - English
 - IBM Quantum Safe Explorer 2.2.5.1 *Visual Studio Code Extension* - Multiplatform English
 - IBM Quantum Safe Explorer 2.2.5.1 *Command Line Interface (CLI)* - English
 
-For **Windows**:
+### Windows
 
 - IBM Quantum Safe Explorer 2.2.5.1 *Service - Windows* - English
 - IBM Quantum Safe Explorer 2.2.5.1 *Visual Studio Code Extension* - Multiplatform English
 - IBM Quantum Safe Explorer 2.2.5.1 *Command Line Interface (CLI)* - English
+
+:::
 
 ## Download the installer (optional)
 
