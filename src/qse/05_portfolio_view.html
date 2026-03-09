@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Portfolio View Setup – IBM Quantum Safe Encryption</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../src/qse/04_github_actions_integration.html" rel="next">
+<link href="../../src/qse/02_scanning.html" rel="prev">
+<link href="../../images/bee.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-dd287b09ff057a2d9ebcf43c9beafc47.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": true,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Search",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/IBMlogo.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/IBMlogo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IBM Quantum Safe Encryption</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-github" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/ibm-client-engineering">
+ <span class="dropdown-text">Check us out on Github</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/ibm-client-engineering/solution-journal-quantum-safe">
+ <span class="dropdown-text">Look at this repo on Github</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-linkedin" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-linkedin">    
+        <li>
+    <a class="dropdown-item" href="http://linkedin.com/post">
+ <span class="dropdown-text">Share on your LinkedIn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.linkedin.com/company/ibm/">
+ <span class="dropdown-text">IBM LinkedIn</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">QSE</a></li><li class="breadcrumb-item"><a href="../../src/qse/05_portfolio_view.html">Portfolio View</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem Definition</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">QSR</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Adaptive Proxy</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/adaptive_proxy/02_configuration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuration</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Performance Test Harness</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qsr/performance_test_harness/02_usage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Usage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">QSE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/03_tooling_landscape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Positioning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/01_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/02_scanning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scanning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/05_portfolio_view.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Portfolio View</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/qse/04_github_actions_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Integration</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Guardium Insights</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">EC2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/01-prereqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/ec2/02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">EKS</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/01_pre-reqs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prerequisites</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/eks/02_cluster-build.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EKS Cluster Build</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/03_gi-install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guardium Insights Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/guardium_insights/04_optional_services.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Services</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/key-takeaway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Key Takeaways</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#downloads" id="toc-downloads" class="nav-link" data-scroll-target="#downloads">Downloads</a>
+  <ul class="collapse">
+  <li><a href="#portfolio-view-files" id="toc-portfolio-view-files" class="nav-link" data-scroll-target="#portfolio-view-files">Portfolio View files</a></li>
+  <li><a href="#additional-downloads" id="toc-additional-downloads" class="nav-link" data-scroll-target="#additional-downloads">Additional Downloads</a>
+  <ul class="collapse">
+  <li><a href="#nodejs" id="toc-nodejs" class="nav-link" data-scroll-target="#nodejs">NodeJS</a></li>
+  <li><a href="#postgresql" id="toc-postgresql" class="nav-link" data-scroll-target="#postgresql">PostgreSQL</a></li>
+  <li><a href="#java" id="toc-java" class="nav-link" data-scroll-target="#java">Java</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link" data-scroll-target="#installation-setup">Installation &amp; Setup</a>
+  <ul class="collapse">
+  <li><a href="#database-setup" id="toc-database-setup" class="nav-link" data-scroll-target="#database-setup">Database setup</a>
+  <ul class="collapse">
+  <li><a href="#create-a-database" id="toc-create-a-database" class="nav-link" data-scroll-target="#create-a-database">Create a database</a></li>
+  <li><a href="#run-setup-scripts" id="toc-run-setup-scripts" class="nav-link" data-scroll-target="#run-setup-scripts">Run setup scripts</a></li>
+  </ul></li>
+  <li><a href="#application-portfolio-data-loader-setup" id="toc-application-portfolio-data-loader-setup" class="nav-link" data-scroll-target="#application-portfolio-data-loader-setup">Application portfolio data loader setup</a></li>
+  <li><a href="#explorer-scan-data-loader-setup" id="toc-explorer-scan-data-loader-setup" class="nav-link" data-scroll-target="#explorer-scan-data-loader-setup">Explorer scan data loader setup</a></li>
+  <li><a href="#cognos" id="toc-cognos" class="nav-link" data-scroll-target="#cognos">Cognos</a>
+  <ul class="collapse">
+  <li><a href="#download-and-add-jdbc-driver" id="toc-download-and-add-jdbc-driver" class="nav-link" data-scroll-target="#download-and-add-jdbc-driver">Download and add JDBC Driver</a></li>
+  <li><a href="#increase-max-memory-for-websphere-liberty-profile" id="toc-increase-max-memory-for-websphere-liberty-profile" class="nav-link" data-scroll-target="#increase-max-memory-for-websphere-liberty-profile">Increase max memory for WebSphere Liberty Profile</a></li>
+  <li><a href="#import-custom-dashboard" id="toc-import-custom-dashboard" class="nav-link" data-scroll-target="#import-custom-dashboard">Import custom dashboard</a></li>
+  <li><a href="#update-cognos-vm-ip-address" id="toc-update-cognos-vm-ip-address" class="nav-link" data-scroll-target="#update-cognos-vm-ip-address">Update Cognos VM IP Address</a></li>
+  <li><a href="#load-data-into-database" id="toc-load-data-into-database" class="nav-link" data-scroll-target="#load-data-into-database">Load data into database</a></li>
+  <li><a href="#run-cognos-dashboard" id="toc-run-cognos-dashboard" class="nav-link" data-scroll-target="#run-cognos-dashboard">Run Cognos Dashboard</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#use-interpretation" id="toc-use-interpretation" class="nav-link" data-scroll-target="#use-interpretation">Use &amp; Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#interpreting-the-scan-results" id="toc-interpreting-the-scan-results" class="nav-link" data-scroll-target="#interpreting-the-scan-results">Interpreting the scan results</a>
+  <ul class="collapse">
+  <li><a href="#api-discovery" id="toc-api-discovery" class="nav-link" data-scroll-target="#api-discovery">API discovery</a></li>
+  <li><a href="#vulnerability-summary" id="toc-vulnerability-summary" class="nav-link" data-scroll-target="#vulnerability-summary">Vulnerability summary</a></li>
+  <li><a href="#cryptographic-summary" id="toc-cryptographic-summary" class="nav-link" data-scroll-target="#cryptographic-summary">Cryptographic summary</a></li>
+  <li><a href="#vulnerability-details" id="toc-vulnerability-details" class="nav-link" data-scroll-target="#vulnerability-details">Vulnerability details</a></li>
+  <li><a href="#cryptographic-details" id="toc-cryptographic-details" class="nav-link" data-scroll-target="#cryptographic-details">Cryptographic details</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#postgresdbdump.sql-syntax-error" id="toc-postgresdbdump.sql-syntax-error" class="nav-link" data-scroll-target="#postgresdbdump.sql-syntax-error">postgresdbdump.sql syntax error</a></li>
+  <li><a href="#xqe-dat-0001-the-request-was-canceled-by-the-user" id="toc-xqe-dat-0001-the-request-was-canceled-by-the-user" class="nav-link" data-scroll-target="#xqe-dat-0001-the-request-was-canceled-by-the-user">XQE-DAT-0001 | The request was canceled by the user</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/qse/03_tooling_landscape.html">QSE</a></li><li class="breadcrumb-item"><a href="../../src/qse/05_portfolio_view.html">Portfolio View</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Portfolio View Setup</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Useful links (IBM Docs)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=portfolio-view">Portfolio View</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=view-virtual-machine-security">VM Security</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>Tip: Use the top-left <strong>Change version</strong> dropdown to select the version you’re running.</p>
+</blockquote>
+</div>
+</div>
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>The purpose of the Portfolio View is “to provide a holistic view of cryptographic vulnerabilities across the enterprise’s applications”. Although the VS Code extension and index.html from the CLI have visualizations including a pie chart and dashboard, the portfolio view allows for categorizing scanned code into applications, repositories, and business units. This helps with awareness and action on any risk and compliance issues discovered by the scans.</p>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This page provides the step-by-step instructions to downloading, installing, setting up and using the Portfolio View.</p>
+<p>It covers:</p>
+<ul>
+<li>Prerequisites</li>
+<li>Which files to download
+<ul>
+<li>Portfolio View files</li>
+<li>Additional downloads
+<ul>
+<li>Database setup</li>
+</ul></li>
+</ul></li>
+<li>Installation procedure</li>
+<li>Loading data</li>
+<li>Using the Portfolio View dashboard</li>
+<li>Troubleshooting</li>
+</ul>
+</section>
+<section id="prerequisites" class="level1">
+<h1>Prerequisites</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Components</th>
+<th>Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Operating system</td>
+<td>• Windows Server 2022 Standard<br>• Red Hat Enterprises Linux (RHEL) 9</td>
+</tr>
+<tr class="even">
+<td>System memory and CPU</td>
+<td>• 64 GB RAM<br>• 16 vCPU</td>
+</tr>
+<tr class="odd">
+<td>Software</td>
+<td>• Node.js v16<br>• PostgreSQL 16.0 or higher<br>• IBM Cognos Analytics 12.0.4</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="downloads" class="level1">
+<h1>Downloads</h1>
+<section id="portfolio-view-files" class="level2">
+<h2 class="anchored" data-anchor-id="portfolio-view-files">Portfolio View files</h2>
+<p>You will have to download the QSE Portfolio View and <strong>three IBM Cognos Analytics eAssemblies</strong>. The Client is multiplatform, while the server and installer are platform-specific. Depending on your O.S.:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li>IBM Cognos Analytics Server 12.0.4 Linux x86 Multilingual</li>
+<li>IBM Cognos Analytics Installer 3.7.35 Linux x86 Multilingual</li>
+<li>IBM Quantum Safe Explorer 2.2.3 Portfolio View - Multiplatform English</li>
+<li>IBM Cognos Analytics Client 12.0.4 Multiplatform Multilingual</li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ul>
+<li>IBM Cognos Analytics Server 12.0.4 Microsoft Windows Multilingual</li>
+<li>IBM Cognos Analytics Installer 3.7.35 Microsoft Windows Multilingual</li>
+<li>IBM Quantum Safe Explorer 2.2.3 Portfolio View - Multiplatform English</li>
+<li>IBM Cognos Analytics Client 12.0.4 Multiplatform Multilingual</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="additional-downloads" class="level2">
+<h2 class="anchored" data-anchor-id="additional-downloads">Additional Downloads</h2>
+<section id="nodejs" class="level3">
+<h3 class="anchored" data-anchor-id="nodejs">NodeJS</h3>
+<p>Download the latest version of <a href="https://nodejs.org/en/download/">NodeJS</a> for your O.S. and architecture/distribution.</p>
+</section>
+<section id="postgresql" class="level3">
+<h3 class="anchored" data-anchor-id="postgresql">PostgreSQL</h3>
+<p>Download the latest version of <a href="https://www.postgresql.org/download/">PostgreSQL</a> for your O.S. and architecture/distribution.</p>
+<p>Follow the instructions to initialize the database, make sure to name it <strong>qsapm</strong>.</p>
+<section id="windows-path-configuration" class="level4">
+<h4 class="anchored" data-anchor-id="windows-path-configuration">Windows Path Configuration</h4>
+<p>On Windows, the PostgreSQL binaries directory is not automatically added to the Path environment variable. To add it, find the binaries directory. It will look like this:</p>
+<pre><code>C:\Program Files\PostgreSQL\&lt;version&gt;\bin</code></pre>
+<p>Open the <strong>System Properties</strong> settings:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sysdm.cpl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="1">
+<li>Click the <strong>Advanced</strong> tab and then the <strong>Environment Variables</strong> button.</li>
+<li>Under <strong>System variables</strong>, select the <strong>Path</strong> variable and click the <strong>Edit</strong> button.</li>
+<li>An “Edit environment variable” dialog box containing a list of paths will appear. Click the <strong>New</strong> button and paste the PostgreSQL binaries path found earlier into the new entry.</li>
+<li>Click <strong>OK</strong> on all three open dialog boxes.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>User and file permissions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Ensure that PostgreSQL runs as a dedicated system user with limited privileges.</p></li>
+<li><p>Secure the PostgreSQL data directory by setting the correct file permissions, preventing unauthorized access. For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chown</span> <span class="at">-R</span> postgres:postgres /var/lib/postgresql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="java" class="level3">
+<h3 class="anchored" data-anchor-id="java">Java</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>You need to install the Java Runtime Environment (JRE) separately. To see which version is compatible with your version of Cognos:</p>
+<ol type="1">
+<li>Navigate to <a href="https://www.ibm.com/support/pages/node/6966712">Cognos Analytics Supported Software Environments</a></li>
+<li>Select your version</li>
+<li>Open the <strong>Prerequisite Software</strong> page.</li>
+</ol>
+<p>For 12.0.4, the requirement is Oracle Java SDK/JRE/JDK 8.0.40 and future fix packs.</p>
+<p>After downloading the JRE, move the jdk within to /opt/bin and add it to the PATH:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> server-jre-8u401-linux-x64/jdk1.8.0_401/ /opt/jre/</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export JAVA_HOME=/opt/jre/'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH=$PATH:$JAVA_HOME/bin'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Check the installation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>You can skip this step and use the Java Runtime Environment (JRE) provided with Cognos Analytics.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="installation-setup" class="level1">
+<h1>Installation &amp; Setup</h1>
+<section id="database-setup" class="level2">
+<h2 class="anchored" data-anchor-id="database-setup">Database setup</h2>
+<section id="create-a-database" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-database">Create a database</h3>
+<p>If you haven’t yet created a database named <strong>qsapm</strong>, do so now:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-U</span> postgres <span class="co"># initialize psql shell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> qsapm;</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>\q <span class="co">-- exit the psql shell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="run-setup-scripts" class="level3">
+<h3 class="anchored" data-anchor-id="run-setup-scripts">Run setup scripts</h3>
+<p>Unzip all the zipped files in the IBM_Quantum_Safe_Explorer_Portfolio_View_<version> file, and navigate to the workdir. Then run:</version></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> postgresdbdump.sql</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> CHANGELOG.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you encounter a syntax error with the first script, see <a href="#postgresdbdump.sql-syntax-error">this fix</a>.</p>
+</div>
+</div>
+<p>For reference, the syntax is as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> <span class="op">&lt;</span>host<span class="op">&gt;</span> -U <span class="op">&lt;</span>username<span class="op">&gt;</span> -d <span class="op">&lt;</span>dbname<span class="op">&gt;</span> -f script_path.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="application-portfolio-data-loader-setup" class="level2">
+<h2 class="anchored" data-anchor-id="application-portfolio-data-loader-setup">Application portfolio data loader setup</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="explorer-scan-data-loader-setup" class="level2">
+<h2 class="anchored" data-anchor-id="explorer-scan-data-loader-setup">Explorer scan data loader setup</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../apm-dataloader</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cognos" class="level2">
+<h2 class="anchored" data-anchor-id="cognos">Cognos</h2>
+<p>From the downloaded <em>PortfolioViewPlatform</em> folder, run the cognos installer.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>UI Mode Options
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The installer supports three UI modes:</p>
+<ul>
+<li><strong>gui</strong> (default) - Graphical interface</li>
+<li><strong>console</strong> - Text-based interactive mode (note: lowercase)</li>
+<li><strong>silent</strong> - Non-interactive mode (requires response file)</li>
+</ul>
+<p>To specify a mode, use the <code>-i</code> flag: <code>./ca_instl_lnx86_3.7.35.bin -i console</code></p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ca_instl_lnx86_3.7.35.bin</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./ca_instl_lnx86_3.7.35.bin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ol type="1">
+<li>Double-click the installer ca_instl_win_3.7.35.exe.</li>
+<li>Select IBM Cognos Analytics - 12.0.4 and click <em>Next</em></li>
+<li>Select <em>I accept the terms of the License Agreement</em> and click <em>Next</em></li>
+<li>Set to your desired Install location and shortcut options and click <em>Next</em></li>
+<li>Allow the installer to create the install directory by clicking <em>Yes</em></li>
+<li>On the Component Selection, select Easy Install and click <em>Next</em></li>
+<li>Fill in the Cognos administrator user ID and password, note them down, and click <em>Next</em></li>
+</ol>
+<ul>
+<li>Note- the password must include:
+<ul>
+<li>1 uppercase character</li>
+<li>1 lowercase character</li>
+<li>1 digit</li>
+<li>1 special character among [!@#$]</li>
+<li>be of a length between [15, 20] characters</li>
+</ul></li>
+</ul>
+<ol start="8" type="1">
+<li>Review the details, making sure you have enough space on the disk and click <em>Install</em></li>
+<li>Wait for the installation to complete</li>
+<li>Click <em>Done</em></li>
+</ol>
+</div>
+</div>
+</div>
+<section id="download-and-add-jdbc-driver" class="level3">
+<h3 class="anchored" data-anchor-id="download-and-add-jdbc-driver">Download and add JDBC Driver</h3>
+<ol type="1">
+<li>Identify the appropriate JDBC driver from the <a href="https://www.ibm.com/support/pages/node/6989513">IBM Cognos Analytics JDBC Drivers</a> page.</li>
+<li>Download it from the appropriate downloads page based on your database.</li>
+</ol>
+<ul>
+<li>For PostgreSQL, use their <a href="https://jdbc.postgresql.org/download/">JDBC Downloads</a>.</li>
+</ul>
+<ol start="3" type="1">
+<li>Move it into the <code>installation_location\drivers</code> directory.</li>
+</ol>
+<ul>
+<li>i.e.&nbsp;<code>C:\Program Files\ibm\cognos\analytics\drivers</code></li>
+</ul>
+</section>
+<section id="increase-max-memory-for-websphere-liberty-profile" class="level3">
+<h3 class="anchored" data-anchor-id="increase-max-memory-for-websphere-liberty-profile">Increase max memory for WebSphere Liberty Profile</h3>
+<ol type="1">
+<li>Launch the Cognos Configuration:</li>
+</ol>
+<ul>
+<li>For <strong>Linux</strong>:
+<ul>
+<li>Navigate to the <code>install_location/bin</code></li>
+<li>Run <code>./cogconfig.sh</code></li>
+</ul></li>
+<li>For <strong>Windows</strong>:
+<ul>
+<li>From the <em>Start</em> menu, search for “IBM Cognos Configuration” and hit <em>Enter</em>.</li>
+</ul></li>
+</ul>
+<ol start="2" type="1">
+<li>Under Local Configuration -&gt; Environment -&gt; IBM Cognos services, click on <em>IBM Cognos</em></li>
+<li>Set the “Maximum memory for Websphere Liberty Profile in MB” to <strong>16384</strong>.</li>
+<li>Click <em>File</em> -&gt; <em>Save</em> or press <em>Ctrl+S</em>.</li>
+<li>When the processing window completes, click <em>Close</em>.</li>
+<li>Click <em>File</em> -&gt; <em>Exit</em>. or press <em>Alt+F4</em>.</li>
+<li>In the restart confirmation window, click <em>Yes</em>.</li>
+<li>After the restart completes, click <em>Close</em>.</li>
+</ol>
+</section>
+<section id="import-custom-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="import-custom-dashboard">Import custom dashboard</h3>
+<ol type="1">
+<li>Unzip the <code>IBM Quantum Safe Explorer 2.2.3 Portfolio View - Multiplatform English</code> and all folders within <em>up to cognosdashboard</em>.</li>
+<li>Copy the <code>Team Content.zip</code> folder within the cognosdashboard to <code>install_location/analytics/deployment/</code>.</li>
+<li>Navigate to IBM Cognos Analytics in your browser and login with the cognos administrator user ID and password you created.</li>
+</ol>
+<ul>
+<li>You can also search for <em>IBM Cognos Analytics</em> from the <em>Start/Search</em> menu.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The dashboard can be accessed at <code>http://&lt;server&gt;:&lt;port&gt;/bi</code>. The default is <code>http://localhost:9300/bi</code> when running locally.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>From the hamburger menu on the top-left, navigate to <em>Manage</em> -&gt; <em>Administration console…</em></li>
+<li>Navigate to the <strong>Configuration</strong> tab and select <strong>Content Administration</strong> and click on the <strong>New Import</strong> icon:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/new-import.png" class="img-fluid figure-img"></p>
+<figcaption>New Import</figcaption>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>In the <strong>Team Content</strong> section, select <strong>Portfolio View</strong> and click <strong>Next</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-view-selection.png" class="img-fluid figure-img"></p>
+<figcaption>Portfolio View Selection</figcaption>
+</figure>
+</div>
+<ol start="6" type="1">
+<li>The Public folders, directory, and library content section appears. Ensure that the checkbox for <strong>Portfolio View</strong> is selected, and then click <strong>Next</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-view-checkbox.png" class="img-fluid figure-img"></p>
+<figcaption>Portfolio View Checkbox</figcaption>
+</figure>
+</div>
+<ol start="7" type="1">
+<li>Select an action and click <strong>Finish</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-view-action.png" class="img-fluid figure-img"></p>
+<figcaption>Select Action</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If unsure of the action to be selected, then select <strong>Save and run once</strong>.</p>
+</div>
+</div>
+<p>The imported folder will now be available in the Team Content tab.</p>
+<ol start="8" type="1">
+<li><strong>Connect to the PostgreSQL instance:</strong></li>
+</ol>
+<ol type="a">
+<li>In the left panel, click <strong>Data Source Connections</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-data-source.png" class="img-fluid figure-img"></p>
+<figcaption>Data Source Connections</figcaption>
+</figure>
+</div>
+<ol start="2" type="a">
+<li>Click the <strong>New Data Source</strong> icon near the top right of the Configuration page:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-new-data-source.png" class="img-fluid figure-img"></p>
+<figcaption>New Data Source</figcaption>
+</figure>
+</div>
+<ol start="3" type="a">
+<li>Type the <strong>Name</strong> of the data source and click <strong>Next</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-name-data-source.png" class="img-fluid figure-img"></p>
+<figcaption>Name Data Source</figcaption>
+</figure>
+</div>
+<ol start="4" type="a">
+<li>Select <strong>JDBC</strong> as the data source type, and click <strong>Next</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-select-jdbc.png" class="img-fluid figure-img"></p>
+<figcaption>Select JDBC</figcaption>
+</figure>
+</div>
+<ol start="5" type="a">
+<li>On the following screen, select <strong>PostgreSQL</strong> as the datasource <strong>Type</strong>. Under <strong>JDBC URL</strong>, replace <code>&lt;host&gt;</code>, <code>&lt;port&gt;</code>, and <code>&lt;database-name&gt;</code> with the details of the database:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-postgresql-config.png" class="img-fluid figure-img"></p>
+<figcaption>PostgreSQL Configuration</figcaption>
+</figure>
+</div>
+<ol start="6" type="a">
+<li>Enter the credentials of the PostgreSQL database in the <strong>User ID</strong> and <strong>Password</strong> fields. Type the password again in the <strong>Confirm password</strong> field.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-credentials.png" class="img-fluid figure-img"></p>
+<figcaption>Enter Credentials</figcaption>
+</figure>
+</div>
+<ol start="7" type="a">
+<li>Open the database connection test by clicking <strong>Test the connection…</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-test-connection.png" class="img-fluid figure-img"></p>
+<figcaption>Test Connection</figcaption>
+</figure>
+</div>
+<ol start="8" type="a">
+<li>Click <strong>Test</strong> button to test the connection:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-click-test.png" class="img-fluid figure-img"></p>
+<figcaption>Click Test</figcaption>
+</figure>
+</div>
+<ol type="i">
+<li>In the test results, ensure that the status is “Succeeded” and click <strong>Close</strong>.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-test-results.png" class="img-fluid figure-img"></p>
+<figcaption>Test Results</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the connection test fails, check host, port, database name, and credentials and try again.</p>
+</div>
+</div>
+<ol start="10" type="a">
+<li>Click <strong>Finish</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-finish.png" class="img-fluid figure-img"></p>
+<figcaption>Click Finish</figcaption>
+</figure>
+</div>
+<p>The data source is now displayed in the configuration page.</p>
+</section>
+<section id="update-cognos-vm-ip-address" class="level3">
+<h3 class="anchored" data-anchor-id="update-cognos-vm-ip-address">Update Cognos VM IP Address</h3>
+<p>Follow the steps below to update the IP address of the Virtual Machine in which Cognos is installed:</p>
+<ol type="1">
+<li><p>Login to Cognos using admin access.</p></li>
+<li><p>Navigate to the <strong>New Dashboard</strong> and click the <strong>Share</strong> option to copy the link.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-share-dashboard.png" class="img-fluid figure-img"></p>
+<figcaption>Share Dashboard</figcaption>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Open the <strong>Portfolio View</strong> dashboard and scroll down to select the <strong>Click to design dashboard</strong> text field. In the properties pane, paste the new link in the <strong>Link to</strong> field and <strong>save</strong> the report.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-portfolio-view-properties-link.png" class="img-fluid figure-img"></p>
+<figcaption>Portfolio View Properties Link</figcaption>
+</figure>
+</div>
+</section>
+<section id="load-data-into-database" class="level3">
+<h3 class="anchored" data-anchor-id="load-data-into-database">Load data into database</h3>
+<section id="loading-application-portfolio-data" class="level4">
+<h4 class="anchored" data-anchor-id="loading-application-portfolio-data">Loading application portfolio data</h4>
+<ol type="1">
+<li>Open the following configuration file in a text editor:</li>
+</ol>
+<pre><code>apm-appdetailsdataloader/dist/config.json</code></pre>
+<ol start="2" type="1">
+<li>Edit the <code>dbConfig</code> section using the details of the PostgreSQL server that has been installed:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"database"</span><span class="fu">:</span> <span class="st">"qsapm"</span><span class="fu">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"port"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Copy the application portfolio file to the following directory:</li>
+</ol>
+<pre><code>apm-appdetailsdataloader/input</code></pre>
+<p>See the examples below to understand the fields required:</p>
+<details>
+<summary>
+<blockquote class="blockquote">
+Reveal application portfolio template csv
+</blockquote></summary>
+
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>app_portfolio_sample.csv</strong></pre>
+</div>
+<pre class="csv" data-filename="app_portfolio_sample.csv"><code>organizationid,organizationname,organizationdescription,organizationlocation,businessunitid,businessunitname,businessunitdescription,divisionid,divisionname,divisiondescription,applicationid,applicationname,applicationdescription,applicationsize,applicationstatus,applicationstartdate,applicationenddate,applicationowner,repositoryid,repositoryname,repositorylanguage,repositorysize,repositorydependencies,repositorystatus,repositorystartdate,repositoryenddate
+1,Northwind Corp,Global supply chain leader,Chicago,BU100,Logistics,Handles logistics operations,DIV100,Freight Ops,Freight operations division,APP100,Freight Manager,Manages freight scheduling,250,Active,2023-01-15,,Alice Johnson,REPO100,Freight-API,Java,1200,"spring,hibernate",Active,2023-01-20,
+1,Northwind Corp,Global supply chain leader,Chicago,BU100,Logistics,Handles logistics operations,DIV100,Freight Ops,Freight operations division,APP100,Freight Manager,Manages freight scheduling,250,Active,2023-01-15,,Alice Johnson,REPO101,Freight-UI,JavaScript,800,"react,axios",Active,2023-02-01,
+1,Northwind Corp,Global supply chain leader,Chicago,BU101,Warehousing,Warehouse operations,DIV101,Storage Ops,Storage and inventory division,APP101,Inventory Control,Tracks inventory levels,180,Active,2022-11-01,2024-12-31,Bob Smith,REPO102,Inventory-Service,Python,600,"flask,sqlalchemy",Inactive,2022-11-05,2024-12-31
+2,BlueSky Tech,Cloud software provider,Austin,BU200,Engineering,Product engineering division,DIV200,Platform Services,Core platform services,APP200,Cloud Portal,Customer cloud portal,300,Active,2024-03-01,,Carol White,REPO200,Portal-Backend,Go,1500,"gin,gorm",Active,2024-03-05,
+2,BlueSky Tech,Cloud software provider,Austin,BU200,Engineering,Product engineering division,DIV200,Platform Services,Core platform services,APP200,Cloud Portal,Customer cloud portal,300,Active,2024-03-01,,Carol White,REPO201,Portal-Frontend,TypeScript,900,"vue,axios",Active,2024-03-10,
+2,BlueSky Tech,Cloud software provider,Austin,BU201,Security,Security and compliance,DIV201,Identity Services,Identity and access management,APP201,Identity Manager,Manages authentication,220,Active,2023-06-15,,David Lee,REPO202,Identity-Auth,Java,1100,"spring-security,jwt",Active,2023-06-20,
+2,BlueSky Tech,Cloud software provider,Austin,BU201,Security,Security and compliance,DIV201,Identity Services,Identity and access management,APP201,Identity Manager,Manages authentication,220,Active,2023-06-15,,David Lee,REPO203,Identity-UI,JavaScript,700,"react,redux",Active,2023-07-01,</code></pre>
+</div>
+</details>
+<details>
+<summary>
+<blockquote class="blockquote">
+Reveal application portfolio sample csv
+</blockquote></summary>
+
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>app_portfolio_template.csv</strong></pre>
+</div>
+<pre class="csv" data-filename="app_portfolio_template.csv"><code>organizationid,organizationname,organizationdescription,organizationlocation,businessunitid,businessunitname,businessunitdescription,divisionid,divisionname,divisiondescription,applicationid,applicationname,applicationdescription,applicationsize,applicationstatus,applicationstartdate,applicationenddate,applicationowner,repositoryid,repositoryname,repositorylanguage,repositorysize,repositorydependencies,repositorystatus,repositorystartdate,repositoryenddate</code></pre>
+</div>
+</details>
+<ol start="4" type="1">
+<li>Run the appropriate data loader to import the application portfolio data into the PostgreSQL database:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="loading-the-explorer-scan-output-into-the-database" class="level4">
+<h4 class="anchored" data-anchor-id="loading-the-explorer-scan-output-into-the-database">Loading the Explorer scan output into the database</h4>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Prerequisites
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Ensure the repo and app names from the application portfolio csv match the <code>RepositoryId</code> and <code>ApplicationId</code> in the JSON files you are loading.</li>
+<li>Create the following folders under <code>apm-dataloader</code> if they don’t exist already:
+<ul>
+<li><code>flatinput</code></li>
+<li><code>flatoutput</code></li>
+<li><code>flaterror</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<ol type="1">
+<li>Open the following configuration file in a text editor:</li>
+</ol>
+<pre><code>apm-dataloader/dist/config.json</code></pre>
+<ol start="2" type="1">
+<li>Edit the <code>dbConfig</code> section using the details of the PostgreSQL server:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"database"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"port"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Copy the following output files from the IBM Quantum Safe Explorer scans to the following directories:</li>
+</ol>
+<pre><code>quantum_safe_api_discovery_crypto_inventory.json -&gt; apm-dataloader/flat-input</code></pre>
+<pre><code>quantum_safe_cryptography_analysis_findings_java.json -&gt; apm-dataloader/input</code></pre>
+<ol start="4" type="1">
+<li>Run the appropriate data loader to import the Explorer scan outputs into the PostgreSQL database:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-dataloader</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="run-cognos-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="run-cognos-dashboard">Run Cognos Dashboard</h3>
+<section id="accessing-the-dashboard" class="level4">
+<h4 class="anchored" data-anchor-id="accessing-the-dashboard">Accessing the dashboard</h4>
+<p>To view the Portfolio View dashboard, do the following:</p>
+<ol type="1">
+<li>Use any web browser to navigate to <code>http://&lt;server&gt;:&lt;port&gt;/bi</code> and log in to Cognos:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-login.png" class="img-fluid figure-img"></p>
+<figcaption>Cognos Login</figcaption>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Click the menu icon in the upper left corner of the welcome screen:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-menu.png" class="img-fluid figure-img"></p>
+<figcaption>Cognos Menu</figcaption>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Click <strong>Content</strong>:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-content.png" class="img-fluid figure-img"></p>
+<figcaption>Click Content</figcaption>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Click the <strong>Team Content</strong> tab:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-team-content.png" class="img-fluid figure-img"></p>
+<figcaption>Team Content Tab</figcaption>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>Click the title on the <strong>Portfolio View</strong> tile:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-portfolio-tile.png" class="img-fluid figure-img"></p>
+<figcaption>Portfolio View Tile</figcaption>
+</figure>
+</div>
+<ol start="6" type="1">
+<li>The Portfolio View content appears. Click the title on the <strong>Portfolio View</strong> tile to open the dashboard:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-open-dashboard.png" class="img-fluid figure-img"></p>
+<figcaption>Open Dashboard</figcaption>
+</figure>
+</div>
+<p>The Portfolio View dashboard will now be displayed, showing cryptographic vulnerability data across your application portfolio.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="use-interpretation" class="level1">
+<h1>Use &amp; Interpretation</h1>
+<section id="interpreting-the-scan-results" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-scan-results">Interpreting the scan results</h2>
+<p>The data from the Explorer scan results, loaded into the dashboard, are provided in tables and visualized using charts. The tables and charts are interactive, and the results can be filtered by a variety of attributes, such as vulnerability severity, programming language, and cryptographic algorithm.</p>
+<p>The dashboard consists of five tabs in total.</p>
+<p>From the API Discovery scan:</p>
+<ul>
+<li>API discovery</li>
+</ul>
+<p>From the Cryptography Analysis scan:</p>
+<ul>
+<li>Vulnerability summary</li>
+<li>Cryptographic summary</li>
+<li>Vulnerability details</li>
+<li>Cryptographic details</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-dashboard-tabs.png" class="img-fluid figure-img"></p>
+<figcaption>Portfolio View Dashboard Tabs</figcaption>
+</figure>
+</div>
+<section id="api-discovery" class="level3">
+<h3 class="anchored" data-anchor-id="api-discovery">API discovery</h3>
+<p>The API discovery displays the inventory from all the languages scanned during the API Discovery scan. Specifically, it’s based on the loaded into the database via the flatinput folder.</p>
+<p>The <strong>Summary of Crypto findings</strong> table at the top provides a high-level summary of the total number of applications scanned and loaded, number with crypto, total number of languages, number of files scanned, and number of crypto libraries used.</p>
+<p>The <strong>Scan history graph</strong> provides a monthly view of the total number of applications scanned and loaded each month that are with and without crypto.</p>
+<p>The <strong>Application / Cryptography pie chart</strong> provides a view of the total number of applications scanned and loaded with crypto.</p>
+<p>The <strong>Applications detailed crypto findings table</strong> gives a view of each application with details such as crypto libraries used, total number of files, total crypto functions, and the total number of cryptographic artifacts in each application. Right click and filter each application in the table to view the detailed information of the file name and the crypto functions in them.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-api-discovery-full.png" class="img-fluid figure-img"></p>
+<figcaption>API Discoveporry Dashboard</figcaption>
+</figure>
+</div>
+</section>
+<section id="vulnerability-summary" class="level3">
+<h3 class="anchored" data-anchor-id="vulnerability-summary">Vulnerability summary</h3>
+<p>In the “Vulnerability summary” tab a summary of the cryptographic vulnerabilities in the IBM Quantum Safe Explorer results that was previously loaded into the PostgreSQL database are displayed. Click the <strong>Vulnerability summary</strong> tab to return to this page at any time.</p>
+<p>The “Vulnerability summary” page comprises of three sections:</p>
+<ol type="1">
+<li>Severity</li>
+<li>Classification</li>
+<li>Language</li>
+</ol>
+<p>Each section consists of a chart and a table. These are interactive. Click any part of a chart or table to choose what will be displayed on all the three charts.</p>
+<p>The <strong>“Severity”</strong> section categorizes the vulnerabilities into three severity levels. These are listed in the <strong>Vulnerability score</strong> column of the table. From least severe to most, the vulnerability scores are “Minor”, “Major”, and “Critical”. The number of vulnerabilities of each type that were found are listed in a table and visualized in an accompanying donut chart.</p>
+<p>The <strong>“Classification”</strong> section lists the specific vulnerabilities for each severity level, with the number of occurrences of each.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-vulnerability-severity.png" class="img-fluid figure-img"></p>
+<figcaption>Vulnerability Summary - Severity</figcaption>
+</figure>
+</div>
+<p>The <strong>“Classification”</strong> column of the table, and the corresponding bar chart, displays <code>cwe&lt;Weakness_ID&gt;</code>. The table includes a “Debug message” column, which provides a brief summary of the vulnerability. The weakness ID of a vulnerability can be looked up on the <a href="https://cwe.mitre.org/">Common Weakness Enumeration</a> website for further details.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-vulnerability-classification.png" class="img-fluid figure-img"></p>
+<figcaption>Vulnerability Summary - Classification</figcaption>
+</figure>
+</div>
+<p>The <strong>“Language”</strong> section of the “Vulnerability summary” page shows the name of each application, grouped by programming language. The data are provided in a table and visualized in a donut chart.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-vulnerability-language.png" class="img-fluid figure-img"></p>
+<figcaption>Vulnerability Summary - Language</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <strong>Language and application</strong> section to filter the charts by programming language or application name.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each of the three sections has a filter icon in its top right corner. Click this icon to edit the filters for that section.</p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-edit-filters.png" class="img-fluid figure-img"></p>
+<figcaption>Edit Filters</figcaption>
+</figure>
+</div>
+</section>
+<section id="cryptographic-summary" class="level3">
+<h3 class="anchored" data-anchor-id="cryptographic-summary">Cryptographic summary</h3>
+<p>Clicking the <strong>Cryptographic summary</strong> tab will display two sections: Variants and Cryptographic libraries. Each of these sections comprises a donut chart and a table. As with the “Vulnerability summary” page, the charts and tables on this page are interactive; clicking any part of these will apply a filter to all data shown on the page.</p>
+<p>The <strong>“Variants”</strong> section breaks the results down into cryptographic algorithms. The donut chart shows how many instances of each algorithm were found, and the table shows the different key sizes found for each variant:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-crypto-variants.png" class="img-fluid figure-img"></p>
+<figcaption>Cryptographic Summary - Variants</figcaption>
+</figure>
+</div>
+<p>The <strong>“Cryptographic libraries”</strong> section contains a donut plot listing the cryptographic software libraries used, such as OpenSSL or JCA. The accompanying table lists the vulnerable algorithms found for each library.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-crypto-libraries.png" class="img-fluid figure-img"></p>
+<figcaption>Cryptographic Summary - Libraries</figcaption>
+</figure>
+</div>
+</section>
+<section id="vulnerability-details" class="level3">
+<h3 class="anchored" data-anchor-id="vulnerability-details">Vulnerability details</h3>
+<p>The “Vulnerability details” page displays a table with all the vulnerabilities found, grouped by vulnerability score:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-vulnerability-summary.png" class="img-fluid figure-img"></p>
+<figcaption>Vulnerability Summary</figcaption>
+</figure>
+</div>
+<p>This table contains all the information from the table in the Classification section of the “Vulnerability summary” page, but also breaks the results down by the names of the application, and the repository, that the vulnerabilities were found in.</p>
+</section>
+<section id="cryptographic-details" class="level3">
+<h3 class="anchored" data-anchor-id="cryptographic-details">Cryptographic details</h3>
+<p>The Cryptographic details page displays a table listing the cryptographic variants found, along with their public key sizes. These are the same data provided in the Variants table on the “Cryptographic summary” page but includes additional details: the application and repository names. This is shown in the following screenshot showing cryptographic algorithm usage at an application and repository level.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-crypto-details.png" class="img-fluid figure-img"></p>
+<figcaption>Cryptographic Details</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="troubleshooting" class="level1">
+<h1>Troubleshooting</h1>
+<section id="postgresdbdump.sql-syntax-error" class="level3">
+<h3 class="anchored" data-anchor-id="postgresdbdump.sql-syntax-error">postgresdbdump.sql syntax error</h3>
+<p>If you encounter a syntax error when running the <code>postgresdbdump.sql</code> script, add a semicolon to lines 736 and 748 and re-run it. The corrected lines should look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> scanhistory <span class="kw">order</span> <span class="kw">by</span> scanid, created_time <span class="kw">asc</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="xqe-dat-0001-the-request-was-canceled-by-the-user" class="level3">
+<h3 class="anchored" data-anchor-id="xqe-dat-0001-the-request-was-canceled-by-the-user">XQE-DAT-0001 | The request was canceled by the user</h3>
+<p>If you see one or both of the following errors on the portfolio view dashboard:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>XQE<span class="op">-</span>DAT<span class="op">-</span><span class="dv">0001</span> <span class="kw">Data</span> <span class="kw">source</span> adapter error: org.postgresql.util.PSQLException: ERROR: <span class="kw">cross</span><span class="op">-</span><span class="kw">database</span> <span class="kw">references</span> are <span class="kw">not</span> implemented: <span class="ot">"qsapm.qspm.findings"</span> Position: <span class="dv">369</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">The</span> request was canceled <span class="kw">by</span> <span class="kw">the</span> <span class="fu">user</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ensure, using sql queries, that the database qsapm exists, that the schema qspm under it exists, and that qsapm.qspm.findings is populated.</p>
+<p>Use the following SQL query to get a more detailed view of the ingested data once you confirm the above:</p>
+<details>
+<summary>
+<blockquote class="blockquote">
+Reveal ingested data sql query
+</blockquote></summary>
+
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>select_ingested_data.sql</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-filename="select_ingested_data.sql"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> orgapplicationhierarchy <span class="kw">AS</span> (</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        o.organizationid,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        o.organizationname,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        b.businessunitid,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        b.businessunitname,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        a.applicationid,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        r.repositoryid,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        r.repositoryname</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.organizationdimension o</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.businessunitdimension b <span class="kw">ON</span> o.organizationid <span class="op">=</span> b.organizationid</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.divisiondimension d <span class="kw">ON</span> b.businessunitid <span class="op">=</span> d.businessunitid</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.applicationdimension a <span class="kw">ON</span> d.divisionid <span class="op">=</span> a.divisionid</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.repositorydimension r <span class="kw">ON</span> a.applicationid <span class="op">=</span> r.applicationid</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>latestscan <span class="kw">AS</span> (</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        scanid, </span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        applicationid, </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        repositoryid, </span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> applicationid, repositoryid <span class="kw">ORDER</span> <span class="kw">BY</span> scandatetimestamp <span class="kw">DESC</span>) <span class="kw">AS</span> rn</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.findings</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>latestscan_filtered <span class="kw">AS</span> (</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> scanid, applicationid, repositoryid</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> latestscan</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> rn <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details <span class="kw">AS</span> (</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> v.<span class="op">*</span> </span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> qspm.vulnerabilities v       </span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> latestscan_filtered ls </span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> v.scanid <span class="op">=</span> ls.scanid </span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.applicationid <span class="op">=</span> ls.applicationid </span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.repositoryid <span class="op">=</span> ls.repositoryid</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> </span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>vd.scanid, vd.applicationid , vd.repositoryid  ,vd.vulnerabilityscore, a.applicationname,r.repositoryname,vd.classification,vd.debugmessage</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> </span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details vd</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.applicationdimension a <span class="kw">on</span> a.applicationid <span class="op">=</span> vd.applicationid</span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.repositorydimension r <span class="kw">on</span> vd.repositoryid <span class="op">=</span> r.repositoryid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</details>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ibm-client-engineering\.github\.io\/solution-journal-quantum-safe\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../src/qse/02_scanning.html" class="pagination-link" aria-label="Scanning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Scanning</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../src/qse/04_github_actions_integration.html" class="pagination-link" aria-label="GitHub Integration">
+        <span class="nav-page-text">GitHub Integration</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<div class="listitem">
+<a href="https://ibm.com" rel="noopener noreferrer" class="footerLogo"><img src="https://www.ibm.com/brand/experience-guides/developer/8f4e3cc2b5d52354a6d43c8edba1e3c9/02_8-bar-reverse.svg" alt="IBM Logo" class="footer__logo themedComponent_node_modules-@docusaurus-theme-common-lib-components-ThemedComponent-styles-module themedComponent--light_node_modules-@docusaurus-theme-common-lib-components-ThemedComponent-styles-module" width="250" height="250"></a>
+</div>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

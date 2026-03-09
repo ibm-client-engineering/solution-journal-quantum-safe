@@ -285,6 +285,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../src/qse/05_portfolio_view.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Portfolio View</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../src/qse/04_github_actions_integration.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">GitHub Integration</span></a>
   </div>
@@ -447,12 +453,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-windows">Installing Quantum Safe Explorer on Windows</a></li>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-installing-quantum-safe-macos">Installing Quantum Safe Explorer on macOS</a></li>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-windows">Uninstalling Quantum Safe Explorer on Windows</a></li>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=explorer-uninstalling-quantum-safe-from-macos">Uninstalling Quantum Safe Explorer on macOS</a></li>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension">Installing/Uninstalling QSE VS Code extension</a></li>
-<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x_beta?topic=configuring-quantum-safe-explorer-visual-studio-code-extension">Configuring QSE VS Code extension</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-installing-quantum-safe-windows">Installing Quantum Safe Explorer on Windows</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-installing-quantum-safe-macos">Installing Quantum Safe Explorer on macOS</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-uninstalling-quantum-safe-from-windows">Uninstalling Quantum Safe Explorer on Windows</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=explorer-uninstalling-quantum-safe-from-macos">Uninstalling Quantum Safe Explorer on macOS</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=installing-uninstalling-quantum-safe-explorer-visual-studio-code-extension">Installing/Uninstalling QSE VS Code extension</a></li>
+<li><a href="https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=configuring-quantum-safe-explorer-visual-studio-code-extension">Configuring QSE VS Code extension</a></li>
 </ul>
 <blockquote class="blockquote">
 <p>Tip: Use the top-left <strong>Change version</strong> dropdown to select the version you’re running.</p>
@@ -587,10 +593,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="download-platform-specific-bundles" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="download-platform-specific-bundles"><span class="header-section-number">3.2</span> Download platform-specific bundles</h2>
-<p>Download the application bundles corresponding to your operating system.</p>
 <blockquote class="blockquote">
 <p>Note: In many distributions, the QSE artifacts come as multiple zip packages that must be extracted into the <strong>same folder</strong>.</p>
 </blockquote>
+<p>You will have to download <strong>three IBM Quantum Safe Explorer eAssemblies</strong>. The VS Code Extension and CLI are multiplatform, while the Service is platform-specific. Depending on your O.S.:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">MacOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<ul>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Service - MacOS</em> - English</li>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Visual Studio Code Extension</em> - Multiplatform English</li>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Command Line Interface (CLI)</em> - English</li>
+</ul>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ul>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Service - Windows</em> - English</li>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Visual Studio Code Extension</em> - Multiplatform English</li>
+<li>IBM Quantum Safe Explorer 2.2.5.1 <em>Command Line Interface (CLI)</em> - English</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="download-the-installer-optional" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="download-the-installer-optional"><span class="header-section-number">3.3</span> Download the installer (optional)</h2>
@@ -604,9 +629,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Important: These files often use the same base name; keep them together.</p>
 </blockquote>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">macOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>Example artifacts:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">IBM_QSE_2.2.5_CLI_EN.zip</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">IBM_QSE_2.2.5_service_WIN_EN.zip</span></span>
@@ -646,7 +671,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>└───M0Z1DEN</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        IBM Quantum Safe Explorer<span class="op">.</span><span class="fu">exe</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>Example artifacts:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 user staff  35M Jun 26 15:59 IIQSE0_1.0.1_MP_EN<span class="er">(</span><span class="ex">2</span><span class="kw">)</span><span class="ex">.zip</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 user staff  73M Jun 26 15:58 IIQSE0_1.0.1_MP_EN.zip</span>
@@ -682,9 +707,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="5"><span class="header-section-number">5</span> Install QSE service (application)</h1>
 <p>This installs and runs the local QSE service that the VS Code extension and CLI talk to.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">macOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>Run the installer by either double clicking on the .exe file or running the following commands:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0Z1DEN\ <span class="co">#or whatever this folder is called for you!</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\M0Z1DEN<span class="op">&gt;</span> <span class="op">&amp;</span> <span class="st">'.\IBM Quantum Safe Explorer.exe'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -717,7 +742,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Install the PKG (requires admin):</p>
 <ul>
 <li><p>Double-click the IBM Quantum Safe Explorer.pkg file</p></li>
@@ -766,13 +791,13 @@ Warning
 <h1 data-number="6"><span class="header-section-number">6</span> Install the CLI (optional but useful)</h1>
 <p>The <code>cli.sh</code> script can be used to run scans from a terminal and is also used by some workflows.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">macOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Simply change directory to where you extracted the CLI bundle. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory (example):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\M0Z1BEN<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\<span class="fu">CLI</span>\</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p>Simply change directory to where you extracted the CLI bundle. The <code>cli.sh</code> file will be used to perform the actual scan. Assuming you unzipped from your <code>\Downloads</code> directory (example):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads/M0Z1BEN/CLI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -785,15 +810,15 @@ Warning
 <section id="install-using-the-vs-code-cli" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="install-using-the-vs-code-cli"><span class="header-section-number">7.1</span> Install using the VS Code CLI</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">macOS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">macOS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads<span class="op">&gt;</span> <span class="fu">cd</span> <span class="op">.</span>\M0Z1FEN\ <span class="co">#or whatever this folder is called for you!</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\Administrator\Downloads\M0Z1FEN<span class="op">&gt;</span> code <span class="op">--</span>install-extension quantum-safe-explorer-2<span class="op">.</span><span class="dv">2.5</span><span class="op">-</span><span class="dv">0.</span><span class="dt">vsix</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Installing extensions<span class="op">...</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Extension <span class="st">'quantum-safe-explorer-2.2.5-0.vsix'</span> was successfully installed<span class="op">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> M0Z1FEN <span class="co"># or whatever this folder is called for you!</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> quantum-safe-explorer-2.2.5-0.vsix</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
