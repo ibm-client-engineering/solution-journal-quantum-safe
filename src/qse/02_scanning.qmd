@@ -31,13 +31,13 @@ cd sample_files
 code .
 ```
 
-![Scanning1](/images/scanning1.png)
+![](/images/scanning1.png)
 
 Open that directory in VSCode.
 
 On VSCode, open a new terminal in the code window. This can be done with the following key combo: Ctrl-Shift-Backtick(`)
 
-![Scanning3](/images/scanning3.png)
+![](/images/scanning3.png)
 
 In Windows this will open a Powershell terminal
 
@@ -51,16 +51,61 @@ There are two scanning options available in IBM Quantum Safe Explorer 2.2.5. The
 For a more detailed list on the features and differences of these scans, see [IBM Documentation here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#features)
 
 ::: {.callout-note}
-Cryptography analysis is currently only available on Java. See [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#languages-and-cryptography-libraries-supported) for up-to-date list of languages and libraries supported
-::: 
+Run Cryptography Analysis BEFORE running API Discovery. This will avoid file overwriting and keep the results of the API discovery scan intact. 
 
-![Scanning4](/images/scanning4.png)
+Additionally, Cryptography Analysis is currently only available on Java. See [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=quantum-safe-explorer-overview#languages-and-cryptography-libraries-supported) for up-to-date list of languages and libraries supported
+:::
 
-First, let's click on "Scan API discovery"
+#### Cryptography Analysis Scan
+
+Before we run the Java cryptography analysis, make sure the Java files are compiled by running `javac VulnerableCryptoExample.java` and `javac WeakCryptoVulnerabilities.java` in the java_files subfolder.
+
+![](/images/scanning-crypto)
+
+First, let's click on "Scan Cryptography Analysis"
+
+If it's your first time running a cryptography analysis in the repo, you will see the following input box for the class path:
+
+![](/images/scanning-class-path)
+
+For the class path, put in the path where the .class files are located and press Enter
+
+In my directory, the class path is: `c:\\Users\\itzuser\\Desktop\\qse-samples\\sample_files\\java_files`
+
+If you have run a cryptography analysis in this repo before, you can edit the `.vscode\settings.json` file to specify the class path with the compiled Java files.
+
+Here is an example of a working settings.json file:
+
+```bash
+{
+    "qs-explorer.classPath": [
+        {
+            "path": "c:\\Users\\itzuser\\Desktop\\qse-samples\\sample_files\\java_files",
+            "workspace": "c:\\Users\\itzuser\\Desktop\\qse-samples\\sample_files"
+        }
+    ]
+}
+```
+
+When the scan completes, you should see the following directories show up in the Explorer window of VSCode:
+
+**qs_explorer_result** and **qs_scan_result**
+
+![](/images/scanning6.png)
+
+We should now see the EXPLORER SCAN RESULTS tab populated with the Java Cryptographic Analysis
+
+![](/images/cryptographic_results.png)
+
+#### API Discovery Scan
+
+![](/images/scanning4.png)
+
+Now, let's click on "Scan API discovery"
 
 The following notification should pop up
 
-![Scanning5](/images/scanning5.png)
+![](/images/scanning5.png)
 
 Let it scan until it completes.
 
@@ -68,11 +113,11 @@ When the scan completes, you should see the following directories show up in the
 
 **qs_explorer_result** and **qs_scan_result**
 
-![Scanning6](/images/scanning6.png)
+![](/images/scanning6.png)
 
 We should now see the EXPLORER SCAN RESULTS tab populated with some graphs and charts.
 
-![Scanning7](/images/scanning7.png)
+![](/images/scanning7.png)
 
 ## Executing the IBM Quantum Safe Explorer CLI
 
@@ -110,9 +155,9 @@ The run will also point out that you have already accepted the licensing agreeme
 
 Before you officially perform the script run, it is helpful to know the list of required/optional parameters:
 
-![QSEmacos1](/images/macos-qse-cli-params1.png)
+![](/images/macos-qse-cli-params1.png)
 
-![QSEmacos2](/images/macos-qse-cli-params2.png)
+![](/images/macos-qse-cli-params2.png)
 
 You can also find a link to this parameter list in the documentation [here](https://www.ibm.com/docs/en/quantum-safe/quantum-safe-explorer/2.x?topic=cli-using-quantum-safe-explorer)
 
@@ -122,13 +167,19 @@ You initiate a scan using the required **program package path**. The command can
 
 `./cli.sh -i <package-path> -l .cs`
 
-**Cryptography Analysis Scan:**
+**API Discovery Scan (Multiple Languages):**
+
+`./cli.sh -i <package-path> -l ".go,.dart,.java,.jar,.py,.cpp,.cs"`
+
+**Cryptography Analysis Scan (Ensure Java Files are Compiled before Running):**
 
 `./cli.sh -i <package-path> -l .java -cf <class-path> -da`
 
 ::: {.callout-note}
 
 If you are scanning more than one language, then the command needs to be run in double quotation marks. Use the **Help** command by running `./cli.sh -h` for more details on the various parameters.
+
+**Remember:** Run Cryptography Analysis BEFORE running API Discovery. This will avoid file overwriting and keep the results of the API discovery scan intact.
 :::
 
 Here is an example of a completed scan (API discovery) with a specified program *package path*:
@@ -221,7 +272,7 @@ The scan results for Cryptographic analysis language can be found in the followi
 
 These files are quite verbose. Here's a snippet of the result:
 
-![Accessing1](/images/scan-results-json.png)
+![](/images/scan-results-json.png)
 
 
 
@@ -237,7 +288,7 @@ There are two ways to view the CLI output on Visual Studio Code with the IBM Qua
 
 When you execute a scan, a **qs_explorer_result** folder is generated along with the **qs_scan_result** folder.
 
-![Opening1](/images/scan-results-directory.png)
+![](/images/scan-results-directory.png)
 
 ::: {.callout-note}
 To view the results, you need to have the Visual Studio Code extension installed on your system. 
@@ -246,15 +297,15 @@ To view the results, you need to have the Visual Studio Code extension installed
 
 Navigate to the **File** menu drop down, select the **Open Folder** to locate your `/<package-path>` folder:
 
-![Opening2](/images/vs-code-find-project.png)
+![](/images/vs-code-find-project.png)
 
 Once you have found your `/<package-path>` simply open it to populate the project in the Visual Studio Code Explorer view:
 
-![Opening3](/images/vs-code-open-project.png)
+![](/images/vs-code-open-project.png)
 
 The EXPLORER SCAN RESULTS tab is open by default. The scan results are displayed:
 
-![Opening4](/images/scanning7.png)
+![](/images/scanning7.png)
 
 ### Opening the scan results subfolder (qs_explorer_result) directly
 
@@ -265,3 +316,20 @@ Click the **EXPLORER SCAN RESULTS** tab to view the scan results. Under the cryp
 ::: {.callout-note}
 In this option, only the scan results will appear. The code cannot be opened in the editor panel.
 :::
+
+
+## IBM Quantum Safe Explorer Insights
+
+**Accessing IBM Quantum Safe Explorer Insights**
+
+To launch the Insights browser:
+
+1. Navigate to the extracted CLI folder
+2. Locate the `insights` folder and click on `index.html` to open the page in your preferred web browser
+3. Click on "Open folder" and navigate to the `sample_files` repo where the folder `qs_explorer_result` is located
+4. Upload the entire `qs_explorer_result` folder
+5. Select any of the .json files to view the Analysis and Discovery scan results.
+
+All functionalities on this page are consistent with those available in the IBM Quantum Safe VS Code extension.
+
+
