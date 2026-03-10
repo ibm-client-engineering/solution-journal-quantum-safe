@@ -75,9 +75,9 @@ inputs:
     description: "Type of scan(s) to run"
     required: false
     options:
-      - api_discovery
-      - crypto_analysis
-      - both
+      - "api_discovery"
+      - "crypto_analysis"
+      - "both"
     default: api_discovery
   
   java_class_path:
@@ -102,7 +102,7 @@ runs:
       shell: bash
     
     - name: Cryptography Analysis Scan
-      if: inputs.scan_type == crypto_analysis || inputs.scan_type == both
+      if: "${{ inputs.scan_type == 'crypto_analysis' || inputs.scan_type == 'both' }}"
       run: |
         cd "${GITHUB_ACTION_PATH}/qse"
         ./cli.sh \
@@ -114,7 +114,7 @@ runs:
       shell: bash
 
     - name: API Discovery Scan
-      if: inputs.scan_type == api_discovery || inputs.scan_type == both
+      if: "${{ inputs.scan_type == 'api_discovery' || inputs.scan_type == 'both' }}"
       run: |
         cd "${GITHUB_ACTION_PATH}/qse"
         ./cli.sh \
@@ -192,9 +192,9 @@ jobs:
         uses: your-org/qse-scan-action@v1 
         with:
         # If you want to scan a specific folder, set it here; otherwise scan repo root
-          input_dir: ${{ github.workspace }}
+        # input_dir: ${{ github.workspace }}
         # Specify what scan(s) to run (api_discovery is the default):
-        # crypto_analysis | api_discovery | both
+        # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one
         # Optional: override default output folder (relative output paths are relative to the input folder):
         # output_dir: "qse-scan-results"
 ```
@@ -213,11 +213,11 @@ jobs:
 - name: QSE scan (only /services/payments)
   uses: ./.github/actions/qse-scan
   with:
-    input_dir: ${{ github.workspace }}/services/payments
+    input_dir: ${{ github.workspace }}/services/payments # only scan this payments folder
     # Optionally constrain languages scope"
     # languages: ".java,.py" 
     # Specify what scan(s) to run (api_discovery is the default):
-    # crypto_analysis | api_discovery | both
+    # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one
     # Optionally specify override default output directory (relative output paths are relative to the input folder):
     # output_dir: "qse_${{ matrix.repo }}_out"
 ```
@@ -266,7 +266,7 @@ jobs:
           # Optionally constrain languages scope-
           # languages: ".java,.py"
           # Specify what scan(s) to run (api_discovery is the default):
-          # crypto_analysis | api_discovery | both
+          # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one
           # Optionally specify override default output directory (relative output paths are relative to the input folder):
           # output_dir: "qse_${{ matrix.repo }}_out"
 ```
@@ -400,6 +400,15 @@ my-project/
         └── qse-scan.yml          # Workflow that uses the action, see below
 ```
 
+::: {.callout-note}
+For use with the sample_files repository, make sure you set the input directory to the following in qse-scan.yml:
+```yaml
+with:
+  input_dir: ${{ github.workspace }}/sample_files
+```
+This is included in a comment in the below example file.
+:::
+
 <details>
 <summary>> Reveal code for qse-scan.yml</summary>
 ```{.yaml filename=".github/workflows/qse-scan.yml"}
@@ -416,15 +425,21 @@ jobs:
       # 1) Checkout the code to the runner's workspace
       - uses: actions/checkout@v4
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       # 2) Call your reusable Action (tag the version you created, e.g., v1)
-      - name: IBM Quantum Safe Explorer scan
+      - name: Run QSE Scan
         uses: your-org/qse-scan-action@v1 # TODO: replace with your org
         with:
           # If you want to scan a specific folder, set it here; otherwise scan repo root
-          input_dir: ${{ github.workspace }}
+          # input_dir: ${{ github.workspace }}/sample_files # Use this for the sample_files repo
           # Match your local CLI usage
           # Specify what scan(s) to run (api_discovery is the default):
-          # crypto_analysis | api_discovery | both
+          # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one
           # Optional: override default output folder (relative output paths are relative to the input folder):
           # output_dir: "./qse-scan-results"
 ```
@@ -459,12 +474,13 @@ In the above example, you would have to open a Pull Request to trigger the scan:
 
 ![QSE Github Pull Request](/images/qse-github-actions-pr.png)
 
-- When you click into the **Details**, you will be able to see any issues and the runtime
-    - If successful, there will be an Artifacts section below with the scan resuts .zip file like so:
+When you click into the **Details**, you will be able to see any issues and the runtime.
+
+If successful, there will be an Artifacts section below with the scan resuts .zip file like so:
 
 ![QSE Github Actions Success](/images/qse-github-actions-success.png)
 
-- Download the file by clicking the download icon on the right of the tile section with the filename
+Download the file by clicking the download icon on the right of the tile section with the filename. Follow the instructions [here](/src/qse/02_scanning.html#viewing-the-cli-scan-results-in-the-ibm-quantum-safe-explorer-visual-studio-code-extension) to view the results.
 
 # Template Repository
 
@@ -521,6 +537,14 @@ MC-QSE/
 │       └── qse-scan.yml                   # Uses: ./.github/actions/qse-scan
 ```
 
+::: {.callout-note}
+For use with the sample_files repository, make sure you set the input directory to the following in qse-scan.yml:
+```yaml
+with:
+  input_dir: ${{ github.workspace }}/sample_files
+```
+This is included in a comment in the below example file.
+:::
 
 The new qse-scan.yml becomes:
 
@@ -548,13 +572,13 @@ jobs:
           java-version: '17'
 
       # 3) Run the action
-      - name: Run Quantum Safe Explorer scan
+      - name: Run QSE Scan (Local)
         uses: ./.github/actions/qse-scan ### Accesses a local action yaml instead of the separate GitHub Action
         with:
         # If you want to scan a specific folder, set it here; otherwise scan repo root
-          input_dir: ${{ github.workspace }}
+        # input_dir: ${{ github.workspace }}/sample_files # Use this for the sample_files repo
         # Specify what scan(s) to run (api_discovery is the default):
-        # crypto_analysis | api_discovery | both
+        # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one
         # Optional: override default output folder (relative paths are relative to the input folder):
         # output_dir: "./qse-scan-results"
 ```
@@ -564,3 +588,20 @@ The whole .github/actions folder is moved into the same repository that you are 
 
 ### Template modification
 For reuse with this method, create a template with the above structure, that includes the cli, instead.
+
+## Unrecognized Java Runtime version
+
+If you see something such as the the following output from the qse-scan:
+
+```bash
+Error: 3-10 14:50:08,590] [2-thread-2] [ERROR] [com.ibm.quantumsafe.sca.framework.common.JavaGenerateGraphModelImpl] - Failed to create a graph for /home/runner/_work/sample_files/java_files/VulnerableCryptoExample.java
+java.lang.UnsupportedClassVersionError: VulnerableCryptoExample has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
+```
+
+Then you will need to recompile the java file with:
+
+```bash
+javac --release 17 VulnerableCryptoExample.java # replace with the name of your java file
+```
+
+And then rerun the action.
