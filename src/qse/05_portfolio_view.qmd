@@ -18,14 +18,11 @@ format:
 
 # Purpose
 
-The purpose of the Portfolio View is "to provide a holistic view of cryptographic vulnerabilities across the enterprise's applications".
-Although the VS Code extension and index.html from the CLI have visualizations including a pie chart and dashboard, the portfolio view allows
-for categorizing scanned code into applications, repositories, and business units. This helps with awareness and action on any risk and 
-compliance issues discovered by the scans.
+The purpose of the Portfolio View is to provide a holistic view of cryptographic vulnerabilities across the enterprise's applications. Although the VS Code extension and *index.html* from the CLI have visualizations including a pie chart and dashboard, the Portfolio View allows for categorizing scanned code into applications, repositories, and business units. This helps with awareness and action on any risk and compliance issues discovered by the scans.
 
 # Overview
 
-This page provides the step-by-step instructions to downloading, installing, setting up and using the Portfolio View.
+This page provides step-by-step instructions for downloading, installing, setting up, and using the Portfolio View.
 
 It covers:
 
@@ -51,7 +48,7 @@ It covers:
 
 ## Portfolio View files
 
-You will have to download the QSE Portfolio View and **three IBM Cognos Analytics eAssemblies**. The Client is multiplatform, while the server and installer are platform-specific. Depending on your O.S.:
+You will need to download the QSE Portfolio View and **three IBM Cognos Analytics eAssemblies**. The *Client* is multiplatform, while the *Server* and *Installer* are platform-specific. Depending on your operating system:
 
 ::: {.panel-tabset}
 
@@ -71,21 +68,86 @@ You will have to download the QSE Portfolio View and **three IBM Cognos Analytic
 
 :::
 
+If necessary, send the packages to your server:
+
+```bash
+scp -P PORT -i ssh_key.pem QSE_PortfolioView_Platform.zip <user>@<server_ip_address>:/path/to/download.zip
+```
+ 
 ## Additional Downloads
 
 ### NodeJS
 
-Download the latest version of [NodeJS](https://nodejs.org/en/download/) for your O.S. and architecture/distribution.
+Download the latest version of [NodeJS](https://nodejs.org/en/download/) for your operating system and architecture/distribution.
 
-### PostgreSQL
+### Java
 
-Download the latest version of [PostgreSQL](https://www.postgresql.org/download/) for your O.S. and architecture/distribution. 
+::: {.panel-tabset}
 
-Follow the instructions to initialize the database, make sure to name it **qsapm**.
+### Linux
 
-#### Windows Path Configuration
+You need to install the Java Runtime Environment (JRE) separately. To see which version is compatible with your version of Cognos: 
 
-On Windows, the PostgreSQL binaries directory is not automatically added to the Path environment variable. To add it, find the binaries directory. It will look like this:
+1. Navigate to [Cognos Analytics Supported Software Environments](https://www.ibm.com/support/pages/node/6966712).
+2. Select your version.
+3. Open the **Prerequisite Software** page. 
+
+For 12.0.4, the requirement is Oracle Java SDK/JRE/JDK 8.0.40 and future fix packs.
+
+A valid install command for this version is:
+
+```bash
+sudo dnf install java-1.8.0-openjdk-devel
+```
+
+Test the install:
+
+```bash
+java -version
+
+openjdk version "1.8.0_482"
+OpenJDK Runtime Environment (build 1.8.0_482-b08)
+OpenJDK 64-Bit Server VM (build 25.482-b08, mixed mode)
+```
+
+If the above doesn't work, add it to the path:
+```bash
+# Double-check the installation location, here you should see java-1.8.0-openjdk-devel
+ls /usr/lib/jvm
+# Create a script to export the path:
+sudo vim /etc/profile.d/java.sh
+# Add the following:
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+export PATH=$PATH:$JAVA_HOME/bin
+# Make it executable
+sudo chmod +x /etc/profile.d/java.sh
+# Reload the profile:
+source /etc/profile.d/java.sh
+```
+
+Check the installation:
+```bash
+echo $JAVA_HOME
+java -version
+```
+
+### Windows
+
+You can skip this step and use the Java Runtime Environment (JRE) provided with Cognos Analytics.
+
+:::
+
+### Database
+
+#### PostgreSQL
+
+Download the latest version of [PostgreSQL](https://www.postgresql.org/download/) for your architecture. 
+
+Follow the instructions to initialize the database, make sure to name it *qsapm*.
+
+##### Windows Path Configuration
+
+On Windows, the PostgreSQL binaries directory is not automatically added to the *Path* environment variable. To add it, find the binaries directory, which will look like this:
 
 ```
 C:\Program Files\PostgreSQL\<version>\bin
@@ -99,7 +161,7 @@ sysdm.cpl
 
 1. Click the **Advanced** tab and then the **Environment Variables** button. 
 2. Under **System variables**, select the **Path** variable and click the **Edit** button. 
-3. An "Edit environment variable" dialog box containing a list of paths will appear. Click the **New** button and paste the PostgreSQL binaries path found earlier into the new entry. 
+3. An *Edit environment variable* dialog box containing a list of paths will appear. Click the **New** button and paste the PostgreSQL binaries path found earlier into the new entry. 
 4. Click **OK** on all three open dialog boxes.
 
 ::: {.callout-note}
@@ -112,52 +174,32 @@ sysdm.cpl
   ```
 :::
 
-### Java
-
-::: {.panel-tabset}
-
-### Linux
-
-You need to install the Java Runtime Environment (JRE) separately. To see which version is compatible with your
-version of Cognos: 
-
-1. Navigate to [Cognos Analytics Supported Software Environments](https://www.ibm.com/support/pages/node/6966712)
-2. Select your version
-3. Open the **Prerequisite Software** page. 
-
-For 12.0.4, the requirement is Oracle Java SDK/JRE/JDK 8.0.40 
-and future fix packs.
-
-After downloading the JRE, move the jdk within to /opt/bin and add it to the PATH:
-```bash
-mv server-jre-8u401-linux-x64/jdk1.8.0_401/ /opt/jre/
-echo 'export JAVA_HOME=/opt/jre/' >> ~/.bashrc
-echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Check the installation:
-```bash
-java -version
-```
-
-
-### Windows
-
-You can skip this step and use the Java Runtime Environment (JRE) provided with Cognos Analytics.
-
-:::
-
 # Installation & Setup
 
 ## Database setup
+
+### Set a password for PostgreSQL
+
+If you haven't already set a password for the database user postgres, follow these steps:
+
+First, connect to the database:
+
+```bash
+sudo -u postgres psql
+```
+
+Set a password:
+
+```sql
+\password postgres # Enter your password
+```
 
 ### Create a database
 
 If you haven't yet created a database named **qsapm**, do so now:
 
 ```bash
-psql -U postgres # initialize psql shell
+psql -U postgres # initialize psql shell, if you aren't in it already
 ```
 
 ```sql
@@ -167,7 +209,7 @@ CREATE DATABASE qsapm;
 
 ### Run setup scripts
 
-Unzip all the zipped files in the IBM_Quantum_Safe_Explorer_Portfolio_View_<version> file, and navigate to the workdir. Then run:
+Unzip all the zipped files in the *IBM_Quantum_Safe_Explorer_Portfolio_View_<version>* file and navigate to the *workdir* directory. Then run:
 
 ```bash
 psql -h localhost -U postgres -d qsapm -f postgresdbdump.sql
@@ -183,14 +225,14 @@ For reference, the syntax is as follows:
 psql -h <host> -U <username> -d <dbname> -f script_path.sql
 ```
 
-## Application portfolio data loader setup
+### Application portfolio data loader setup
 
 ```bash
 cd apm-appdetailsdataloader
 npm install
 ```
 
-## Explorer scan data loader setup
+### Explorer scan data loader setup
 
 ```bash
 cd ../apm-dataloader
@@ -199,48 +241,94 @@ npm install
 
 ## Cognos
 
-From the downloaded *PortfolioViewPlatform* folder, run the cognos installer.
-
 ::: {.panel-tabset}
 
 ### Linux
 
-::: {.callout-tip}
-## UI Mode Options
+1. Connect to your Linux VM using an SSH client that supports X11 forwarding:
 
-The installer supports three UI modes:
-
-- **gui** (default) - Graphical interface
-- **console** - Text-based interactive mode (note: lowercase)
-- **silent** - Non-interactive mode (requires response file)
-
-To specify a mode, use the `-i` flag: `./ca_instl_lnx86_3.7.35.bin -i console`
-:::
+- If connecting from **MacOS**, you can use [**XQuartz**](xquartz.org) (or choose your own). 
 
 ```bash
+brew install --cask xquartz # install xquartz on MacOS
+```
+
+- If connecting from **Windows**, you can use [**PuTTY**](https://putty.org/index.html) (or choose your own).
+
+2. Follow these commands to configure X11 forwarding and launch the installer:
+```bash
+# Connect to the VM (optionally with X11 forwarding enabled)
+ssh -X -i ~/.ssh/ssh_key.pem <user>@<server_ip_address> -p PORT
+# Install prerequisite libraries
+sudo dnf groupinstall "Server with GUI" # double-check group name by running dnf group list
+sudo dnf update -y
+sudo dnf install libXtst libX11.so.6 libnsl nspr.i686 nspr.x86_64 nss.i686 nss.x86_64 motif.i686 motif.x86_64 libnsl.so.1 libstdc++.so.6
+# Enable graphical mode, if it isn't already set
+systemctl set-default graphical
+# Enable X11Forwarding
+sudo vim /etc/ssh/sshd_config
+# Edit/add in the following: (find the relevant section around line 108, which should already have these variables)
+X11Forwarding yes
+X11UseLocalhost yes
+X11DisplayOffset 10
+# Restart the sshd service
+sudo systemctl restart sshd
+# Set ulimit values
+sudo ulimit -t unlimited -d unlimited -f unlimited -m unlimited -u unlimited -n 8192 -s 8192 -v unlimited
+# Reboot
+reboot
+
+# FOR MAC - RUN ON YOUR TERMINAL (NOT ON THE SERVER): Enable mouse click-through so you can click through the GUI installer
+vim ~/.ssh/config
+# Edit/add in the following: (find the relevant section around line 108, which should already have these variables)
+Host *
+  ForwardX11 yes
+  ForwardX11Trusted yes
+  ForwardAgent yes
+
+# Reconnect to the VM with the above X11 forwarding enabled client
+ssh -X -i ~/.ssh/ssh_key.pem <user>@<server_ip_address> -p PORT
+# Check your xauth cookie; if empty, reconnect to the VM and try again
+xauth list $DISPLAY # Example output: itz-1wtxx7-helper-1/unix:10  MIT-MAGIC-COOKIE-1  3843ddbf3946c81417739f83dd2944
+# Run as root
+sudo su
+# Create the .Xauthority file
+touch ~/.Xauthority
+# Add the cookie to the root user
+xauth add <entire_cookie_output_from_above>
+# Navigate to the installer directory and launch it
 chmod +x ca_instl_lnx86_3.7.35.bin
 ./ca_instl_lnx86_3.7.35.bin
 ```
 
+3. Select your desired language and click **Next**.
+4. Select *IBM Cognos Analytics - \<version\>* and click **Next**.
+5. Select *I accept the terms of the License Agreement* and click **Next**.
+6. Set to your desired install location and click **Next**.
+7. (If the directory does not already exist) Allow the installer to create the install directory by clicking **Yes**.
+8. On the *Component Selection*, select accept the default selections and click **Next**.
+9. Click **Install**.
+10. Click **Done**.
+
 ### Windows
 
-1. Double-click the installer ca_instl_win_3.7.35.exe.
-2. Select IBM Cognos Analytics - 12.0.4 and click *Next*
-3. Select *I accept the terms of the License Agreement* and click *Next*
-4. Set to your desired Install location and shortcut options and click *Next*
-5. Allow the installer to create the install directory by clicking *Yes*
-6. On the Component Selection, select Easy Install and click *Next*
-7. Fill in the Cognos administrator user ID and password, note them down, and click *Next*
+1. Double-click the installer *ca_instl_win_3.7.35.exe*.
+2. Select *IBM Cognos Analytics - 12.0.4* and click **Next**.
+3. Select *I accept the terms of the License Agreement* and click **Next**.
+4. Set to your desired install location and shortcut options and click **Next**.
+5. (If the directory does not already exist) Allow the installer to create the install directory by clicking **Yes**.
+6. On the Component Selection, select *Easy Install* and click **Next**.
+7. Fill in the Cognos administrator user ID and password, note them down, and click **Next**.
 
-  - Note- the password must include:
+  - *Note:* the password must include:
     - 1 uppercase character
     - 1 lowercase character
     - 1 digit
     - 1 special character among [!@#$]
     - be of a length between [15, 20] characters
-8. Review the details, making sure you have enough space on the disk and click *Install*
-9. Wait for the installation to complete
-10. Click *Done*
+8. Review the details, making sure you have enough space on the disk and click **Install**.
+9. Wait for the installation to complete.
+10. Click **Done**.
 
 :::
 
@@ -248,31 +336,60 @@ chmod +x ca_instl_lnx86_3.7.35.bin
 
 1. Identify the appropriate JDBC driver from the [IBM Cognos Analytics JDBC Drivers](https://www.ibm.com/support/pages/node/6989513) page.
 2. Download it from the appropriate downloads page based on your database. 
-- For PostgreSQL, use their [JDBC Downloads](https://jdbc.postgresql.org/download/).
+  - For PostgreSQL, use their [JDBC Downloads](https://jdbc.postgresql.org/download/).
 3. Move it into the ```installation_location\drivers``` directory.
-- i.e. ```C:\Program Files\ibm\cognos\analytics\drivers```
+  - For example: ```C:\Program Files\ibm\cognos\analytics\drivers```
 
 ### Increase max memory for WebSphere Liberty Profile
 
-1. Launch the Cognos Configuration:
-- For **Linux**:
-  - Navigate to the ```install_location/bin```
-  - Run ```./cogconfig.sh```
-- For **Windows**:
-  - From the *Start* menu, search for "IBM Cognos Configuration" and hit *Enter*.
-2. Under Local Configuration -> Environment -> IBM Cognos services, click on *IBM Cognos*
-3. Set the "Maximum memory for Websphere Liberty Profile in MB" to **16384**.
-4. Click *File* -> *Save* or press *Ctrl+S*.
-5. When the processing window completes, click *Close*.
-6. Click *File* -> *Exit*. or press *Alt+F4*.
-7. In the restart confirmation window, click *Yes*.
-8. After the restart completes, click *Close*.
+::: {.panel-tabset}
 
+### Linux
+
+1. Launch the *Cognos Configuration*:
+
+```bash
+# Naviage to installation directory/bin64
+cd /opt/ibm/cognos/analytics/bin64 # or replace with your custom install directory
+# Become superuser (you may need to copy over the xauth cookie again)
+sudo su
+# Run the installer
+./cogconfig.sh
+```
+2. Under *Local Configuration* → *Environment* → *IBM Cognos services*, click on **IBM Cognos**.
+3. Set the *Maximum memory for Websphere Liberty Profile in MB* to **16384**.
+4. Click **File** → **Save** or press **Ctrl+S**.
+5. When the processing window completes, click **Close**.
+6. Under *Local Configuration* → *Data Access* → *Content Manager*, right-click on **Content Store**.
+7. Select **Delete** and click **Yes** on the confirmation window.
+8. Under *Local Configuration* → *Data Access*, right-click on **Content Manager**.
+9. Select *New Resource* → **Database...**.
+10. Enter *qsapm* as the *Name* and select *PostgreSQL* as the *type* (you may need to scroll down to find it).
+11. Fill out the details, including the database server, port, username, and password. For the database name, enter *qsapm*, and for the schema, enter *qspm*.
+12. Right-click on the newly created *qsapm* database and click **Test**. Adjust the details as needed if this connection fails.
+13. Under **File**, click **Save**.
+14. Under **File**, click **Exit**.
+15. If there is an additional window asking to start the service, click **Yes**.
+16. Upon completion, click **Close**.
+
+### Windows
+
+1. Launch the *Cognos Configuration*:
+   - From the *Start* menu, search for *IBM Cognos Configuration* and press **Enter**.
+2. Under *Local Configuration* → *Environment* → *IBM Cognos services*, click on **IBM Cognos**.
+3. Set the *Maximum memory for Websphere Liberty Profile in MB* to **16384**.
+4. Click **File** → **Save** or press **Ctrl+S**.
+5. When the processing window completes, click **Close**.
+6. Click **File** → **Exit** or press **Alt+F4**.
+7. In the restart confirmation window, click **Yes**.
+8. After the restart completes, click **Close**.
+
+:::
 
 ### Import custom dashboard
 
 1. Unzip the ```IBM Quantum Safe Explorer 2.2.3 Portfolio View - Multiplatform English``` and all folders within *up to cognosdashboard*.
-2. Copy the ```Team Content.zip``` folder within the cognosdashboard to ```install_location/analytics/deployment/```.
+2. Copy the ```Team Content.zip``` folder within the *cognosdashboard* directory to ```install_location/analytics/deployment/```.
 3. Navigate to IBM Cognos Analytics in your browser and login with the cognos administrator user ID and password you created.
 - You can also search for *IBM Cognos Analytics* from the *Start/Search* menu.
 
@@ -282,16 +399,16 @@ The dashboard can be accessed at `http://<server>:<port>/bi`. The default is `ht
 :::
 
 
-4. From the hamburger menu on the top-left, navigate to *Manage* -> *Administration console...*
-5. Navigate to the **Configuration** tab and select **Content Administration** and click on the **New Import** icon:
+4. From the hamburger menu on the top-left, navigate to **Manage** -> **Administration console...**
+5. Navigate to the **Configuration** tab, select **Content Administration** and click on the **New Import** icon:
 
 ![New Import](/images/new-import.png)
 
-5. In the **Team Content** section, select **Portfolio View** and click **Next**:
+5. Select **Team Content** and click **Next** twice:
 
 ![Portfolio View Selection](/images/portfolio-view-selection.png)
 
-6. The Public folders, directory, and library content section appears. Ensure that the checkbox for **Portfolio View** is selected, and then click **Next**:
+6. The *Public folders, directory, and library content* section appears. Ensure that the checkbox for **Portfolio View** is selected, and then click **Next** thrice:
 
 ![Portfolio View Checkbox](/images/portfolio-view-checkbox.png)
 
@@ -299,20 +416,23 @@ The dashboard can be accessed at `http://<server>:<port>/bi`. The default is `ht
 
 ![Select Action](/images/portfolio-view-action.png)
 
-::: {.callout-note}
-## Note
-If unsure of the action to be selected, then select **Save and run once**.
+::: {.callout-tip}
+If unsure of the action to be selected, select **Save and run once**.
 :::
 
-The imported folder will now be available in the Team Content tab.
+8. Leave the default options to run the import *now* and click **Run** and then **Ok** to confirm:
 
-8. **Connect to the PostgreSQL instance:**
+![Run with options](/images/portfolio-view-run.png)
+
+The imported folder will now be available in the *Team Content* tab under the *Content* page of the dashboard.
+
+9. **Connect to the PostgreSQL instance:**
 
 a) In the left panel, click **Data Source Connections**:
 
 ![Data Source Connections](/images/cognos-data-source.png)
 
-b) Click the **New Data Source** icon near the top right of the Configuration page:
+b) Click the **New Data Source** icon near the top right of the *Configuration* page:
 
 ![New Data Source](/images/cognos-new-data-source.png)
 
@@ -328,7 +448,7 @@ e) On the following screen, select **PostgreSQL** as the datasource **Type**. Un
 
 ![PostgreSQL Configuration](/images/cognos-postgresql-config.png)
 
-f) Enter the credentials of the PostgreSQL database in the **User ID** and **Password** fields. Type the password again in the **Confirm password** field.
+f) Below, enter the credentials of the PostgreSQL database in the **User ID** and **Password** fields. Type the password again in the **Confirm password** field.
 
 ![Enter Credentials](/images/cognos-credentials.png)
 
@@ -340,28 +460,36 @@ h) Click **Test** button to test the connection:
 
 ![Click Test](/images/cognos-click-test.png)
 
-i) In the test results, ensure that the status is "Succeeded" and click **Close**.
+i) In the test results, ensure that the status is *Succeeded* and click **Close** twice.
 
 ![Test Results](/images/cognos-test-results.png)
 
 ::: {.callout-tip}
 ## Tip
-If the connection test fails, check host, port, database name, and credentials and try again.
+If the connection test fails, check host, port, database name, and credentials and try again. 
+
+You can try connecting from your terminal first to confirm the details:
+
+```bash
+psql "host=<host> port=<port> dbname=<dbname> user=<username> password=<password>"   
+```
 :::
 
 j) Click **Finish**:
 
 ![Click Finish](/images/cognos-finish.png)
 
-The data source is now displayed in the configuration page.
+The data source is now displayed in the configuration page:
 
-### Update Cognos VM IP Address
+![Data Source Connected](/images/cognos-connected.png)
+
+### Update Cognos VM IP Address (optional)
 
 Follow the steps below to update the IP address of the Virtual Machine in which Cognos is installed:
 
 1. Login to Cognos using admin access.
 
-2. Navigate to the **New Dashboard** and click the **Share** option to copy the link.
+2. Click on the **Team content** tab, followed by the **Team content** folder, and then navigate to the **New Dashboard** and click the **Share** option to copy the link.
 
 ![Share Dashboard](/images/cognos-share-dashboard.png)
 
@@ -373,26 +501,29 @@ Follow the steps below to update the IP address of the Virtual Machine in which 
 
 #### Loading application portfolio data
 
-1. Open the following configuration file in a text editor:
+1. *Open* the following configuration file in a text editor:
 
 ```
 apm-appdetailsdataloader/dist/config.json
 ```
 
-2. Edit the `dbConfig` section using the details of the PostgreSQL server that has been installed:
+2. *Edit* the csv path to match yours, and *edit* the `dbConfig` section using the details of the PostgreSQL server:
 
 ```json
 {
-  "user": "",
-  "database": "qsapm",
-  "port": "",
-  "host": "",
-  "password": "",
-  "schema": "qspm"
+    "dbConfig": {
+        "user": "",
+        "database": "qsapm",
+        "port": ,
+        "host": "",
+        "password": "",
+        "schema": "qspm"
+    },
+    "csvFilePath": ""
 }
 ```
 
-3. Copy the application portfolio file to the following directory:
+3. *Copy* the application portfolio file to the following directory:
 
 ```
 apm-appdetailsdataloader/input
@@ -421,11 +552,17 @@ organizationid,organizationname,organizationdescription,organizationlocation,bus
 ```
 </details>
 
-4. Run the appropriate data loader to import the application portfolio data into the PostgreSQL database:
+4. *Run* the appropriate data loader to import the application portfolio data into the PostgreSQL database:
 
 ```bash
 cd apm-appdetailsdataloader
 npm run start
+
+> csv-to-postgresql@1.0.0 start
+> node dist/index.js
+
+CSV file successfully parsed
+Successfully inserted application related details into database
 ```
 
 #### Loading the Explorer scan output into the database
@@ -434,32 +571,43 @@ npm run start
 ## Prerequisites
 
 - Ensure the repo and app names from the application portfolio csv match the `RepositoryId` and `ApplicationId` in the JSON files you are loading.
+  - You may need to add in the `RepositoryId` field into your `quantum_safe_api_discovery_crypto_inventory.json` file.
 - Create the following folders under `apm-dataloader` if they don't exist already:
   - `flatinput`
   - `flatoutput`
   - `flaterror`
 :::
 
-1. Open the following configuration file in a text editor:
+1. *Open* the following configuration file in a text editor:
 
 ```
 apm-dataloader/dist/config.json
 ```
 
-2. Edit the `dbConfig` section using the details of the PostgreSQL server:
+2. *Edit* the folder paths to match yours, and *edit* the `dbConfig` section using the details of the PostgreSQL server:
 
 ```json
 {
-  "user": "",
-  "database": "",
-  "port": "",
-  "host": "",
-  "password": "",
-  "schema": "qspm"
+  {
+      "inputFolderPath": "/.../apm-dataloader/input",
+      "outputFolderPath": "/../apm-dataloader/output",
+      "errorFolderPath": "/../apm-dataloader/error",
+      "flatinputFolderPath": "/../apm-dataloader/flatinput",
+      "flatoutputFolderPath": "/../apm-dataloader/flatoutput",
+      "flaterrorFolderPath": "/../apm-dataloader/flaterror",
+      "dbConfig": {
+          "user": "",
+          "database": "qsapm",
+          "port": ,
+          "host": "",
+          "password": "",
+          "schema": "qspm"
+      }
+  }
 }
 ```
 
-3. Copy the following output files from the IBM Quantum Safe Explorer scans to the following directories:
+3. *Copy* the following output files from the IBM Quantum Safe Explorer scans to the following directories:
 
 ```
 quantum_safe_api_discovery_crypto_inventory.json -> apm-dataloader/flat-input
@@ -469,24 +617,40 @@ quantum_safe_api_discovery_crypto_inventory.json -> apm-dataloader/flat-input
 quantum_safe_cryptography_analysis_findings_java.json -> apm-dataloader/input
 ```
 
-4. Run the appropriate data loader to import the Explorer scan outputs into the PostgreSQL database:
+4. *Run* the appropriate data loader to import the Explorer scan outputs into the PostgreSQL database:
 
 ```bash
 cd apm-dataloader
 npm run start
+
+> typescript-postgres-project@2.2.3 start
+> node dist/main.js
+
+Start Processing of file: quantum_safe_cryptography_analysis_findings_java.json
+Start Processing of flat inventory file: quantum_safe_api_discovery_crypto_inventory.json
+Processing JSON Data: {
+  ...
+}
+
+Processing JSON Data: {
+  ...
+}
+
+Data insertion successful of file: quantum_safe_cryptography_analysis_findings_java.json
+Data insertion successful of flat inventory file: quantum_safe_api_discovery_crypto_inventory.json
 ```
 
 ### Run Cognos Dashboard
 
 #### Accessing the dashboard
 
-To view the Portfolio View dashboard, do the following:
+To view the Portfolio View dashboard:
 
-1. Use any web browser to navigate to `http://<server>:<port>/bi` and log in to Cognos:
+1. Use any web browser to *navigate* to `http://<server>:<port>/bi` and *log in* to Cognos:
 
 ![Cognos Login](/images/cognos-login.png)
 
-2. Click the menu icon in the upper left corner of the welcome screen:
+2. Click the **menu (hamburger) icon** in the upper left corner of the welcome screen:
 
 ![Cognos Menu](/images/cognos-menu.png)
 
@@ -502,11 +666,11 @@ To view the Portfolio View dashboard, do the following:
 
 ![Portfolio View Tile](/images/cognos-portfolio-tile.png)
 
-6. The Portfolio View content appears. Click the title on the **Portfolio View** tile to open the dashboard:
+6. The Portfolio View content appears:
 
 ![Open Dashboard](/images/cognos-open-dashboard.png)
 
-The Portfolio View dashboard will now be displayed, showing cryptographic vulnerability data across your application portfolio.
+This dashboard displays the cryptographic vulnerability data across your application portfolio.
 
 # Use & Interpretation
 
@@ -516,22 +680,22 @@ The data from the Explorer scan results, loaded into the dashboard, are provided
 
 The dashboard consists of five tabs in total.
 
-From the API Discovery scan: 
+From the *API Discovery* scan: 
 
-- API discovery
+- **API discovery**
 
-From the Cryptography Analysis scan:
+From the *Cryptography Analysis* scan:
 
-- Vulnerability summary
-- Cryptographic summary
-- Vulnerability details
-- Cryptographic details
+- **Vulnerability summary**
+- **Cryptographic summary**
+- **Vulnerability details**
+- **Cryptographic details**
 
 ![Portfolio View Dashboard Tabs](/images/portfolio-dashboard-tabs.png)
 
 ### API discovery
 
-The API discovery displays the inventory from all the languages scanned during the API Discovery scan. Specifically, it's based on the  loaded into the database via the flatinput folder.
+The **API discovery** tab displays the inventory from all the languages scanned during the API Discovery scan. Specifically, it's based on the data loaded into the database via the *flatinput* folder.
 
 The **Summary of Crypto findings** table at the top provides a high-level summary of the total number of applications scanned and loaded, number with crypto, total number of languages, number of files scanned, and number of crypto libraries used.
 
@@ -539,33 +703,33 @@ The **Scan history graph** provides a monthly view of the total number of applic
 
 The **Application / Cryptography pie chart** provides a view of the total number of applications scanned and loaded with crypto.
 
-The **Applications detailed crypto findings table** gives a view of each application with details such as crypto libraries used, total number of files, total crypto functions, and the total number of cryptographic artifacts in each application. Right click and filter each application in the table to view the detailed information of the file name and the crypto functions in them.
+The **Applications detailed crypto findings table** gives a view of each application with details such as crypto libraries used, total number of files, total crypto functions, and the total number of cryptographic artifacts in each application. Right-click and filter each application in the table to view the detailed information of the file name and the crypto functions in them.
 
-![API Discoveporry Dashboard](/images/portfolio-api-discovery-full.png)
+![API Discovery Dashboard](/images/portfolio-api-discovery-full.png)
 
 ### Vulnerability summary
 
-In the "Vulnerability summary" tab a summary of the cryptographic vulnerabilities in the IBM Quantum Safe Explorer results that was previously loaded into the PostgreSQL database are displayed. Click the **Vulnerability summary** tab to return to this page at any time.
+The **Vulnerability summary** tab displays a summary of the cryptographic vulnerabilities in the IBM Quantum Safe Explorer results that were previously loaded into the PostgreSQL database. Click the **Vulnerability summary** tab to return to this page at any time.
 
-The "Vulnerability summary" page comprises of three sections:
+The **Vulnerability summary** page comprises three sections:
 
-1. Severity
-2. Classification
-3. Language
+1. *Severity*
+2. *Classification*
+3. *Language*
 
-Each section consists of a chart and a table. These are interactive. Click any part of a chart or table to choose what will be displayed on all the three charts.
+Each section consists of a chart and a table. These are interactive. Click any part of a chart or table to choose what will be displayed on all three charts.
 
-The **"Severity"** section categorizes the vulnerabilities into three severity levels. These are listed in the **Vulnerability score** column of the table. From least severe to most, the vulnerability scores are "Minor", "Major", and "Critical". The number of vulnerabilities of each type that were found are listed in a table and visualized in an accompanying donut chart.
+The **Severity** section categorizes the vulnerabilities into three severity levels. These are listed in the **Vulnerability score** column of the table. From least severe to most, the vulnerability scores are *Minor*, *Major*, and *Critical*. The number of vulnerabilities of each type that were found are listed in a table and visualized in an accompanying donut chart.
 
-The **"Classification"** section lists the specific vulnerabilities for each severity level, with the number of occurrences of each.
+The **Classification** section lists the specific vulnerabilities for each severity level, with the number of occurrences of each.
 
 ![Vulnerability Summary - Severity](/images/portfolio-vulnerability-severity.png)
 
-The **"Classification"** column of the table, and the corresponding bar chart, displays `cwe<Weakness_ID>`. The table includes a "Debug message" column, which provides a brief summary of the vulnerability. The weakness ID of a vulnerability can be looked up on the [Common Weakness Enumeration](https://cwe.mitre.org/) website for further details.
+The **Classification** column of the table, and the corresponding bar chart, displays `cwe<Weakness_ID>`. The table includes a *Debug message* column, which provides a brief summary of the vulnerability. The weakness ID of a vulnerability can be looked up on the [Common Weakness Enumeration](https://cwe.mitre.org/) website for further details.
 
 ![Vulnerability Summary - Classification](/images/portfolio-vulnerability-classification.png)
 
-The **"Language"** section of the "Vulnerability summary" page shows the name of each application, grouped by programming language. The data are provided in a table and visualized in a donut chart.
+The **Language** section of the **Vulnerability summary** page shows the name of each application, grouped by programming language. The data are provided in a table and visualized in a donut chart.
 
 ![Vulnerability Summary - Language](/images/portfolio-vulnerability-language.png)
 
@@ -583,33 +747,33 @@ Each of the three sections has a filter icon in its top right corner. Click this
 
 ### Cryptographic summary
 
-Clicking the **Cryptographic summary** tab will display two sections: Variants and Cryptographic libraries. Each of these sections comprises a donut chart and a table. As with the "Vulnerability summary" page, the charts and tables on this page are interactive; clicking any part of these will apply a filter to all data shown on the page.
+Clicking the **Cryptographic summary** tab will display two sections: **Variants** and **Cryptographic libraries**. Each of these sections comprises a donut chart and a table. As with the **Vulnerability summary** page, the charts and tables on this page are interactive; clicking any part of these will apply a filter to all data shown on the page.
 
-The **"Variants"** section breaks the results down into cryptographic algorithms. The donut chart shows how many instances of each algorithm were found, and the table shows the different key sizes found for each variant:
+The **Variants** section breaks the results down into cryptographic algorithms. The donut chart shows how many instances of each algorithm were found, and the table shows the different key sizes found for each variant.
 
 ![Cryptographic Summary - Variants](/images/portfolio-crypto-variants.png)
 
-The **"Cryptographic libraries"** section contains a donut plot listing the cryptographic software libraries used, such as OpenSSL or JCA. The accompanying table lists the vulnerable algorithms found for each library.
+The **Cryptographic libraries** section contains a donut plot listing the cryptographic software libraries used, such as OpenSSL or JCA. The accompanying table lists the vulnerable algorithms found for each library.
 
 ![Cryptographic Summary - Libraries](/images/portfolio-crypto-libraries.png)
 
 ### Vulnerability details
 
-The "Vulnerability details" page displays a table with all the vulnerabilities found, grouped by vulnerability score:
+The **Vulnerability details** page displays a table with all the vulnerabilities found, grouped by vulnerability score.
 
 ![Vulnerability Summary](/images/portfolio-vulnerability-summary.png)
 
-This table contains all the information from the table in the Classification section of the "Vulnerability summary" page, but also breaks the results down by the names of the application, and the repository, that the vulnerabilities were found in.
+This table contains all the information from the table in the **Classification** section of the **Vulnerability summary** page, but also breaks the results down by the names of the application and the repository where the vulnerabilities were found.
 
 ### Cryptographic details
 
-The Cryptographic details page displays a table listing the cryptographic variants found, along with their public key sizes. These are the same data provided in the Variants table on the "Cryptographic summary" page but includes additional details: the application and repository names. This is shown in the following screenshot showing cryptographic algorithm usage at an application and repository level.
+The **Cryptographic details** page displays a table listing the cryptographic variants found, along with their public key sizes. These are the same data provided in the **Variants** table on the **Cryptographic summary** page but include additional details: the application and repository names. This is shown in the following screenshot, which displays cryptographic algorithm usage at an application and repository level.
 
 ![Cryptographic Details](/images/portfolio-crypto-details.png)
 
 # Troubleshooting
 
-### postgresdbdump.sql syntax error
+## postgresdbdump.sql syntax error
 
 If you encounter a syntax error when running the `postgresdbdump.sql` script, add a semicolon to lines 736 and 748 and re-run it. The corrected lines should look like this:
 
@@ -617,7 +781,15 @@ If you encounter a syntax error when running the `postgresdbdump.sql` script, ad
 select * from scanhistory order by scanid, created_time asc;
 ```
 
-### XQE-DAT-0001 | The request was canceled by the user
+## X11 connection rejected because of wrong authentication
+
+If you see this error while trying to run either the Cognos installer or configuration, ensure that you have followed the proper steps to enable X11 forwarding, including:
+
+- Using an X11 forwarding capable terminal emulator, such as [**XQuartz**](xquartz.org) (MacOS) or [**PuTTY**](https://putty.org/index.html) (Windows)
+- Setting the xauth cookie
+  - *You likely have to recopy the xauth cookie from the original user again, if it has been updated since*
+
+## XQE-DAT-0001 | The request was canceled by the user
 
 If you see one or both of the following errors on the portfolio view dashboard:
 
@@ -627,7 +799,7 @@ XQE-DAT-0001 Data source adapter error: org.postgresql.util.PSQLException: ERROR
 The request was canceled by the user
 ```
 
-Ensure, using sql queries, that the database qsapm exists, that the schema qspm under it exists, and that qsapm.qspm.findings is populated.
+Ensure, using SQL queries, that the database *qsapm* exists, that the schema *qspm* under it exists, and that *qsapm.qspm.findings* is populated.
 
 Use the following SQL query to get a more detailed view of the ingested data once you confirm the above:
 
@@ -678,3 +850,35 @@ join qspm.applicationdimension a on a.applicationid = vd.applicationid
 join qspm.repositorydimension r on vd.repositoryid = r.repositoryid
 ```
 </details>
+
+
+## Insufficient Storage
+
+In the event you don't have enough storage under `/opt/`, you can move this directory to an additional storage disk, if you have it available.
+
+For example:
+
+```bash
+# Create new target directory
+sudo mkdir -p /mnt/second/opt
+# Copy existing /opt to the new location (if applicable)
+sudo rsync -avx /opt/ /mnt/second/opt/
+# Rename old /opt
+sudo mv /opt /opt.old
+# Create a new mount point:
+sudo mkdir /opt
+# Unmount disk from /mnt/second
+sudo umount /mnt/second
+# Mount to /opt for testing
+mount /dev/vdc1 /opt
+# Verify
+df -h /opt
+# Edit fstab:
+vim /etc/fstab # Replace entry for /dev/vd1 with: "/dev/vdc1   /opt   ext4   defaults   0 0", save and exit
+# Reload systemd
+systemctl daemon-reload
+# Mount it
+sudo mount -a
+# Verify
+df -h /opt
+```
