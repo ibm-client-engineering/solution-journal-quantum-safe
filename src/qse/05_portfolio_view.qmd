@@ -771,6 +771,10 @@ The **Cryptographic details** page displays a table listing the cryptographic va
 
 ![Cryptographic Details](/images/portfolio-crypto-details.png)
 
+# Direct updates to Portfolio View
+
+See [this section](/src/qse/04_github_actions_integration.html#direct-updates-to-portfolio-view) under the Github Integration page to integrate automatic dashboard updates into your pipeline.
+
 # Troubleshooting
 
 ## postgresdbdump.sql syntax error
