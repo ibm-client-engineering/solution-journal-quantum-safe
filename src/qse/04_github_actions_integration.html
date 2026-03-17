@@ -400,10 +400,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#trigger-the-scan" id="toc-trigger-the-scan" class="nav-link" data-scroll-target="#trigger-the-scan">Trigger the Scan</a></li>
   <li><a href="#template-repository" id="toc-template-repository" class="nav-link" data-scroll-target="#template-repository">Template Repository</a></li>
+  <li><a href="#direct-updates-to-portfolio-view" id="toc-direct-updates-to-portfolio-view" class="nav-link" data-scroll-target="#direct-updates-to-portfolio-view">Direct updates to Portfolio View</a>
+  <ul class="collapse">
+  <li><a href="#method-1-send-scan-results-to-loading-zone" id="toc-method-1-send-scan-results-to-loading-zone" class="nav-link" data-scroll-target="#method-1-send-scan-results-to-loading-zone">Method 1: Send scan results to Loading Zone</a></li>
+  <li><a href="#method-2-directly-load-scan-results" id="toc-method-2-directly-load-scan-results" class="nav-link" data-scroll-target="#method-2-directly-load-scan-results">Method 2: Directly load scan results</a></li>
+  </ul></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#action-is-not-permitted-by-company-policy" id="toc-action-is-not-permitted-by-company-policy" class="nav-link" data-scroll-target="#action-is-not-permitted-by-company-policy">Action is not permitted by company policy</a>
   <ul class="collapse">
+  <li><a href="#upload-artifact-andor-downloads" id="toc-upload-artifact-andor-downloads" class="nav-link" data-scroll-target="#upload-artifact-andor-downloads">upload-artifact and/or downloads</a></li>
+  <li><a href="#qse-scan-action" id="toc-qse-scan-action" class="nav-link" data-scroll-target="#qse-scan-action">qse-scan-action</a></li>
   <li><a href="#template-modification" id="toc-template-modification" class="nav-link" data-scroll-target="#template-modification">Template modification</a></li>
   </ul></li>
   <li><a href="#unrecognized-java-runtime-version" id="toc-unrecognized-java-runtime-version" class="nav-link" data-scroll-target="#unrecognized-java-runtime-version">Unrecognized Java Runtime version</a></li>
@@ -957,10 +964,93 @@ Reveal code for qse-scan.yml
     └── workflows/
         └── qse-scan.yml          # Workflow that uses the action</code></pre>
 </section>
+<section id="direct-updates-to-portfolio-view" class="level1">
+<h1>Direct updates to Portfolio View</h1>
+<p>There are two methods to enable direct updates from Github Actions to the Portfolio View dashboard. Both require some amount of custom scripting, some of which (for method 1) is done below.</p>
+<section id="method-1-send-scan-results-to-loading-zone" class="level2">
+<h2 class="anchored" data-anchor-id="method-1-send-scan-results-to-loading-zone">Method 1: Send scan results to Loading Zone</h2>
+<p>The first step to enabling this is to follow the <a href="../../src/qse/04_github_actions_integration.html#upload-artifact-andor-downloads">recommended fixes</a> for the <code>upload-artifact</code> issue, which <em>sends the scan results from the Github Action directly to the machine which hosts the Portfolio View dashboard</em>.</p>
+<p>Ensure that the host, port, and credentials added to the Repository secrets as mentioned in that section match that of the machine which hosts the Portfolio View dashboard.</p>
+<p>Next, you will need to set up a script that runs either at a desired time interval, or when the <code>/desired/path/on/remote/machine</code> (where the scan results get sent) is updated. The script will need to:</p>
+<ol type="1">
+<li><p>Insert, into the files which will be loaded, the appropriate <code>ApplicationId</code> and <code>RepositoryId</code>.</p></li>
+<li><p>Copy the files to the appropriate locations:</p></li>
+</ol>
+<ul>
+<li>If running API Discovery or both</li>
+</ul>
+<pre><code>/desired/path/on/remote/machine/qse-scan-results/qs_explorer_result/quantum_safe_api_discovery_crypto_inventory.json -&gt; IBM_QSE_2.2.3_PortfolioView/.../workidr/apm-dataloader/flat-input</code></pre>
+<ul>
+<li>If running Cryptography Analysis or both</li>
+</ul>
+<pre><code>/desired/path/on/remote/machine/qse-scan-results/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json -&gt; IBM_QSE_2.2.3_PortfolioView/.../workidr/apm-dataloader/input</code></pre>
+<ol start="3" type="1">
+<li>Run <code>npm start</code> in the apm-dataloader directory to load the data.</li>
+</ol>
+<p>See the <a href="../../src/qse/05_portfolio_view.html#loading-the-explorer-scan-output-into-the-database">instructions on data loading</a> for more details on the Portfolio View data ingestion process.</p>
+</section>
+<section id="method-2-directly-load-scan-results" class="level2">
+<h2 class="anchored" data-anchor-id="method-2-directly-load-scan-results">Method 2: Directly load scan results</h2>
+<p>This method involves running the data loading script from within the Github Action itself. You will need to follow similar steps, namely:</p>
+<ol type="1">
+<li><p>Insert, into the files which will be loaded, the appropriate <code>ApplicationId</code> and <code>RepositoryId</code>.</p></li>
+<li><p>Adapt the data loading script to run in Github Actions</p></li>
+<li><p>Set up its config to point to:</p></li>
+</ol>
+<pre><code>quantum_safe_api_discovery_crypto_inventory.json # To be processed as a flat input</code></pre>
+<p>and</p>
+<pre><code>quantum_safe_cryptography_analysis_findings_java.json # To be processed as a regular input</code></pre>
+</section>
+</section>
 <section id="troubleshooting" class="level1">
 <h1>Troubleshooting</h1>
 <section id="action-is-not-permitted-by-company-policy" class="level2">
 <h2 class="anchored" data-anchor-id="action-is-not-permitted-by-company-policy">Action is not permitted by company policy</h2>
+<section id="upload-artifact-andor-downloads" class="level3">
+<h3 class="anchored" data-anchor-id="upload-artifact-andor-downloads">upload-artifact and/or downloads</h3>
+<p>If you are blocked from using the upload-artifact Github Action or you are unable to download files (i.e.&nbsp;ephemeral environment), then you can directly transfer the results to a different machine.</p>
+<p>In order to do so, follow these steps:</p>
+<ul>
+<li>In your action repo, add the following secrets by navigating to <em>Settings</em>-&gt;<em>Secrets and variables</em> and clicking on <strong>New repository secret</strong>:
+<ul>
+<li>HOST</li>
+<li>PORT</li>
+<li>USER</li>
+<li>SSH_PRIVATE_KEY (if applicable)</li>
+<li>PASSWORD (if applicable)</li>
+</ul></li>
+</ul>
+<p>This is how it will look like with all of the above added in:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/qse-github-actions-repo-secrets.png" class="img-fluid figure-img"></p>
+<figcaption>Github Repository secrets</figcaption>
+</figure>
+</div>
+<ul>
+<li>Remove the <em>upload-artifact</em> section from your action.yml</li>
+<li>In <code>action.yml</code> (or <code>qse-action.yml</code>, <em>if you only want this to be used in a single repository</em>), add the following based on what you require to access the remote machine which will hold the results:</li>
+</ul>
+<ol type="a">
+<li>For <em>accessing via an identity file</em> (key):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy files via SCP</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        mkdir -p /tmp/</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        touch /tmp/key.pem</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        echo "${{ secrets.SSH_PRIVATE_KEY }}" &gt; /tmp/key.pem</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        chmod 600 /tmp/key.pem</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        scp -i /tmp/key.pem -P ${{ secrets.PORT }} -r ${{ github.workspace }}/${{ inputs.output_dir }}qse-scan-results ${{ secrets.USER }}@${{ secrets.HOST }}:/desired/path/on/remote/machine    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="a">
+<li>For <em>accessing via password</em>:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy files via SSHPASS</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        sshpass -p "${{ secrets.PASSWORD }}" scp -P ${{ secrets.PORT }} -r ${{ github.workspace }}/${{ inputs.output_dir }}qse-scan-results ${{ secrets.USER }}@${{ secrets.HOST }}:/desired/path/on/remote/machine       </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Once the action runs, you will be able to access the results from the <code>/desired/path/on/remote/machine/qse-scan-results</code> on your remote machine.</p>
+</section>
+<section id="qse-scan-action" class="level3">
+<h3 class="anchored" data-anchor-id="qse-scan-action">qse-scan-action</h3>
 <p>If the qse-scan-action is not allowed by your company or organization’s policy, you can still test it out (see details below)</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1022,8 +1112,8 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>For use with the sample_files repository, make sure you set the input directory to the following in qse-scan.yml:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">input_dir</span><span class="kw">:</span><span class="at"> ${{ github.workspace }}/sample_files</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">input_dir</span><span class="kw">:</span><span class="at"> ${{ github.workspace }}/sample_files</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is included in a comment in the below example file.</p>
 </div>
 </div>
@@ -1038,39 +1128,40 @@ Reveal code for modified qse-scan.yml
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/qse-scan.yml</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-filename=".github/workflows/qse-scan.yml"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> QSE Scan on PRs</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">qse-scan</span><span class="kw">:</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    # </span><span class="al">TODO</span><span class="co">: repace with the name of the hardware you have available under Actions -&gt; Runners</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">      # 1) Checkout the code to the runner's workspace</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">      # 2) Set up JDK 17 (minimum)</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up JDK 17</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-java@v4</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">distribution</span><span class="kw">:</span><span class="at"> temurin</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">java-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'17'</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">      # 3) Run the action</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run QSE Scan (Local)</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> ./.github/actions/qse-scan</span><span class="co"> ### Accesses a local action yaml instead of the separate GitHub Action</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">        # If you want to scan a specific folder, set it here; otherwise scan repo root</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">        # input_dir: ${{ github.workspace }}/sample_files # Use this for the sample_files repo</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">        # Specify what scan(s) to run (api_discovery is the default):</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">        # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">        # Optional: override default output folder (relative paths are relative to the input folder):</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">        # output_dir: "./qse-scan-results"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-filename=".github/workflows/qse-scan.yml"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> QSE Scan on PRs</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">qse-scan</span><span class="kw">:</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">    # </span><span class="al">TODO</span><span class="co">: repace with the name of the hardware you have available under Actions -&gt; Runners</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">      # 1) Checkout the code to the runner's workspace</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">      # 2) Set up JDK 17 (minimum)</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up JDK 17</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-java@v4</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">distribution</span><span class="kw">:</span><span class="at"> temurin</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">java-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'17'</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">      # 3) Run the action</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run QSE Scan (Local)</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> ./.github/actions/qse-scan</span><span class="co"> ### Accesses a local action yaml instead of the separate GitHub Action</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co">        # If you want to scan a specific folder, set it here; otherwise scan repo root</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co">        # input_dir: ${{ github.workspace }}/sample_files # Use this for the sample_files repo</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="co">        # Specify what scan(s) to run (api_discovery is the default):</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co">        # scan_type: "crypto_analysis" | "api_discovery" | "both" # pick one</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="co">        # Optional: override default output folder (relative paths are relative to the input folder):</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="co">        # output_dir: "./qse-scan-results"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 <p>The whole .github/actions folder is moved into the same repository that you are scanning.</p>
+</section>
 <section id="template-modification" class="level3">
 <h3 class="anchored" data-anchor-id="template-modification">Template modification</h3>
 <p>For reuse with this method, create a template with the above structure, that includes the cli, instead.</p>
@@ -1079,10 +1170,10 @@ Reveal code for modified qse-scan.yml
 <section id="unrecognized-java-runtime-version" class="level2">
 <h2 class="anchored" data-anchor-id="unrecognized-java-runtime-version">Unrecognized Java Runtime version</h2>
 <p>If you see something such as the the following output from the qse-scan:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> 3-10 14:50:08,590] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">ERROR</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.sca.framework.common.JavaGenerateGraphModelImpl</span><span class="pp">]</span> <span class="at">-</span> Failed to create a graph for /home/runner/_work/sample_files/java_files/VulnerableCryptoExample.java</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">java.lang.UnsupportedClassVersionError:</span> VulnerableCryptoExample has been compiled by a more recent version of the Java Runtime <span class="er">(</span><span class="ex">class</span> file version 65.0<span class="kw">)</span><span class="ex">,</span> this version of the Java Runtime only recognizes class file versions up to 61.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> 3-10 14:50:08,590] <span class="pp">[</span><span class="ss">2</span><span class="pp">-</span><span class="ss">thread</span><span class="pp">-</span><span class="ss">2</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">ERROR</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">com.ibm.quantumsafe.sca.framework.common.JavaGenerateGraphModelImpl</span><span class="pp">]</span> <span class="at">-</span> Failed to create a graph for /home/runner/_work/sample_files/java_files/VulnerableCryptoExample.java</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">java.lang.UnsupportedClassVersionError:</span> VulnerableCryptoExample has been compiled by a more recent version of the Java Runtime <span class="er">(</span><span class="ex">class</span> file version 65.0<span class="kw">)</span><span class="ex">,</span> this version of the Java Runtime only recognizes class file versions up to 61.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then you will need to recompile the java file with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">javac</span> <span class="at">--release</span> 17 VulnerableCryptoExample.java <span class="co"># replace with the name of your java file</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">javac</span> <span class="at">--release</span> 17 VulnerableCryptoExample.java <span class="co"># replace with the name of your java file</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And then rerun the action.</p>
 
 

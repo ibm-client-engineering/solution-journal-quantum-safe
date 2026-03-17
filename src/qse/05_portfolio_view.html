@@ -391,25 +391,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#additional-downloads" id="toc-additional-downloads" class="nav-link" data-scroll-target="#additional-downloads">Additional Downloads</a>
   <ul class="collapse">
   <li><a href="#nodejs" id="toc-nodejs" class="nav-link" data-scroll-target="#nodejs">NodeJS</a></li>
-  <li><a href="#postgresql" id="toc-postgresql" class="nav-link" data-scroll-target="#postgresql">PostgreSQL</a></li>
   <li><a href="#java" id="toc-java" class="nav-link" data-scroll-target="#java">Java</a></li>
+  <li><a href="#database" id="toc-database" class="nav-link" data-scroll-target="#database">Database</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link" data-scroll-target="#installation-setup">Installation &amp; Setup</a>
   <ul class="collapse">
   <li><a href="#database-setup" id="toc-database-setup" class="nav-link" data-scroll-target="#database-setup">Database setup</a>
   <ul class="collapse">
+  <li><a href="#set-a-password-for-postgresql" id="toc-set-a-password-for-postgresql" class="nav-link" data-scroll-target="#set-a-password-for-postgresql">Set a password for PostgreSQL</a></li>
   <li><a href="#create-a-database" id="toc-create-a-database" class="nav-link" data-scroll-target="#create-a-database">Create a database</a></li>
   <li><a href="#run-setup-scripts" id="toc-run-setup-scripts" class="nav-link" data-scroll-target="#run-setup-scripts">Run setup scripts</a></li>
-  </ul></li>
   <li><a href="#application-portfolio-data-loader-setup" id="toc-application-portfolio-data-loader-setup" class="nav-link" data-scroll-target="#application-portfolio-data-loader-setup">Application portfolio data loader setup</a></li>
   <li><a href="#explorer-scan-data-loader-setup" id="toc-explorer-scan-data-loader-setup" class="nav-link" data-scroll-target="#explorer-scan-data-loader-setup">Explorer scan data loader setup</a></li>
+  </ul></li>
   <li><a href="#cognos" id="toc-cognos" class="nav-link" data-scroll-target="#cognos">Cognos</a>
   <ul class="collapse">
   <li><a href="#download-and-add-jdbc-driver" id="toc-download-and-add-jdbc-driver" class="nav-link" data-scroll-target="#download-and-add-jdbc-driver">Download and add JDBC Driver</a></li>
   <li><a href="#increase-max-memory-for-websphere-liberty-profile" id="toc-increase-max-memory-for-websphere-liberty-profile" class="nav-link" data-scroll-target="#increase-max-memory-for-websphere-liberty-profile">Increase max memory for WebSphere Liberty Profile</a></li>
   <li><a href="#import-custom-dashboard" id="toc-import-custom-dashboard" class="nav-link" data-scroll-target="#import-custom-dashboard">Import custom dashboard</a></li>
-  <li><a href="#update-cognos-vm-ip-address" id="toc-update-cognos-vm-ip-address" class="nav-link" data-scroll-target="#update-cognos-vm-ip-address">Update Cognos VM IP Address</a></li>
+  <li><a href="#update-cognos-vm-ip-address-optional" id="toc-update-cognos-vm-ip-address-optional" class="nav-link" data-scroll-target="#update-cognos-vm-ip-address-optional">Update Cognos VM IP Address (optional)</a></li>
   <li><a href="#load-data-into-database" id="toc-load-data-into-database" class="nav-link" data-scroll-target="#load-data-into-database">Load data into database</a></li>
   <li><a href="#run-cognos-dashboard" id="toc-run-cognos-dashboard" class="nav-link" data-scroll-target="#run-cognos-dashboard">Run Cognos Dashboard</a></li>
   </ul></li>
@@ -425,10 +426,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cryptographic-details" id="toc-cryptographic-details" class="nav-link" data-scroll-target="#cryptographic-details">Cryptographic details</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#direct-updates-to-portfolio-view" id="toc-direct-updates-to-portfolio-view" class="nav-link" data-scroll-target="#direct-updates-to-portfolio-view">Direct updates to Portfolio View</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#postgresdbdump.sql-syntax-error" id="toc-postgresdbdump.sql-syntax-error" class="nav-link" data-scroll-target="#postgresdbdump.sql-syntax-error">postgresdbdump.sql syntax error</a></li>
+  <li><a href="#x11-connection-rejected-because-of-wrong-authentication" id="toc-x11-connection-rejected-because-of-wrong-authentication" class="nav-link" data-scroll-target="#x11-connection-rejected-because-of-wrong-authentication">X11 connection rejected because of wrong authentication</a></li>
   <li><a href="#xqe-dat-0001-the-request-was-canceled-by-the-user" id="toc-xqe-dat-0001-the-request-was-canceled-by-the-user" class="nav-link" data-scroll-target="#xqe-dat-0001-the-request-was-canceled-by-the-user">XQE-DAT-0001 | The request was canceled by the user</a></li>
+  <li><a href="#insufficient-storage" id="toc-insufficient-storage" class="nav-link" data-scroll-target="#insufficient-storage">Insufficient Storage</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -476,11 +480,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="purpose" class="level1">
 <h1>Purpose</h1>
-<p>The purpose of the Portfolio View is “to provide a holistic view of cryptographic vulnerabilities across the enterprise’s applications”. Although the VS Code extension and index.html from the CLI have visualizations including a pie chart and dashboard, the portfolio view allows for categorizing scanned code into applications, repositories, and business units. This helps with awareness and action on any risk and compliance issues discovered by the scans.</p>
+<p>The purpose of the Portfolio View is to provide a holistic view of cryptographic vulnerabilities across the enterprise’s applications. Although the VS Code extension and <em>index.html</em> from the CLI have visualizations including a pie chart and dashboard, the Portfolio View allows for categorizing scanned code into applications, repositories, and business units. This helps with awareness and action on any risk and compliance issues discovered by the scans.</p>
 </section>
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>This page provides the step-by-step instructions to downloading, installing, setting up and using the Portfolio View.</p>
+<p>This page provides step-by-step instructions for downloading, installing, setting up, and using the Portfolio View.</p>
 <p>It covers:</p>
 <ul>
 <li>Prerequisites</li>
@@ -531,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Downloads</h1>
 <section id="portfolio-view-files" class="level2">
 <h2 class="anchored" data-anchor-id="portfolio-view-files">Portfolio View files</h2>
-<p>You will have to download the QSE Portfolio View and <strong>three IBM Cognos Analytics eAssemblies</strong>. The Client is multiplatform, while the server and installer are platform-specific. Depending on your O.S.:</p>
+<p>You will need to download the QSE Portfolio View and <strong>three IBM Cognos Analytics eAssemblies</strong>. The <em>Client</em> is multiplatform, while the <em>Server</em> and <em>Installer</em> are platform-specific. Depending on your operating system:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li></ul>
 <div class="tab-content">
@@ -553,27 +557,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>If necessary, send the packages to your server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-P</span> PORT <span class="at">-i</span> ssh_key.pem QSE_PortfolioView_Platform.zip <span class="op">&lt;</span>user<span class="op">&gt;</span>@<span class="op">&lt;</span>server_ip_address<span class="op">&gt;</span>:/path/to/download.zip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="additional-downloads" class="level2">
 <h2 class="anchored" data-anchor-id="additional-downloads">Additional Downloads</h2>
 <section id="nodejs" class="level3">
 <h3 class="anchored" data-anchor-id="nodejs">NodeJS</h3>
-<p>Download the latest version of <a href="https://nodejs.org/en/download/">NodeJS</a> for your O.S. and architecture/distribution.</p>
+<p>Download the latest version of <a href="https://nodejs.org/en/download/">NodeJS</a> for your operating system and architecture/distribution.</p>
 </section>
-<section id="postgresql" class="level3">
-<h3 class="anchored" data-anchor-id="postgresql">PostgreSQL</h3>
-<p>Download the latest version of <a href="https://www.postgresql.org/download/">PostgreSQL</a> for your O.S. and architecture/distribution.</p>
-<p>Follow the instructions to initialize the database, make sure to name it <strong>qsapm</strong>.</p>
-<section id="windows-path-configuration" class="level4">
-<h4 class="anchored" data-anchor-id="windows-path-configuration">Windows Path Configuration</h4>
-<p>On Windows, the PostgreSQL binaries directory is not automatically added to the Path environment variable. To add it, find the binaries directory. It will look like this:</p>
+<section id="java" class="level3">
+<h3 class="anchored" data-anchor-id="java">Java</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>You need to install the Java Runtime Environment (JRE) separately. To see which version is compatible with your version of Cognos:</p>
+<ol type="1">
+<li>Navigate to <a href="https://www.ibm.com/support/pages/node/6966712">Cognos Analytics Supported Software Environments</a>.</li>
+<li>Select your version.</li>
+<li>Open the <strong>Prerequisite Software</strong> page.</li>
+</ol>
+<p>For 12.0.4, the requirement is Oracle Java SDK/JRE/JDK 8.0.40 and future fix packs.</p>
+<p>A valid install command for this version is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install java-1.8.0-openjdk-devel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Test the install:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">openjdk</span> version <span class="st">"1.8.0_482"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">OpenJDK</span> Runtime Environment <span class="er">(</span><span class="ex">build</span> 1.8.0_482-b08<span class="kw">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">OpenJDK</span> 64-Bit Server VM <span class="er">(</span><span class="ex">build</span> 25.482-b08, mixed mode<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the above doesn’t work, add it to the path:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Double-check the installation location, here you should see java-1.8.0-openjdk-devel</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /usr/lib/jvm</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a script to export the path:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/profile.d/java.sh</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the following:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">JAVA_HOME</span><span class="op">=</span>/usr/lib/jvm/java-1.8.0-openjdk</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:<span class="va">$JAVA_HOME</span>/bin</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Make it executable</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod +x /etc/profile.d/java.sh</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload the profile:</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /etc/profile.d/java.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Check the installation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$JAVA_HOME</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>You can skip this step and use the Java Runtime Environment (JRE) provided with Cognos Analytics.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="database" class="level3">
+<h3 class="anchored" data-anchor-id="database">Database</h3>
+<section id="postgresql" class="level4">
+<h4 class="anchored" data-anchor-id="postgresql">PostgreSQL</h4>
+<p>Download the latest version of <a href="https://www.postgresql.org/download/">PostgreSQL</a> for your architecture.</p>
+<p>Follow the instructions to initialize the database, make sure to name it <em>qsapm</em>.</p>
+<section id="windows-path-configuration" class="level5">
+<h5 class="anchored" data-anchor-id="windows-path-configuration">Windows Path Configuration</h5>
+<p>On Windows, the PostgreSQL binaries directory is not automatically added to the <em>Path</em> environment variable. To add it, find the binaries directory, which will look like this:</p>
 <pre><code>C:\Program Files\PostgreSQL\&lt;version&gt;\bin</code></pre>
 <p>Open the <strong>System Properties</strong> settings:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sysdm.cpl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sysdm.cpl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="1">
 <li>Click the <strong>Advanced</strong> tab and then the <strong>Environment Variables</strong> button.</li>
 <li>Under <strong>System variables</strong>, select the <strong>Path</strong> variable and click the <strong>Edit</strong> button.</li>
-<li>An “Edit environment variable” dialog box containing a list of paths will appear. Click the <strong>New</strong> button and paste the PostgreSQL binaries path found earlier into the new entry.</li>
+<li>An <em>Edit environment variable</em> dialog box containing a list of paths will appear. Click the <strong>New</strong> button and paste the PostgreSQL binaries path found earlier into the new entry.</li>
 <li>Click <strong>OK</strong> on all three open dialog boxes.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -589,38 +640,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Ensure that PostgreSQL runs as a dedicated system user with limited privileges.</p></li>
 <li><p>Secure the PostgreSQL data directory by setting the correct file permissions, preventing unauthorized access. For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chown</span> <span class="at">-R</span> postgres:postgres /var/lib/postgresql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chown</span> <span class="at">-R</span> postgres:postgres /var/lib/postgresql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
 </div>
 </div>
 </section>
 </section>
-<section id="java" class="level3">
-<h3 class="anchored" data-anchor-id="java">Java</h3>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p>You need to install the Java Runtime Environment (JRE) separately. To see which version is compatible with your version of Cognos:</p>
-<ol type="1">
-<li>Navigate to <a href="https://www.ibm.com/support/pages/node/6966712">Cognos Analytics Supported Software Environments</a></li>
-<li>Select your version</li>
-<li>Open the <strong>Prerequisite Software</strong> page.</li>
-</ol>
-<p>For 12.0.4, the requirement is Oracle Java SDK/JRE/JDK 8.0.40 and future fix packs.</p>
-<p>After downloading the JRE, move the jdk within to /opt/bin and add it to the PATH:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> server-jre-8u401-linux-x64/jdk1.8.0_401/ /opt/jre/</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export JAVA_HOME=/opt/jre/'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH=$PATH:$JAVA_HOME/bin'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Check the installation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<p>You can skip this step and use the Java Runtime Environment (JRE) provided with Cognos Analytics.</p>
-</div>
-</div>
-</div>
 </section>
 </section>
 </section>
@@ -628,18 +653,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Installation &amp; Setup</h1>
 <section id="database-setup" class="level2">
 <h2 class="anchored" data-anchor-id="database-setup">Database setup</h2>
+<section id="set-a-password-for-postgresql" class="level3">
+<h3 class="anchored" data-anchor-id="set-a-password-for-postgresql">Set a password for PostgreSQL</h3>
+<p>If you haven’t already set a password for the database user postgres, follow these steps:</p>
+<p>First, connect to the database:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> postgres psql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Set a password:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>\<span class="kw">password</span> postgres # Enter your <span class="kw">password</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="create-a-database" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-database">Create a database</h3>
 <p>If you haven’t yet created a database named <strong>qsapm</strong>, do so now:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-U</span> postgres <span class="co"># initialize psql shell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> qsapm;</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>\q <span class="co">-- exit the psql shell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-U</span> postgres <span class="co"># initialize psql shell, if you aren't in it already</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> qsapm;</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>\q <span class="co">-- exit the psql shell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="run-setup-scripts" class="level3">
 <h3 class="anchored" data-anchor-id="run-setup-scripts">Run setup scripts</h3>
-<p>Unzip all the zipped files in the IBM_Quantum_Safe_Explorer_Portfolio_View_<version> file, and navigate to the workdir. Then run:</version></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> postgresdbdump.sql</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> CHANGELOG.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unzip all the zipped files in the <em>IBM_Quantum_Safe_Explorer_Portfolio_View_<version></version></em> file and navigate to the <em>workdir</em> directory. Then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> postgresdbdump.sql</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> localhost <span class="at">-U</span> postgres <span class="at">-d</span> qsapm <span class="at">-f</span> CHANGELOG.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -654,60 +687,103 @@ Warning
 </div>
 </div>
 <p>For reference, the syntax is as follows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> <span class="op">&lt;</span>host<span class="op">&gt;</span> -U <span class="op">&lt;</span>username<span class="op">&gt;</span> -d <span class="op">&lt;</span>dbname<span class="op">&gt;</span> -f script_path.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="at">-h</span> <span class="op">&lt;</span>host<span class="op">&gt;</span> -U <span class="op">&lt;</span>username<span class="op">&gt;</span> -d <span class="op">&lt;</span>dbname<span class="op">&gt;</span> -f script_path.sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="application-portfolio-data-loader-setup" class="level3">
+<h3 class="anchored" data-anchor-id="application-portfolio-data-loader-setup">Application portfolio data loader setup</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="application-portfolio-data-loader-setup" class="level2">
-<h2 class="anchored" data-anchor-id="application-portfolio-data-loader-setup">Application portfolio data loader setup</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="explorer-scan-data-loader-setup" class="level3">
+<h3 class="anchored" data-anchor-id="explorer-scan-data-loader-setup">Explorer scan data loader setup</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../apm-dataloader</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="explorer-scan-data-loader-setup" class="level2">
-<h2 class="anchored" data-anchor-id="explorer-scan-data-loader-setup">Explorer scan data loader setup</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../apm-dataloader</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="cognos" class="level2">
 <h2 class="anchored" data-anchor-id="cognos">Cognos</h2>
-<p>From the downloaded <em>PortfolioViewPlatform</em> folder, run the cognos installer.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Windows</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>UI Mode Options
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The installer supports three UI modes:</p>
+<ol type="1">
+<li>Connect to your Linux VM using an SSH client that supports X11 forwarding:</li>
+</ol>
 <ul>
-<li><strong>gui</strong> (default) - Graphical interface</li>
-<li><strong>console</strong> - Text-based interactive mode (note: lowercase)</li>
-<li><strong>silent</strong> - Non-interactive mode (requires response file)</li>
+<li>If connecting from <strong>MacOS</strong>, you can use <a href="xquartz.org"><strong>XQuartz</strong></a> (or choose your own).</li>
 </ul>
-<p>To specify a mode, use the <code>-i</code> flag: <code>./ca_instl_lnx86_3.7.35.bin -i console</code></p>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ca_instl_lnx86_3.7.35.bin</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./ca_instl_lnx86_3.7.35.bin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> xquartz <span class="co"># install xquartz on MacOS</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>If connecting from <strong>Windows</strong>, you can use <a href="https://putty.org/index.html"><strong>PuTTY</strong></a> (or choose your own).</li>
+</ul>
+<ol start="2" type="1">
+<li>Follow these commands to configure X11 forwarding and launch the installer:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to the VM (optionally with X11 forwarding enabled)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-X</span> <span class="at">-i</span> ~/.ssh/ssh_key.pem <span class="op">&lt;</span>user<span class="op">&gt;</span>@<span class="op">&lt;</span>server_ip_address<span class="op">&gt;</span> -p PORT</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Install prerequisite libraries</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf groupinstall <span class="st">"Server with GUI"</span> <span class="co"># double-check group name by running dnf group list</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf update <span class="at">-y</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install libXtst libX11.so.6 libnsl nspr.i686 nspr.x86_64 nss.i686 nss.x86_64 motif.i686 motif.x86_64 libnsl.so.1 libstdc++.so.6</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable graphical mode, if it isn't already set</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> set-default graphical</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable X11Forwarding</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> vim /etc/ssh/sshd_config</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit/add in the following: (find the relevant section around line 108, which should already have these variables)</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="ex">X11Forwarding</span> yes</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="ex">X11UseLocalhost</span> yes</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="ex">X11DisplayOffset</span> 10</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart the sshd service</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart sshd</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set ulimit values</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ulimit <span class="at">-t</span> unlimited <span class="at">-d</span> unlimited <span class="at">-f</span> unlimited <span class="at">-m</span> unlimited <span class="at">-u</span> unlimited <span class="at">-n</span> 8192 <span class="at">-s</span> 8192 <span class="at">-v</span> unlimited</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Reboot</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="ex">reboot</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># FOR MAC - RUN ON YOUR TERMINAL (NOT ON THE SERVER): Enable mouse click-through so you can click through the GUI installer</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> ~/.ssh/config</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit/add in the following: (find the relevant section around line 108, which should already have these variables)</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> <span class="pp">*</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ForwardX11</span> yes</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ForwardX11Trusted</span> yes</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ForwardAgent</span> yes</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Reconnect to the VM with the above X11 forwarding enabled client</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-X</span> <span class="at">-i</span> ~/.ssh/ssh_key.pem <span class="op">&lt;</span>user<span class="op">&gt;</span>@<span class="op">&lt;</span>server_ip_address<span class="op">&gt;</span> -p PORT</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your xauth cookie; if empty, reconnect to the VM and try again</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="ex">xauth</span> list <span class="va">$DISPLAY</span> <span class="co"># Example output: itz-1wtxx7-helper-1/unix:10  MIT-MAGIC-COOKIE-1  3843ddbf3946c81417739f83dd2944</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Run as root</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> su</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the .Xauthority file</span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> ~/.Xauthority</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the cookie to the root user</span></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="ex">xauth</span> add <span class="op">&lt;</span>entire_cookie_output_from_above<span class="op">&gt;</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the installer directory and launch it</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ca_instl_lnx86_3.7.35.bin</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="ex">./ca_instl_lnx86_3.7.35.bin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Select your desired language and click <strong>Next</strong>.</li>
+<li>Select <em>IBM Cognos Analytics - &lt;version&gt;</em> and click <strong>Next</strong>.</li>
+<li>Select <em>I accept the terms of the License Agreement</em> and click <strong>Next</strong>.</li>
+<li>Set to your desired install location and click <strong>Next</strong>.</li>
+<li>(If the directory does not already exist) Allow the installer to create the install directory by clicking <strong>Yes</strong>.</li>
+<li>On the <em>Component Selection</em>, select accept the default selections and click <strong>Next</strong>.</li>
+<li>Click <strong>Install</strong>.</li>
+<li>Click <strong>Done</strong>.</li>
+</ol>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <ol type="1">
-<li>Double-click the installer ca_instl_win_3.7.35.exe.</li>
-<li>Select IBM Cognos Analytics - 12.0.4 and click <em>Next</em></li>
-<li>Select <em>I accept the terms of the License Agreement</em> and click <em>Next</em></li>
-<li>Set to your desired Install location and shortcut options and click <em>Next</em></li>
-<li>Allow the installer to create the install directory by clicking <em>Yes</em></li>
-<li>On the Component Selection, select Easy Install and click <em>Next</em></li>
-<li>Fill in the Cognos administrator user ID and password, note them down, and click <em>Next</em></li>
+<li>Double-click the installer <em>ca_instl_win_3.7.35.exe</em>.</li>
+<li>Select <em>IBM Cognos Analytics - 12.0.4</em> and click <strong>Next</strong>.</li>
+<li>Select <em>I accept the terms of the License Agreement</em> and click <strong>Next</strong>.</li>
+<li>Set to your desired install location and shortcut options and click <strong>Next</strong>.</li>
+<li>(If the directory does not already exist) Allow the installer to create the install directory by clicking <strong>Yes</strong>.</li>
+<li>On the Component Selection, select <em>Easy Install</em> and click <strong>Next</strong>.</li>
+<li>Fill in the Cognos administrator user ID and password, note them down, and click <strong>Next</strong>.</li>
 </ol>
 <ul>
-<li>Note- the password must include:
+<li><em>Note:</em> the password must include:
 <ul>
 <li>1 uppercase character</li>
 <li>1 lowercase character</li>
@@ -717,9 +793,9 @@ Warning
 </ul></li>
 </ul>
 <ol start="8" type="1">
-<li>Review the details, making sure you have enough space on the disk and click <em>Install</em></li>
-<li>Wait for the installation to complete</li>
-<li>Click <em>Done</em></li>
+<li>Review the details, making sure you have enough space on the disk and click <strong>Install</strong>.</li>
+<li>Wait for the installation to complete.</li>
+<li>Click <strong>Done</strong>.</li>
 </ol>
 </div>
 </div>
@@ -737,40 +813,65 @@ Warning
 <li>Move it into the <code>installation_location\drivers</code> directory.</li>
 </ol>
 <ul>
-<li>i.e.&nbsp;<code>C:\Program Files\ibm\cognos\analytics\drivers</code></li>
+<li>For example: <code>C:\Program Files\ibm\cognos\analytics\drivers</code></li>
 </ul>
 </section>
 <section id="increase-max-memory-for-websphere-liberty-profile" class="level3">
 <h3 class="anchored" data-anchor-id="increase-max-memory-for-websphere-liberty-profile">Increase max memory for WebSphere Liberty Profile</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Linux</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <ol type="1">
-<li>Launch the Cognos Configuration:</li>
+<li>Launch the <em>Cognos Configuration</em>:</li>
 </ol>
-<ul>
-<li>For <strong>Linux</strong>:
-<ul>
-<li>Navigate to the <code>install_location/bin</code></li>
-<li>Run <code>./cogconfig.sh</code></li>
-</ul></li>
-<li>For <strong>Windows</strong>:
-<ul>
-<li>From the <em>Start</em> menu, search for “IBM Cognos Configuration” and hit <em>Enter</em>.</li>
-</ul></li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Naviage to installation directory/bin64</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/ibm/cognos/analytics/bin64 <span class="co"># or replace with your custom install directory</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Become superuser (you may need to copy over the xauth cookie again)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> su</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the installer</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./cogconfig.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li>Under Local Configuration -&gt; Environment -&gt; IBM Cognos services, click on <em>IBM Cognos</em></li>
-<li>Set the “Maximum memory for Websphere Liberty Profile in MB” to <strong>16384</strong>.</li>
-<li>Click <em>File</em> -&gt; <em>Save</em> or press <em>Ctrl+S</em>.</li>
-<li>When the processing window completes, click <em>Close</em>.</li>
-<li>Click <em>File</em> -&gt; <em>Exit</em>. or press <em>Alt+F4</em>.</li>
-<li>In the restart confirmation window, click <em>Yes</em>.</li>
-<li>After the restart completes, click <em>Close</em>.</li>
+<li>Under <em>Local Configuration</em> → <em>Environment</em> → <em>IBM Cognos services</em>, click on <strong>IBM Cognos</strong>.</li>
+<li>Set the <em>Maximum memory for Websphere Liberty Profile in MB</em> to <strong>16384</strong>.</li>
+<li>Click <strong>File</strong> → <strong>Save</strong> or press <strong>Ctrl+S</strong>.</li>
+<li>When the processing window completes, click <strong>Close</strong>.</li>
+<li>Under <em>Local Configuration</em> → <em>Data Access</em> → <em>Content Manager</em>, right-click on <strong>Content Store</strong>.</li>
+<li>Select <strong>Delete</strong> and click <strong>Yes</strong> on the confirmation window.</li>
+<li>Under <em>Local Configuration</em> → <em>Data Access</em>, right-click on <strong>Content Manager</strong>.</li>
+<li>Select <em>New Resource</em> → <strong>Database…</strong>.</li>
+<li>Enter <em>qsapm</em> as the <em>Name</em> and select <em>PostgreSQL</em> as the <em>type</em> (you may need to scroll down to find it).</li>
+<li>Fill out the details, including the database server, port, username, and password. For the database name, enter <em>qsapm</em>, and for the schema, enter <em>qspm</em>.</li>
+<li>Right-click on the newly created <em>qsapm</em> database and click <strong>Test</strong>. Adjust the details as needed if this connection fails.</li>
+<li>Under <strong>File</strong>, click <strong>Save</strong>.</li>
+<li>Under <strong>File</strong>, click <strong>Exit</strong>.</li>
+<li>If there is an additional window asking to start the service, click <strong>Yes</strong>.</li>
+<li>Upon completion, click <strong>Close</strong>.</li>
 </ol>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<ol type="1">
+<li>Launch the <em>Cognos Configuration</em>:
+<ul>
+<li>From the <em>Start</em> menu, search for <em>IBM Cognos Configuration</em> and press <strong>Enter</strong>.</li>
+</ul></li>
+<li>Under <em>Local Configuration</em> → <em>Environment</em> → <em>IBM Cognos services</em>, click on <strong>IBM Cognos</strong>.</li>
+<li>Set the <em>Maximum memory for Websphere Liberty Profile in MB</em> to <strong>16384</strong>.</li>
+<li>Click <strong>File</strong> → <strong>Save</strong> or press <strong>Ctrl+S</strong>.</li>
+<li>When the processing window completes, click <strong>Close</strong>.</li>
+<li>Click <strong>File</strong> → <strong>Exit</strong> or press <strong>Alt+F4</strong>.</li>
+<li>In the restart confirmation window, click <strong>Yes</strong>.</li>
+<li>After the restart completes, click <strong>Close</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="import-custom-dashboard" class="level3">
 <h3 class="anchored" data-anchor-id="import-custom-dashboard">Import custom dashboard</h3>
 <ol type="1">
 <li>Unzip the <code>IBM Quantum Safe Explorer 2.2.3 Portfolio View - Multiplatform English</code> and all folders within <em>up to cognosdashboard</em>.</li>
-<li>Copy the <code>Team Content.zip</code> folder within the cognosdashboard to <code>install_location/analytics/deployment/</code>.</li>
+<li>Copy the <code>Team Content.zip</code> folder within the <em>cognosdashboard</em> directory to <code>install_location/analytics/deployment/</code>.</li>
 <li>Navigate to IBM Cognos Analytics in your browser and login with the cognos administrator user ID and password you created.</li>
 </ol>
 <ul>
@@ -790,8 +891,8 @@ Tip
 </div>
 </div>
 <ol start="4" type="1">
-<li>From the hamburger menu on the top-left, navigate to <em>Manage</em> -&gt; <em>Administration console…</em></li>
-<li>Navigate to the <strong>Configuration</strong> tab and select <strong>Content Administration</strong> and click on the <strong>New Import</strong> icon:</li>
+<li>From the hamburger menu on the top-left, navigate to <strong>Manage</strong> -&gt; <strong>Administration console…</strong></li>
+<li>Navigate to the <strong>Configuration</strong> tab, select <strong>Content Administration</strong> and click on the <strong>New Import</strong> icon:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -800,7 +901,7 @@ Tip
 </figure>
 </div>
 <ol start="5" type="1">
-<li>In the <strong>Team Content</strong> section, select <strong>Portfolio View</strong> and click <strong>Next</strong>:</li>
+<li>Select <strong>Team Content</strong> and click <strong>Next</strong> twice:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -809,7 +910,7 @@ Tip
 </figure>
 </div>
 <ol start="6" type="1">
-<li>The Public folders, directory, and library content section appears. Ensure that the checkbox for <strong>Portfolio View</strong> is selected, and then click <strong>Next</strong>:</li>
+<li>The <em>Public folders, directory, and library content</em> section appears. Ensure that the checkbox for <strong>Portfolio View</strong> is selected, and then click <strong>Next</strong> thrice:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -826,21 +927,30 @@ Tip
 <figcaption>Select Action</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Note
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If unsure of the action to be selected, then select <strong>Save and run once</strong>.</p>
+<p>If unsure of the action to be selected, select <strong>Save and run once</strong>.</p>
 </div>
 </div>
-<p>The imported folder will now be available in the Team Content tab.</p>
 <ol start="8" type="1">
+<li>Leave the default options to run the import <em>now</em> and click <strong>Run</strong> and then <strong>Ok</strong> to confirm:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/portfolio-view-run.png" class="img-fluid figure-img"></p>
+<figcaption>Run with options</figcaption>
+</figure>
+</div>
+<p>The imported folder will now be available in the <em>Team Content</em> tab under the <em>Content</em> page of the dashboard.</p>
+<ol start="9" type="1">
 <li><strong>Connect to the PostgreSQL instance:</strong></li>
 </ol>
 <ol type="a">
@@ -853,7 +963,7 @@ Tip
 </figure>
 </div>
 <ol start="2" type="a">
-<li>Click the <strong>New Data Source</strong> icon near the top right of the Configuration page:</li>
+<li>Click the <strong>New Data Source</strong> icon near the top right of the <em>Configuration</em> page:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -889,7 +999,7 @@ Tip
 </figure>
 </div>
 <ol start="6" type="a">
-<li>Enter the credentials of the PostgreSQL database in the <strong>User ID</strong> and <strong>Password</strong> fields. Type the password again in the <strong>Confirm password</strong> field.</li>
+<li>Below, enter the credentials of the PostgreSQL database in the <strong>User ID</strong> and <strong>Password</strong> fields. Type the password again in the <strong>Confirm password</strong> field.</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -916,7 +1026,7 @@ Tip
 </figure>
 </div>
 <ol type="i">
-<li>In the test results, ensure that the status is “Succeeded” and click <strong>Close</strong>.</li>
+<li>In the test results, ensure that the status is <em>Succeeded</em> and click <strong>Close</strong> twice.</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -935,6 +1045,8 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>If the connection test fails, check host, port, database name, and credentials and try again.</p>
+<p>You can try connecting from your terminal first to confirm the details:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> <span class="st">"host=&lt;host&gt; port=&lt;port&gt; dbname=&lt;dbname&gt; user=&lt;username&gt; password=&lt;password&gt;"</span>   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <ol start="10" type="a">
@@ -946,14 +1058,20 @@ Tip
 <figcaption>Click Finish</figcaption>
 </figure>
 </div>
-<p>The data source is now displayed in the configuration page.</p>
+<p>The data source is now displayed in the configuration page:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/cognos-connected.png" class="img-fluid figure-img"></p>
+<figcaption>Data Source Connected</figcaption>
+</figure>
+</div>
 </section>
-<section id="update-cognos-vm-ip-address" class="level3">
-<h3 class="anchored" data-anchor-id="update-cognos-vm-ip-address">Update Cognos VM IP Address</h3>
+<section id="update-cognos-vm-ip-address-optional" class="level3">
+<h3 class="anchored" data-anchor-id="update-cognos-vm-ip-address-optional">Update Cognos VM IP Address (optional)</h3>
 <p>Follow the steps below to update the IP address of the Virtual Machine in which Cognos is installed:</p>
 <ol type="1">
 <li><p>Login to Cognos using admin access.</p></li>
-<li><p>Navigate to the <strong>New Dashboard</strong> and click the <strong>Share</strong> option to copy the link.</p></li>
+<li><p>Click on the <strong>Team content</strong> tab, followed by the <strong>Team content</strong> folder, and then navigate to the <strong>New Dashboard</strong> and click the <strong>Share</strong> option to copy the link.</p></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -976,22 +1094,25 @@ Tip
 <section id="loading-application-portfolio-data" class="level4">
 <h4 class="anchored" data-anchor-id="loading-application-portfolio-data">Loading application portfolio data</h4>
 <ol type="1">
-<li>Open the following configuration file in a text editor:</li>
+<li><em>Open</em> the following configuration file in a text editor:</li>
 </ol>
 <pre><code>apm-appdetailsdataloader/dist/config.json</code></pre>
 <ol start="2" type="1">
-<li>Edit the <code>dbConfig</code> section using the details of the PostgreSQL server that has been installed:</li>
+<li><em>Edit</em> the csv path to match yours, and <em>edit</em> the <code>dbConfig</code> section using the details of the PostgreSQL server:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"database"</span><span class="fu">:</span> <span class="st">"qsapm"</span><span class="fu">,</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"port"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"dbConfig"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"database"</span><span class="fu">:</span> <span class="st">"qsapm"</span><span class="fu">,</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"port"</span><span class="fu">:</span> <span class="fu">,</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"csvFilePath"</span><span class="fu">:</span> <span class="st">""</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
-<li>Copy the application portfolio file to the following directory:</li>
+<li><em>Copy</em> the application portfolio file to the following directory:</li>
 </ol>
 <pre><code>apm-appdetailsdataloader/input</code></pre>
 <p>See the examples below to understand the fields required:</p>
@@ -1029,10 +1150,16 @@ Reveal application portfolio sample csv
 </div>
 </details>
 <ol start="4" type="1">
-<li>Run the appropriate data loader to import the application portfolio data into the PostgreSQL database:</li>
+<li><em>Run</em> the appropriate data loader to import the application portfolio data into the PostgreSQL database:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-appdetailsdataloader</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> csv-to-postgresql@1.0.0 <span class="ex">start</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> node <span class="ex">dist/index.js</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">CSV</span> file successfully parsed</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Successfully</span> inserted application related details into database</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="loading-the-explorer-scan-output-into-the-database" class="level4">
 <h4 class="anchored" data-anchor-id="loading-the-explorer-scan-output-into-the-database">Loading the Explorer scan output into the database</h4>
@@ -1047,7 +1174,10 @@ Reveal application portfolio sample csv
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Ensure the repo and app names from the application portfolio csv match the <code>RepositoryId</code> and <code>ApplicationId</code> in the JSON files you are loading.</li>
+<li>Ensure the repo and app names from the application portfolio csv match the <code>RepositoryId</code> and <code>ApplicationId</code> in the JSON files you are loading.
+<ul>
+<li>You may need to add in the <code>RepositoryId</code> field into your <code>quantum_safe_api_discovery_crypto_inventory.json</code> file.</li>
+</ul></li>
 <li>Create the following folders under <code>apm-dataloader</code> if they don’t exist already:
 <ul>
 <li><code>flatinput</code></li>
@@ -1058,39 +1188,65 @@ Reveal application portfolio sample csv
 </div>
 </div>
 <ol type="1">
-<li>Open the following configuration file in a text editor:</li>
+<li><em>Open</em> the following configuration file in a text editor:</li>
 </ol>
 <pre><code>apm-dataloader/dist/config.json</code></pre>
 <ol start="2" type="1">
-<li>Edit the <code>dbConfig</code> section using the details of the PostgreSQL server:</li>
+<li><em>Edit</em> the folder paths to match yours, and <em>edit</em> the <code>dbConfig</code> section using the details of the PostgreSQL server:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"database"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"port"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"inputFolderPath"</span><span class="fu">:</span> <span class="st">"/.../apm-dataloader/input"</span><span class="fu">,</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"outputFolderPath"</span><span class="fu">:</span> <span class="st">"/../apm-dataloader/output"</span><span class="fu">,</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"errorFolderPath"</span><span class="fu">:</span> <span class="st">"/../apm-dataloader/error"</span><span class="fu">,</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"flatinputFolderPath"</span><span class="fu">:</span> <span class="st">"/../apm-dataloader/flatinput"</span><span class="fu">,</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"flatoutputFolderPath"</span><span class="fu">:</span> <span class="st">"/../apm-dataloader/flatoutput"</span><span class="fu">,</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"flaterrorFolderPath"</span><span class="fu">:</span> <span class="st">"/../apm-dataloader/flaterror"</span><span class="fu">,</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"dbConfig"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"user"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"database"</span><span class="fu">:</span> <span class="st">"qsapm"</span><span class="fu">,</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"port"</span><span class="fu">:</span> <span class="fu">,</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"host"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"password"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"schema"</span><span class="fu">:</span> <span class="st">"qspm"</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
-<li>Copy the following output files from the IBM Quantum Safe Explorer scans to the following directories:</li>
+<li><em>Copy</em> the following output files from the IBM Quantum Safe Explorer scans to the following directories:</li>
 </ol>
 <pre><code>quantum_safe_api_discovery_crypto_inventory.json -&gt; apm-dataloader/flat-input</code></pre>
 <pre><code>quantum_safe_cryptography_analysis_findings_java.json -&gt; apm-dataloader/input</code></pre>
 <ol start="4" type="1">
-<li>Run the appropriate data loader to import the Explorer scan outputs into the PostgreSQL database:</li>
+<li><em>Run</em> the appropriate data loader to import the Explorer scan outputs into the PostgreSQL database:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-dataloader</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> apm-dataloader</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run start</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> typescript-postgres-project@2.2.3 <span class="ex">start</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> node <span class="ex">dist/main.js</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Start</span> Processing of file: quantum_safe_cryptography_analysis_findings_java.json</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Start</span> Processing of flat inventory file: quantum_safe_api_discovery_crypto_inventory.json</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Processing</span> JSON Data: {</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">...</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Processing</span> JSON Data: {</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">...</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Data</span> insertion successful of file: quantum_safe_cryptography_analysis_findings_java.json</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="ex">Data</span> insertion successful of flat inventory file: quantum_safe_api_discovery_crypto_inventory.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="run-cognos-dashboard" class="level3">
 <h3 class="anchored" data-anchor-id="run-cognos-dashboard">Run Cognos Dashboard</h3>
 <section id="accessing-the-dashboard" class="level4">
 <h4 class="anchored" data-anchor-id="accessing-the-dashboard">Accessing the dashboard</h4>
-<p>To view the Portfolio View dashboard, do the following:</p>
+<p>To view the Portfolio View dashboard:</p>
 <ol type="1">
-<li>Use any web browser to navigate to <code>http://&lt;server&gt;:&lt;port&gt;/bi</code> and log in to Cognos:</li>
+<li>Use any web browser to <em>navigate</em> to <code>http://&lt;server&gt;:&lt;port&gt;/bi</code> and <em>log in</em> to Cognos:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1099,7 +1255,7 @@ Reveal application portfolio sample csv
 </figure>
 </div>
 <ol start="2" type="1">
-<li>Click the menu icon in the upper left corner of the welcome screen:</li>
+<li>Click the <strong>menu (hamburger) icon</strong> in the upper left corner of the welcome screen:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1135,7 +1291,7 @@ Reveal application portfolio sample csv
 </figure>
 </div>
 <ol start="6" type="1">
-<li>The Portfolio View content appears. Click the title on the <strong>Portfolio View</strong> tile to open the dashboard:</li>
+<li>The Portfolio View content appears:</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1143,7 +1299,7 @@ Reveal application portfolio sample csv
 <figcaption>Open Dashboard</figcaption>
 </figure>
 </div>
-<p>The Portfolio View dashboard will now be displayed, showing cryptographic vulnerability data across your application portfolio.</p>
+<p>This dashboard displays the cryptographic vulnerability data across your application portfolio.</p>
 </section>
 </section>
 </section>
@@ -1154,16 +1310,16 @@ Reveal application portfolio sample csv
 <h2 class="anchored" data-anchor-id="interpreting-the-scan-results">Interpreting the scan results</h2>
 <p>The data from the Explorer scan results, loaded into the dashboard, are provided in tables and visualized using charts. The tables and charts are interactive, and the results can be filtered by a variety of attributes, such as vulnerability severity, programming language, and cryptographic algorithm.</p>
 <p>The dashboard consists of five tabs in total.</p>
-<p>From the API Discovery scan:</p>
+<p>From the <em>API Discovery</em> scan:</p>
 <ul>
-<li>API discovery</li>
+<li><strong>API discovery</strong></li>
 </ul>
-<p>From the Cryptography Analysis scan:</p>
+<p>From the <em>Cryptography Analysis</em> scan:</p>
 <ul>
-<li>Vulnerability summary</li>
-<li>Cryptographic summary</li>
-<li>Vulnerability details</li>
-<li>Cryptographic details</li>
+<li><strong>Vulnerability summary</strong></li>
+<li><strong>Cryptographic summary</strong></li>
+<li><strong>Vulnerability details</strong></li>
+<li><strong>Cryptographic details</strong></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1173,44 +1329,44 @@ Reveal application portfolio sample csv
 </div>
 <section id="api-discovery" class="level3">
 <h3 class="anchored" data-anchor-id="api-discovery">API discovery</h3>
-<p>The API discovery displays the inventory from all the languages scanned during the API Discovery scan. Specifically, it’s based on the loaded into the database via the flatinput folder.</p>
+<p>The <strong>API discovery</strong> tab displays the inventory from all the languages scanned during the API Discovery scan. Specifically, it’s based on the data loaded into the database via the <em>flatinput</em> folder.</p>
 <p>The <strong>Summary of Crypto findings</strong> table at the top provides a high-level summary of the total number of applications scanned and loaded, number with crypto, total number of languages, number of files scanned, and number of crypto libraries used.</p>
 <p>The <strong>Scan history graph</strong> provides a monthly view of the total number of applications scanned and loaded each month that are with and without crypto.</p>
 <p>The <strong>Application / Cryptography pie chart</strong> provides a view of the total number of applications scanned and loaded with crypto.</p>
-<p>The <strong>Applications detailed crypto findings table</strong> gives a view of each application with details such as crypto libraries used, total number of files, total crypto functions, and the total number of cryptographic artifacts in each application. Right click and filter each application in the table to view the detailed information of the file name and the crypto functions in them.</p>
+<p>The <strong>Applications detailed crypto findings table</strong> gives a view of each application with details such as crypto libraries used, total number of files, total crypto functions, and the total number of cryptographic artifacts in each application. Right-click and filter each application in the table to view the detailed information of the file name and the crypto functions in them.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-api-discovery-full.png" class="img-fluid figure-img"></p>
-<figcaption>API Discoveporry Dashboard</figcaption>
+<figcaption>API Discovery Dashboard</figcaption>
 </figure>
 </div>
 </section>
 <section id="vulnerability-summary" class="level3">
 <h3 class="anchored" data-anchor-id="vulnerability-summary">Vulnerability summary</h3>
-<p>In the “Vulnerability summary” tab a summary of the cryptographic vulnerabilities in the IBM Quantum Safe Explorer results that was previously loaded into the PostgreSQL database are displayed. Click the <strong>Vulnerability summary</strong> tab to return to this page at any time.</p>
-<p>The “Vulnerability summary” page comprises of three sections:</p>
+<p>The <strong>Vulnerability summary</strong> tab displays a summary of the cryptographic vulnerabilities in the IBM Quantum Safe Explorer results that were previously loaded into the PostgreSQL database. Click the <strong>Vulnerability summary</strong> tab to return to this page at any time.</p>
+<p>The <strong>Vulnerability summary</strong> page comprises three sections:</p>
 <ol type="1">
-<li>Severity</li>
-<li>Classification</li>
-<li>Language</li>
+<li><em>Severity</em></li>
+<li><em>Classification</em></li>
+<li><em>Language</em></li>
 </ol>
-<p>Each section consists of a chart and a table. These are interactive. Click any part of a chart or table to choose what will be displayed on all the three charts.</p>
-<p>The <strong>“Severity”</strong> section categorizes the vulnerabilities into three severity levels. These are listed in the <strong>Vulnerability score</strong> column of the table. From least severe to most, the vulnerability scores are “Minor”, “Major”, and “Critical”. The number of vulnerabilities of each type that were found are listed in a table and visualized in an accompanying donut chart.</p>
-<p>The <strong>“Classification”</strong> section lists the specific vulnerabilities for each severity level, with the number of occurrences of each.</p>
+<p>Each section consists of a chart and a table. These are interactive. Click any part of a chart or table to choose what will be displayed on all three charts.</p>
+<p>The <strong>Severity</strong> section categorizes the vulnerabilities into three severity levels. These are listed in the <strong>Vulnerability score</strong> column of the table. From least severe to most, the vulnerability scores are <em>Minor</em>, <em>Major</em>, and <em>Critical</em>. The number of vulnerabilities of each type that were found are listed in a table and visualized in an accompanying donut chart.</p>
+<p>The <strong>Classification</strong> section lists the specific vulnerabilities for each severity level, with the number of occurrences of each.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-vulnerability-severity.png" class="img-fluid figure-img"></p>
 <figcaption>Vulnerability Summary - Severity</figcaption>
 </figure>
 </div>
-<p>The <strong>“Classification”</strong> column of the table, and the corresponding bar chart, displays <code>cwe&lt;Weakness_ID&gt;</code>. The table includes a “Debug message” column, which provides a brief summary of the vulnerability. The weakness ID of a vulnerability can be looked up on the <a href="https://cwe.mitre.org/">Common Weakness Enumeration</a> website for further details.</p>
+<p>The <strong>Classification</strong> column of the table, and the corresponding bar chart, displays <code>cwe&lt;Weakness_ID&gt;</code>. The table includes a <em>Debug message</em> column, which provides a brief summary of the vulnerability. The weakness ID of a vulnerability can be looked up on the <a href="https://cwe.mitre.org/">Common Weakness Enumeration</a> website for further details.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-vulnerability-classification.png" class="img-fluid figure-img"></p>
 <figcaption>Vulnerability Summary - Classification</figcaption>
 </figure>
 </div>
-<p>The <strong>“Language”</strong> section of the “Vulnerability summary” page shows the name of each application, grouped by programming language. The data are provided in a table and visualized in a donut chart.</p>
+<p>The <strong>Language</strong> section of the <strong>Vulnerability summary</strong> page shows the name of each application, grouped by programming language. The data are provided in a table and visualized in a donut chart.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-vulnerability-language.png" class="img-fluid figure-img"></p>
@@ -1252,15 +1408,15 @@ Reveal application portfolio sample csv
 </section>
 <section id="cryptographic-summary" class="level3">
 <h3 class="anchored" data-anchor-id="cryptographic-summary">Cryptographic summary</h3>
-<p>Clicking the <strong>Cryptographic summary</strong> tab will display two sections: Variants and Cryptographic libraries. Each of these sections comprises a donut chart and a table. As with the “Vulnerability summary” page, the charts and tables on this page are interactive; clicking any part of these will apply a filter to all data shown on the page.</p>
-<p>The <strong>“Variants”</strong> section breaks the results down into cryptographic algorithms. The donut chart shows how many instances of each algorithm were found, and the table shows the different key sizes found for each variant:</p>
+<p>Clicking the <strong>Cryptographic summary</strong> tab will display two sections: <strong>Variants</strong> and <strong>Cryptographic libraries</strong>. Each of these sections comprises a donut chart and a table. As with the <strong>Vulnerability summary</strong> page, the charts and tables on this page are interactive; clicking any part of these will apply a filter to all data shown on the page.</p>
+<p>The <strong>Variants</strong> section breaks the results down into cryptographic algorithms. The donut chart shows how many instances of each algorithm were found, and the table shows the different key sizes found for each variant.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-crypto-variants.png" class="img-fluid figure-img"></p>
 <figcaption>Cryptographic Summary - Variants</figcaption>
 </figure>
 </div>
-<p>The <strong>“Cryptographic libraries”</strong> section contains a donut plot listing the cryptographic software libraries used, such as OpenSSL or JCA. The accompanying table lists the vulnerable algorithms found for each library.</p>
+<p>The <strong>Cryptographic libraries</strong> section contains a donut plot listing the cryptographic software libraries used, such as OpenSSL or JCA. The accompanying table lists the vulnerable algorithms found for each library.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-crypto-libraries.png" class="img-fluid figure-img"></p>
@@ -1270,18 +1426,18 @@ Reveal application portfolio sample csv
 </section>
 <section id="vulnerability-details" class="level3">
 <h3 class="anchored" data-anchor-id="vulnerability-details">Vulnerability details</h3>
-<p>The “Vulnerability details” page displays a table with all the vulnerabilities found, grouped by vulnerability score:</p>
+<p>The <strong>Vulnerability details</strong> page displays a table with all the vulnerabilities found, grouped by vulnerability score.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-vulnerability-summary.png" class="img-fluid figure-img"></p>
 <figcaption>Vulnerability Summary</figcaption>
 </figure>
 </div>
-<p>This table contains all the information from the table in the Classification section of the “Vulnerability summary” page, but also breaks the results down by the names of the application, and the repository, that the vulnerabilities were found in.</p>
+<p>This table contains all the information from the table in the <strong>Classification</strong> section of the <strong>Vulnerability summary</strong> page, but also breaks the results down by the names of the application and the repository where the vulnerabilities were found.</p>
 </section>
 <section id="cryptographic-details" class="level3">
 <h3 class="anchored" data-anchor-id="cryptographic-details">Cryptographic details</h3>
-<p>The Cryptographic details page displays a table listing the cryptographic variants found, along with their public key sizes. These are the same data provided in the Variants table on the “Cryptographic summary” page but includes additional details: the application and repository names. This is shown in the following screenshot showing cryptographic algorithm usage at an application and repository level.</p>
+<p>The <strong>Cryptographic details</strong> page displays a table listing the cryptographic variants found, along with their public key sizes. These are the same data provided in the <strong>Variants</strong> table on the <strong>Cryptographic summary</strong> page but include additional details: the application and repository names. This is shown in the following screenshot, which displays cryptographic algorithm usage at an application and repository level.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/portfolio-crypto-details.png" class="img-fluid figure-img"></p>
@@ -1291,20 +1447,35 @@ Reveal application portfolio sample csv
 </section>
 </section>
 </section>
+<section id="direct-updates-to-portfolio-view" class="level1">
+<h1>Direct updates to Portfolio View</h1>
+<p>See <a href="../../src/qse/04_github_actions_integration.html#direct-updates-to-portfolio-view">this section</a> under the Github Integration page to integrate automatic dashboard updates into your pipeline.</p>
+</section>
 <section id="troubleshooting" class="level1">
 <h1>Troubleshooting</h1>
-<section id="postgresdbdump.sql-syntax-error" class="level3">
-<h3 class="anchored" data-anchor-id="postgresdbdump.sql-syntax-error">postgresdbdump.sql syntax error</h3>
+<section id="postgresdbdump.sql-syntax-error" class="level2">
+<h2 class="anchored" data-anchor-id="postgresdbdump.sql-syntax-error">postgresdbdump.sql syntax error</h2>
 <p>If you encounter a syntax error when running the <code>postgresdbdump.sql</code> script, add a semicolon to lines 736 and 748 and re-run it. The corrected lines should look like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> scanhistory <span class="kw">order</span> <span class="kw">by</span> scanid, created_time <span class="kw">asc</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> scanhistory <span class="kw">order</span> <span class="kw">by</span> scanid, created_time <span class="kw">asc</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="xqe-dat-0001-the-request-was-canceled-by-the-user" class="level3">
-<h3 class="anchored" data-anchor-id="xqe-dat-0001-the-request-was-canceled-by-the-user">XQE-DAT-0001 | The request was canceled by the user</h3>
+<section id="x11-connection-rejected-because-of-wrong-authentication" class="level2">
+<h2 class="anchored" data-anchor-id="x11-connection-rejected-because-of-wrong-authentication">X11 connection rejected because of wrong authentication</h2>
+<p>If you see this error while trying to run either the Cognos installer or configuration, ensure that you have followed the proper steps to enable X11 forwarding, including:</p>
+<ul>
+<li>Using an X11 forwarding capable terminal emulator, such as <a href="xquartz.org"><strong>XQuartz</strong></a> (MacOS) or <a href="https://putty.org/index.html"><strong>PuTTY</strong></a> (Windows)</li>
+<li>Setting the xauth cookie
+<ul>
+<li><em>You likely have to recopy the xauth cookie from the original user again, if it has been updated since</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="xqe-dat-0001-the-request-was-canceled-by-the-user" class="level2">
+<h2 class="anchored" data-anchor-id="xqe-dat-0001-the-request-was-canceled-by-the-user">XQE-DAT-0001 | The request was canceled by the user</h2>
 <p>If you see one or both of the following errors on the portfolio view dashboard:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>XQE<span class="op">-</span>DAT<span class="op">-</span><span class="dv">0001</span> <span class="kw">Data</span> <span class="kw">source</span> adapter error: org.postgresql.util.PSQLException: ERROR: <span class="kw">cross</span><span class="op">-</span><span class="kw">database</span> <span class="kw">references</span> are <span class="kw">not</span> implemented: <span class="ot">"qsapm.qspm.findings"</span> Position: <span class="dv">369</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">The</span> request was canceled <span class="kw">by</span> <span class="kw">the</span> <span class="fu">user</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ensure, using sql queries, that the database qsapm exists, that the schema qspm under it exists, and that qsapm.qspm.findings is populated.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>XQE<span class="op">-</span>DAT<span class="op">-</span><span class="dv">0001</span> <span class="kw">Data</span> <span class="kw">source</span> adapter error: org.postgresql.util.PSQLException: ERROR: <span class="kw">cross</span><span class="op">-</span><span class="kw">database</span> <span class="kw">references</span> are <span class="kw">not</span> implemented: <span class="ot">"qsapm.qspm.findings"</span> Position: <span class="dv">369</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">The</span> request was canceled <span class="kw">by</span> <span class="kw">the</span> <span class="fu">user</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ensure, using SQL queries, that the database <em>qsapm</em> exists, that the schema <em>qspm</em> under it exists, and that <em>qsapm.qspm.findings</em> is populated.</p>
 <p>Use the following SQL query to get a more detailed view of the ingested data once you confirm the above:</p>
 <details>
 <summary>
@@ -1316,50 +1487,77 @@ Reveal ingested data sql query
 <div class="code-with-filename-file">
 <pre><strong>select_ingested_data.sql</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-filename="select_ingested_data.sql"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> orgapplicationhierarchy <span class="kw">AS</span> (</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        o.organizationid,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        o.organizationname,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        b.businessunitid,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        b.businessunitname,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        a.applicationid,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        r.repositoryid,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        r.repositoryname</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.organizationdimension o</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.businessunitdimension b <span class="kw">ON</span> o.organizationid <span class="op">=</span> b.organizationid</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.divisiondimension d <span class="kw">ON</span> b.businessunitid <span class="op">=</span> d.businessunitid</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.applicationdimension a <span class="kw">ON</span> d.divisionid <span class="op">=</span> a.divisionid</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.repositorydimension r <span class="kw">ON</span> a.applicationid <span class="op">=</span> r.applicationid</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>latestscan <span class="kw">AS</span> (</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        scanid, </span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        applicationid, </span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        repositoryid, </span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> applicationid, repositoryid <span class="kw">ORDER</span> <span class="kw">BY</span> scandatetimestamp <span class="kw">DESC</span>) <span class="kw">AS</span> rn</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.findings</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>latestscan_filtered <span class="kw">AS</span> (</span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> scanid, applicationid, repositoryid</span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> latestscan</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> rn <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details <span class="kw">AS</span> (</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> v.<span class="op">*</span> </span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> qspm.vulnerabilities v       </span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> latestscan_filtered ls </span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> v.scanid <span class="op">=</span> ls.scanid </span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.applicationid <span class="op">=</span> ls.applicationid </span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.repositoryid <span class="op">=</span> ls.repositoryid</span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> </span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>vd.scanid, vd.applicationid , vd.repositoryid  ,vd.vulnerabilityscore, a.applicationname,r.repositoryname,vd.classification,vd.debugmessage</span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> </span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details vd</span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.applicationdimension a <span class="kw">on</span> a.applicationid <span class="op">=</span> vd.applicationid</span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.repositorydimension r <span class="kw">on</span> vd.repositoryid <span class="op">=</span> r.repositoryid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-filename="select_ingested_data.sql"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> orgapplicationhierarchy <span class="kw">AS</span> (</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        o.organizationid,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        o.organizationname,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        b.businessunitid,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>        b.businessunitname,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        a.applicationid,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        r.repositoryid,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        r.repositoryname</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.organizationdimension o</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.businessunitdimension b <span class="kw">ON</span> o.organizationid <span class="op">=</span> b.organizationid</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.divisiondimension d <span class="kw">ON</span> b.businessunitid <span class="op">=</span> d.businessunitid</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.applicationdimension a <span class="kw">ON</span> d.divisionid <span class="op">=</span> a.divisionid</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> qspm.repositorydimension r <span class="kw">ON</span> a.applicationid <span class="op">=</span> r.applicationid</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>latestscan <span class="kw">AS</span> (</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>        scanid, </span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        applicationid, </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        repositoryid, </span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> applicationid, repositoryid <span class="kw">ORDER</span> <span class="kw">BY</span> scandatetimestamp <span class="kw">DESC</span>) <span class="kw">AS</span> rn</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> qspm.findings</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>latestscan_filtered <span class="kw">AS</span> (</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> scanid, applicationid, repositoryid</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> latestscan</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> rn <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details <span class="kw">AS</span> (</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> v.<span class="op">*</span> </span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> qspm.vulnerabilities v       </span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> latestscan_filtered ls </span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> v.scanid <span class="op">=</span> ls.scanid </span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.applicationid <span class="op">=</span> ls.applicationid </span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> v.repositoryid <span class="op">=</span> ls.repositoryid</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> </span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>vd.scanid, vd.applicationid , vd.repositoryid  ,vd.vulnerabilityscore, a.applicationname,r.repositoryname,vd.classification,vd.debugmessage</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> </span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>vulnerabilities_details vd</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.applicationdimension a <span class="kw">on</span> a.applicationid <span class="op">=</span> vd.applicationid</span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a><span class="kw">join</span> qspm.repositorydimension r <span class="kw">on</span> vd.repositoryid <span class="op">=</span> r.repositoryid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
+</section>
+<section id="insufficient-storage" class="level2">
+<h2 class="anchored" data-anchor-id="insufficient-storage">Insufficient Storage</h2>
+<p>In the event you don’t have enough storage under <code>/opt/</code>, you can move this directory to an additional storage disk, if you have it available.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new target directory</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /mnt/second/opt</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy existing /opt to the new location (if applicable)</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rsync <span class="at">-avx</span> /opt/ /mnt/second/opt/</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename old /opt</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv /opt /opt.old</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new mount point:</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir /opt</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Unmount disk from /mnt/second</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> umount /mnt/second</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Mount to /opt for testing</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/vdc1 /opt</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /opt</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit fstab:</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/fstab <span class="co"># Replace entry for /dev/vd1 with: "/dev/vdc1   /opt   ext4   defaults   0 0", save and exit</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload systemd</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> daemon-reload</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Mount it</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount <span class="at">-a</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify</span></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /opt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
