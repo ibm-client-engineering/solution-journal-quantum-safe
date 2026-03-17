@@ -495,10 +495,101 @@ my-project/
         └── qse-scan.yml          # Workflow that uses the action
 ```
 
+# Direct updates to Portfolio View
+
+There are two methods to enable direct updates from Github Actions to the Portfolio View dashboard. Both require some amount of custom scripting, some of which (for method 1) is done below.
+
+## Method 1: Send scan results to Loading Zone
+
+The first step to enabling this is to follow the [recommended fixes](/src/qse/04_github_actions_integration.html#upload-artifact-andor-downloads) for the `upload-artifact` issue, which *sends the scan results from the Github Action directly to the machine which hosts the Portfolio View dashboard*.
+
+Ensure that the host, port, and credentials added to the Repository secrets as mentioned in that section match that of the machine which hosts the Portfolio View dashboard.
+
+Next, you will need to set up a script that runs either at a desired time interval, or when the `/desired/path/on/remote/machine` (where the scan results get sent) is updated. The script will need to:
+
+1. Insert, into the files which will be loaded, the appropriate `ApplicationId` and `RepositoryId`.
+
+2. Copy the files to the appropriate locations:
+
+- If running API Discovery or both
+```
+/desired/path/on/remote/machine/qse-scan-results/qs_explorer_result/quantum_safe_api_discovery_crypto_inventory.json -> IBM_QSE_2.2.3_PortfolioView/.../workidr/apm-dataloader/flat-input
+```
+
+- If running Cryptography Analysis or both
+```
+/desired/path/on/remote/machine/qse-scan-results/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json -> IBM_QSE_2.2.3_PortfolioView/.../workidr/apm-dataloader/input
+```
+
+3. Run `npm start` in the apm-dataloader directory to load the data.
+
+See the [instructions on data loading](/src/qse/05_portfolio_view.html#loading-the-explorer-scan-output-into-the-database) for more details on the Portfolio View data ingestion process.
+
+## Method 2: Directly load scan results
+
+This method involves running the data loading script from within the Github Action itself. You will need to follow similar steps, namely:
+
+1. Insert, into the files which will be loaded, the appropriate `ApplicationId` and `RepositoryId`.
+
+2. Adapt the data loading script to run in Github Actions
+
+3. Set up its config to point to:
+
+```
+quantum_safe_api_discovery_crypto_inventory.json # To be processed as a flat input
+```
+
+and
+
+```
+quantum_safe_cryptography_analysis_findings_java.json # To be processed as a regular input
+```
+
 # Troubleshooting
 
 ## Action is not permitted by company policy
 
+### upload-artifact and/or downloads
+
+If you are blocked from using the upload-artifact Github Action or you are unable to download files (i.e. ephemeral environment), then you can directly transfer the results to a different machine.
+
+In order to do so, follow these steps:
+
+- In your action repo, add the following secrets by navigating to *Settings*->*Secrets and variables* and clicking on **New repository secret**:
+  - HOST
+  - PORT
+  - USER
+  - SSH_PRIVATE_KEY (if applicable)
+  - PASSWORD (if applicable)
+
+This is how it will look like with all of the above added in:
+
+![Github Repository secrets](/images/qse-github-actions-repo-secrets.png)
+
+- Remove the *upload-artifact* section from your action.yml
+- In `action.yml` (or `qse-action.yml`, *if you only want this to be used in a single repository*), add the following based on what you require to access the remote machine which will hold the results:
+a) For *accessing via an identity file* (key):
+
+```yaml
+    - name: Copy files via SCP
+      run: |
+        mkdir -p /tmp/
+        touch /tmp/key.pem
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.pem
+        chmod 600 /tmp/key.pem
+        scp -i /tmp/key.pem -P ${{ secrets.PORT }} -r ${{ github.workspace }}/${{ inputs.output_dir }}qse-scan-results ${{ secrets.USER }}@${{ secrets.HOST }}:/desired/path/on/remote/machine    
+```
+
+b) For *accessing via password*:
+```yaml
+    - name: Copy files via SSHPASS
+      run: |
+        sshpass -p "${{ secrets.PASSWORD }}" scp -P ${{ secrets.PORT }} -r ${{ github.workspace }}/${{ inputs.output_dir }}qse-scan-results ${{ secrets.USER }}@${{ secrets.HOST }}:/desired/path/on/remote/machine       
+```
+
+Once the action runs, you will be able to access the results from the `/desired/path/on/remote/machine/qse-scan-results` on your remote machine.
+
+### qse-scan-action
 If the qse-scan-action is not allowed by your company or organization's policy, you can still test it out (see details below)
 
 ::: {.callout-warning}
