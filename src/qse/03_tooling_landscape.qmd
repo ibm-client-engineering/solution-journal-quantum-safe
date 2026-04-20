@@ -10,7 +10,7 @@ date: last-modified
 
 ## Overview
 
-A robust security posture relies on multiple layers of analysis. When planning a Post-Quantum Cryptography (PQC) strategy, it is important to understand how IBM Quantum Safe Explorer (QSE) differentiates itself from—and complements—standard Application Security (AppSec) and Network Security tools.
+A robust security posture relies on multiple layers of analysis. When planning a Post-Quantum Cryptography (PQC) strategy, it is important to understand how IBM Quantum Safe Explorer (QSE) differentiates itself from, and complements, standard Application Security (AppSec) and Network Security tools.
 
 While existing tools focus on **hygiene** and **vulnerability detection** (finding mistakes), IBM Quantum Safe focuses on **cryptographic agility** and **inventory** (identifying standards that require modernization).
 
@@ -49,10 +49,24 @@ However, for Quantum Safe migration, a "Pass" is insufficient. Organizations nee
 
 ### Semantic Analysis vs. Pattern Matching
 
-IBM Quantum Safe Explorer utilizes deep semantic analysis rather than simple pattern matching:
+IBM Quantum Safe Explorer utilizes deep semantic analysis rather than simple pattern matching to build this inventory:
 
 1.  **Data Flow Analysis:** Tracks variables through the code to determine if they are used as cryptographic keys, even if the variable name is generic (e.g., `var data = ...`).
 2.  **Context Awareness:** Distinguishes between a hash used for security (e.g., signing) versus a hash used for utility (e.g., a hash map index), reducing false alarms during migration planning.
+3.  **Function Parameter Trace:** Traditional scanners struggle when cryptographic parameters (like key sizes, padding schemes, or modes of operation) are passed dynamically across multiple function calls or files. QSE traces these parameters deeply across the application's call stack to accurately determine the exact cryptographic configurations in use, capturing the true architectural dependencies.
+
+### Detecting Crypto-Agility Anti-Patterns
+
+Beyond generating a static inventory, IBM Quantum Safe Explorer actively identifies architectural bottlenecks that hinder future modernization. 
+
+Standard tools look for broken code; QSE looks for *inflexible* code. It flags "Crypto-Agility Anti-Patterns," which are coding practices that make migrating to new cryptographic standards exceptionally difficult. Specific anti-patterns identified by QSE include:
+
+* **Architectural & Provider Overrides:** Programmatically editing provider lists or security properties (e.g., `java.security.setProperty`), or hardcoding a specific provider name. This circumvents the organization's ability to enforce centrally managed, preferred cryptographic policies.
+* **Hardcoded Cryptographic Configurations:** Hardcoding algorithm choices, key lengths, mode choices, protocol choices, or ciphersuites directly into the source code, making future updates a highly manual, error-prone process.
+* **Hardcoded Parameters & Artifacts:** Hardcoding initialization vectors (IVs), salts, iteration counts, random seeds, certificates, or specific algorithmic parameters (like the RSA encryption exponent). This not only limits agility but often introduces predictability and critical security weaknesses (e.g., CWE-321, CWE-335).
+* **SSL/TLS Misconfigurations:** Directly setting protocols or ciphersuites on individual SSL objects, or setting the SSL context as the system default, rather than creating custom, centrally managed SSLContexts.
+
+While some of these practices might not trigger a traditional SAST vulnerability alert today, they create massive technical debt for a PQC migration. By identifying these anti-patterns early, QSE allows development teams to refactor their code for true cryptographic agility.
 
 ## Summary
 
@@ -60,4 +74,4 @@ IBM Quantum Safe is not a replacement for tools like SonarQube or Prisma; it is 
 
 * Use **SAST/SCA** to ensure your code is free of bugs and known CVEs.
 * Use **Network Security** to encrypt traffic boundaries.
-* Use **IBM Quantum Safe** to build your CBOM and manage the migration of your cryptographic standards.
+* Use **IBM Quantum Safe** to build your CBOM, trace hidden parameters, resolve agility anti-patterns, and manage the migration of your cryptographic standards.
